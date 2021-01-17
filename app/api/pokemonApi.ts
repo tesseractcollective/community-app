@@ -7,10 +7,12 @@ export async function fetchPokemon() {
   throw new Error('unable to fetch');
 }
 
-export async function fetchSinglePokemon(url: string) {
-  const result = await fetch(url);
-  if (result.ok) {
-    return result.json();
-  } 
-  throw new Error('unable to fetch');
+export function fetchSinglePokemon(url: string) {
+  return async () => {
+    const result = await fetch(url);
+    if (result.ok) {
+      return result.json();
+    } 
+    throw new Error('unable to fetch');
+  }
 }
