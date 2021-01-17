@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View} from 'react-native';
+import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Login, {User} from './screens/Login';
 import Home from './screens/Home';
@@ -66,12 +67,22 @@ export default function App() {
               <MainTabs.Screen
                 name="HomeStackNavigator"
                 component={HomeStackNavigator}
-                options={{title: translations.homeTabTitle}}
+                options={{
+                  title: translations.homeTabTitle,
+                  tabBarIcon: () => {
+                    return <FeatherIcons name="home" />;
+                  },
+                }}
               />
               <MainTabs.Screen
                 name="ProfileStackNavigator"
                 component={ProfileStackNavigator}
-                options={{title: translations.profileTabTitle}}
+                options={{
+                  title: translations.profileTabTitle,
+                  tabBarIcon: () => {
+                    return <FeatherIcons name="user" />;
+                  },
+                }}
               />
             </MainTabs.Navigator>
           ) : (
