@@ -2,5 +2,6 @@ export default {
   loginScreenTitle: 'Login',
   loginButtonText: 'Login',
   homeTabTitle: 'Home',
-  profileTabTitle: 'Profile'
+  profileTabTitle: 'Profile',
+  loading: 'Loading',
 }

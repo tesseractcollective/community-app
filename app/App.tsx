@@ -12,6 +12,7 @@ import {
   LocalizationProvider,
   useTranslations,
 } from './components/TranslationProvider';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 interface UserContextType {
   user?: User;
@@ -57,41 +58,44 @@ function ProfileStackNavigator() {
 export default function App() {
   const [user, setUser] = React.useState<User | undefined>(undefined);
   const translations = useTranslations();
+  const queryClient = new QueryClient();
 
   return (
     <LocalizationProvider>
       <UserContext.Provider value={{user, setUser}}>
-        <NavigationContainer>
-          {user ? (
-            <MainTabs.Navigator>
-              <MainTabs.Screen
-                name="HomeStackNavigator"
-                component={HomeStackNavigator}
-                options={{
-                  title: translations.homeTabTitle,
-                  tabBarIcon: () => {
-                    return <FeatherIcons name="home" />;
-                  },
-                }}
-              />
-              <MainTabs.Screen
-                name="ProfileStackNavigator"
-                component={ProfileStackNavigator}
-                options={{
-                  title: translations.profileTabTitle,
-                  tabBarIcon: () => {
-                    return <FeatherIcons name="user" />;
-                  },
-                }}
-              />
-            </MainTabs.Navigator>
-          ) : (
-            <LoginStack.Navigator>
-              <LoginStack.Screen name="Login" component={Login} />
-              <LoginStack.Screen name="Register" component={View} />
-            </LoginStack.Navigator>
-          )}
-        </NavigationContainer>
+        <QueryClientProvider client={queryClient} >
+          <NavigationContainer>
+            {user ? (
+              <MainTabs.Navigator>
+                <MainTabs.Screen
+                  name="HomeStackNavigator"
+                  component={HomeStackNavigator}
+                  options={{
+                    title: translations.homeTabTitle,
+                    tabBarIcon: () => {
+                      return <FeatherIcons name="home" />;
+                    },
+                  }}
+                />
+                <MainTabs.Screen
+                  name="ProfileStackNavigator"
+                  component={ProfileStackNavigator}
+                  options={{
+                    title: translations.profileTabTitle,
+                    tabBarIcon: () => {
+                      return <FeatherIcons name="user" />;
+                    },
+                  }}
+                />
+              </MainTabs.Navigator>
+            ) : (
+              <LoginStack.Navigator>
+                <LoginStack.Screen name="Login" component={Login} />
+                <LoginStack.Screen name="Register" component={View} />
+              </LoginStack.Navigator>
+            )}
+          </NavigationContainer>
+        </QueryClientProvider>
       </UserContext.Provider>
     </LocalizationProvider>
   );
