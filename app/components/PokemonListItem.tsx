@@ -1,8 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
-import { useQuery } from 'react-query';
-import { fetchSinglePokemon } from '../api/pokemonApi';
+import {useQuery} from 'react-query';
+import {fetchSinglePokemon} from '../api/pokemonApi';
 
 interface PokemonListItemProps {
   name: string;
@@ -11,13 +11,16 @@ interface PokemonListItemProps {
 
 export default function (props: PokemonListItemProps) {
   const navigation = useNavigation();
-  const { isLoading, isError, data, error } = useQuery(props.url, fetchSinglePokemon(props.url));
+  const {isLoading, isError, data, error} = useQuery(
+    props.url,
+    fetchSinglePokemon(props.url),
+  );
 
   const onPress = useCallback(() => {
     if (data) {
-      navigation.navigate("PokemonDetail", { pokemon: data })
+      navigation.navigate('PokemonDetail', {pokemon: data});
     }
-  }, [data])
+  }, [data]);
 
   return (
     <ListItem bottomDivider onPress={onPress}>

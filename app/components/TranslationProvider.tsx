@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactChild, useContext } from 'react';
+import React, {createContext, useState, ReactChild, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocalizedStrings from 'react-native-localization';
 import * as RNLocalize from 'react-native-localize';
@@ -26,7 +26,7 @@ export const useTranslations = () => {
   return context.translations;
 };
 
-export const LocalizationProvider = ({ children }: Localization) => {
+export const LocalizationProvider = ({children}: Localization) => {
   const [appLanguage, setAppLanguage] = useState(DEFAULT_LANGUAGE);
 
   const setLanguage = (language: string) => {
@@ -43,7 +43,9 @@ export const LocalizationProvider = ({ children }: Localization) => {
     } else {
       let localeCode = DEFAULT_LANGUAGE;
       const supportedLocaleCodes = translations.getAvailableLanguages();
-      const phoneLocaleCodes = RNLocalize.getLocales().map((locale) => locale.languageCode);
+      const phoneLocaleCodes = RNLocalize.getLocales().map(
+        (locale) => locale.languageCode,
+      );
       phoneLocaleCodes.some((code) => {
         if (supportedLocaleCodes.includes(code)) {
           localeCode = code;

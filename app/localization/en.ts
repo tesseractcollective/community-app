@@ -4,4 +4,4 @@ export default {
   homeTabTitle: 'Home',
   profileTabTitle: 'Profile',
   loading: 'Loading',
-}
+};

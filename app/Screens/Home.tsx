@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import {useQuery} from 'react-query';
 
 import {fetchPokemon} from '../api/pokemonApi';
