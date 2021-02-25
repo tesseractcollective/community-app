@@ -14,7 +14,8 @@ import {
   useTranslations,
 } from './components/TranslationProvider';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import PokemonDetail from './screens/PokemonDetail';
+import GroupDetail from './screens/GroupDetail';
+import { Group } from './api/communityApi';
 
 interface UserContextType {
   user?: User;
@@ -32,8 +33,8 @@ export const UserContext = React.createContext<UserContextType>(
 
 type HomeStackParams = {
   Home: undefined
-  PokemonDetail: {
-    pokemon: any
+  GroupDetail: {
+    group: Group
   }
 }
 
@@ -49,9 +50,9 @@ function HomeStackNavigator() {
         options={{title: translations.homeTabTitle}}
       />
       <HomeStack.Screen
-        name="PokemonDetail"
-        component={PokemonDetail}
-        options={({route}) => ({title: route.params.pokemon.name})}
+        name="GroupDetail"
+        component={GroupDetail}
+        options={({route}) => ({title: route.params.group.name})}
       />
     </HomeStack.Navigator>
   );
