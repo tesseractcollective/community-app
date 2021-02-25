@@ -3,13 +3,14 @@ import {Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useQuery} from 'react-query';
 
-import {fetchPokemon} from '../api/pokemonApi';
-import PokemonListItem from '../components/PokemonListItem';
+import {fetchGroups} from '../api/communityApi';
+import GroupListItem from '../components/GroupListItem';
 import {useTranslations} from '../components/TranslationProvider';
 
 export default function () {
   const translations = useTranslations();
-  const {isLoading, isError, data, error} = useQuery('pokemon', fetchPokemon);
+  const {isLoading, isError, data: groups, error} = useQuery('groups', fetchGroups);
+  
 
   return (
     <View>
@@ -17,10 +18,10 @@ export default function () {
         <Text>{translations.loading}</Text>
       ) : isError ? (
         <Text>{error as any}</Text>
-      ) : data ? (
+      ) : groups ? (
         <ScrollView>
-          {data.results.map((item: any, index: number) => (
-            <PokemonListItem key={item.name} {...item} />
+          {groups.map((group: any) => (
+            <GroupListItem key={group.id} group={group} />
           ))}
         </ScrollView>
       ) : (
