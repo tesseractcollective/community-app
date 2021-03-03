@@ -1,4 +1,4 @@
-package com.rnstarter;
+package com.tesseractcollective.communityapp;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "RNStarter";
+    return "communityapp";
   }
 }

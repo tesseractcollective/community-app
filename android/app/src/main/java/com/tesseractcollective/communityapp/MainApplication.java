@@ -1,4 +1,4 @@
-package com.rnstarter;
+package com.tesseractcollective.communityapp;
 
 import android.app.Application;
 import android.content.Context;
