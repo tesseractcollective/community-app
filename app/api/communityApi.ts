@@ -1,3 +1,5 @@
+import constants from "../constants";
+
 export interface Location {
   name: string;
   latitude: number;
@@ -14,7 +16,7 @@ export interface Group {
   updatedAt: string;
 }
 
-const graphqlUrl = "https://api.thelitas.co/v1/graphql";
+const graphqlUrl = constants.graphqlUrl;
 
 async function fetchGraphQl<T>(query: string, queryKey: string, variables?: {[key: string]: any}): Promise<any> {
   const result = await fetch(graphqlUrl, {

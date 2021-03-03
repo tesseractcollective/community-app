@@ -19,14 +19,14 @@ import { Group } from './api/communityApi';
 
 interface UserContextType {
   user?: User;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
 }
 
 const LoginStack = createStackNavigator();
 const MainTabs = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 
-const defaultUserContext = {user: undefined, setUser: (user: User) => {}};
+const defaultUserContext = {user: undefined, setUser: (user: User | undefined) => {}};
 export const UserContext = React.createContext<UserContextType>(
   defaultUserContext,
 );
