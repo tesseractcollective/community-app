@@ -1,5 +1,5 @@
-query allGroups($limit:Int!, $offset:Int!) {
-  groups(limit: $limit, offset: $offset) {
+query allGroups($limit:Int!, $offset:Int!, $where:groups_bool_exp, $orderBy:[groups_order_by!]) {
+  groups(limit: $limit, offset: $offset, where:$where, order_by:$orderBy) {
     id
     name
     description
@@ -16,6 +16,20 @@ query allGroups($limit:Int!, $offset:Int!) {
       latitude
       longitude
       state
+    }
+  }
+}
+
+query allPosts($limit: Int!, $offset: Int!, $where: posts_bool_exp, $orderBy: [posts_order_by!]) {
+  posts(limit:$limit, offset:$offset, where:$where, order_by:$orderBy) {
+    id
+    body
+    createdAt
+    updatedAt
+    photoUrl
+    user {
+      name
+      id
     }
   }
 }

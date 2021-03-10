@@ -1,25 +1,25 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
-import { Groups } from '../graphql';
+import { Posts } from '../graphql';
 
-interface GroupListItemProps {
-  group: Groups
+interface PostListItemProps {
+  post: Posts
 }
 
-export default function (props: GroupListItemProps) {
+export default function (props: PostListItemProps) {
   const navigation = useNavigation();
-  const {group} = props;
+  const {post} = props;
 
   const onPress = () => {
-    navigation.navigate('GroupDetail', {group});
+    navigation.navigate('PostDetail', {post});
   }
 
   return (
     <ListItem bottomDivider onPress={onPress}>
       {/* <Avatar source={{uri: group.photoUrl}} /> */}
       <ListItem.Content>
-        <ListItem.Title>{group.name}</ListItem.Title>
+        <ListItem.Title>{post.body}</ListItem.Title>
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>

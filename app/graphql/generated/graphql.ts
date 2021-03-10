@@ -1305,8 +1305,8 @@ export type Posts = {
   photoUrl?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
   /** An object relationship */
-  user: Users;
-  userId: Scalars['uuid'];
+  user?: Maybe<Users>;
+  userId?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregated selection of "posts" */
@@ -2427,6 +2427,8 @@ export type Uuid_Comparison_Exp = {
 export type AllGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
   offset: Scalars['Int'];
+  where?: Maybe<Groups_Bool_Exp>;
+  orderBy?: Maybe<Array<Groups_Order_By> | Groups_Order_By>;
 }>;
 
 
@@ -2438,6 +2440,26 @@ export type AllGroupsQuery = (
     & { location?: Maybe<(
       { __typename?: 'locations' }
       & Pick<Locations, 'id' | 'name' | 'city' | 'country' | 'countryCode' | 'formattedAddress' | 'latitude' | 'longitude' | 'state'>
+    )> }
+  )> }
+);
+
+export type AllPostsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+  where?: Maybe<Posts_Bool_Exp>;
+  orderBy?: Maybe<Array<Posts_Order_By> | Posts_Order_By>;
+}>;
+
+
+export type AllPostsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'body' | 'createdAt' | 'updatedAt' | 'photoUrl'>
+    & { user?: Maybe<(
+      { __typename?: 'users' }
+      & Pick<Users, 'name' | 'id'>
     )> }
   )> }
 );
@@ -5074,22 +5096,16 @@ export default {
           {
             "name": "user",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "users"
-              }
+              "kind": "OBJECT",
+              "name": "users"
             },
             "args": []
           },
           {
             "name": "userId",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }
@@ -8552,8 +8568,8 @@ export default {
 } as unknown as IntrospectionQuery;
 
 export const AllGroupsDocument = gql`
-    query allGroups($limit: Int!, $offset: Int!) {
-  groups(limit: $limit, offset: $offset) {
+    query allGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp, $orderBy: [groups_order_by!]) {
+  groups(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
     id
     name
     description
@@ -8577,6 +8593,25 @@ export const AllGroupsDocument = gql`
 
 export function useAllGroupsQuery(options: Omit<Urql.UseQueryArgs<AllGroupsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllGroupsQuery>({ query: AllGroupsDocument, ...options });
+};
+export const AllPostsDocument = gql`
+    query allPosts($limit: Int!, $offset: Int!, $where: posts_bool_exp, $orderBy: [posts_order_by!]) {
+  posts(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
+    id
+    body
+    createdAt
+    updatedAt
+    photoUrl
+    user {
+      name
+      id
+    }
+  }
+}
+    `;
+
+export function useAllPostsQuery(options: Omit<Urql.UseQueryArgs<AllPostsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<AllPostsQuery>({ query: AllPostsDocument, ...options });
 };
 export const UsersDocument = gql`
     query users {

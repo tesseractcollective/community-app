@@ -18,7 +18,7 @@ export function usePagination<T extends {[key: string]: any}>(
 
   const [queryResult, reexecuteQuery] = useQuery<T>({
     query: document,
-    variables: {limit, offset, where, order_by: orderBy},
+    variables: {limit, offset, where, orderBy},
   });
 
   const pageItems = queryResult.data
@@ -50,11 +50,9 @@ export function usePagination<T extends {[key: string]: any}>(
 
   useEffect(() => {
     if (pageItems && !fetching) {
-      console.log('useEffect offset:', offset);
-      console.log(pageItems.map((item: any) => item.name));
       const pageItemsMap = pageItems.reduce<{[key: string]: T}>(
         (previous, item) => {
-          previous[primaryKey] = item;
+          previous[item[primaryKey]] = item;
           return previous;
         },
         {},

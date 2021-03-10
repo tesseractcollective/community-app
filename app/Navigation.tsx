@@ -9,12 +9,14 @@ import Home from './screens/Home';
 import GroupDetail from './screens/GroupDetail';
 import {Groups} from './graphql';
 import {useTranslations} from './components/TranslationProvider';
+import AllGroups from './screens/AllGroups';
 
 type HomeStackParams = {
   Home: undefined;
   GroupDetail: {
     group: Groups;
   };
+  AllGroups: undefined;
 };
 
 const MainTabs = createBottomTabNavigator();
@@ -34,6 +36,11 @@ function HomeStackNavigator() {
         name="GroupDetail"
         component={GroupDetail}
         options={({route}) => ({title: route.params.group.name})}
+      />
+      <HomeStack.Screen
+        name="AllGroups"
+        component={AllGroups}
+        options={{title: translations.allGroups}}
       />
     </HomeStack.Navigator>
   );

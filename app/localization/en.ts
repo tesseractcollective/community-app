@@ -5,5 +5,8 @@ export default {
   homeTabTitle: 'Home',
   profileTabTitle: 'Profile',
   loading: 'Loading',
-  groupsMyGroups: 'My Groups',
+  myGroups: 'My Collectives',
+  noGroups: "You haven't joined any collectives yet",
+  allGroups: "All Collectives",
+  search: "Search",
 };
