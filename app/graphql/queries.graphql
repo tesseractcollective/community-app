@@ -1,0 +1,31 @@
+query allGroups($limit:Int!, $offset:Int!) {
+  groups(limit: $limit, offset: $offset) {
+    id
+    name
+    description
+    createdAt
+    updatedAt
+    photoUrl
+    location {
+      id
+      name
+      city
+      country
+      countryCode
+      formattedAddress
+      latitude
+      longitude
+      state
+    }
+  }
+}
+
+query users {
+    users {
+        id
+        email
+        createdAt
+        updatedAt
+    }
+}
+

@@ -3,14 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import Auth0 from 'react-native-auth0';
 
-import { UserContext } from '../App';
 import { useTranslations } from '../components/TranslationProvider';
-import constants from '../constants';
-
-export interface User {
-  name: string;
-  accessToken?: string;
-}
+import constants from '../config';
+import { UserContext } from '../UserContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,11 +14,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   }
-})
+});
 
 export default function () {
   const [loginError, setLoginError] = useState<Error | undefined>(undefined);
-  const { setUser } = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
   const translations = useTranslations();
 
   const auth0 = new Auth0({
@@ -35,10 +30,7 @@ export default function () {
     auth0.webAuth
       .authorize({ scope: 'openid profile email' })
       .then(credentials => {
-        setUser({
-          name: 'test',
-          accessToken: credentials.accessToken
-        });
+        setToken(credentials.idToken);
       })
       .catch(error => {
         console.log(error);
@@ -50,7 +42,7 @@ export default function () {
     auth0.webAuth
       .clearSession({ federated: true })
       .then(success => {
-        setUser(undefined);
+        setToken(undefined);
       })
       .catch(error => {
         console.log('Log out cancelled');

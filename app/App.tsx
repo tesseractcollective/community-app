@@ -1,119 +1,19 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {View} from 'react-native';
+import React from 'react';
 import {ThemeProvider} from 'react-native-elements';
-import FeatherIcons from 'react-native-vector-icons/Feather';
 
-import Login, {User} from './screens/Login';
-import Home from './screens/Home';
-import {
-  LocalizationProvider,
-  useTranslations,
-} from './components/TranslationProvider';
-import {QueryClient, QueryClientProvider} from 'react-query';
-import GroupDetail from './screens/GroupDetail';
-import { Group } from './api/communityApi';
-
-interface UserContextType {
-  user?: User;
-  setUser: (user: User | undefined) => void;
-}
-
-const LoginStack = createStackNavigator();
-const MainTabs = createBottomTabNavigator();
-const ProfileStack = createStackNavigator();
-
-const defaultUserContext = {user: undefined, setUser: (user: User | undefined) => {}};
-export const UserContext = React.createContext<UserContextType>(
-  defaultUserContext,
-);
-
-type HomeStackParams = {
-  Home: undefined
-  GroupDetail: {
-    group: Group
-  }
-}
-
-const HomeStack = createStackNavigator<HomeStackParams>();
-
-function HomeStackNavigator() {
-  const translations = useTranslations();
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name="Home"
-        component={Home}
-        options={{title: translations.homeTabTitle}}
-      />
-      <HomeStack.Screen
-        name="GroupDetail"
-        component={GroupDetail}
-        options={({route}) => ({title: route.params.group.name})}
-      />
-    </HomeStack.Navigator>
-  );
-}
-
-function ProfileStackNavigator() {
-  const translations = useTranslations();
-  return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={View}
-        options={{title: translations.profileTabTitle}}
-      />
-    </ProfileStack.Navigator>
-  );
-}
+import { LocalizationProvider } from './components/TranslationProvider';
+import Navigation from './Navigation';
+import { UserProvider } from './UserContext';
 
 export default function App() {
-  const [user, setUser] = React.useState<User | undefined>(undefined);
-  const translations = useTranslations();
-  const queryClient = new QueryClient();
 
   return (
     <ThemeProvider>
       <LocalizationProvider>
-        <UserContext.Provider value={{user, setUser}}>
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer>
-              {user ? (
-                <MainTabs.Navigator>
-                  <MainTabs.Screen
-                    name="HomeStackNavigator"
-                    component={HomeStackNavigator}
-                    options={{
-                      title: translations.homeTabTitle,
-                      tabBarIcon: () => {
-                        return <FeatherIcons name="home" />;
-                      },
-                    }}
-                  />
-                  <MainTabs.Screen
-                    name="ProfileStackNavigator"
-                    component={ProfileStackNavigator}
-                    options={{
-                      title: translations.profileTabTitle,
-                      tabBarIcon: () => {
-                        return <FeatherIcons name="user" />;
-                      },
-                    }}
-                  />
-                </MainTabs.Navigator>
-              ) : (
-                <LoginStack.Navigator>
-                  <LoginStack.Screen name="Login" component={Login} />
-                  <LoginStack.Screen name="Register" component={View} />
-                </LoginStack.Navigator>
-              )}
-            </NavigationContainer>
-          </QueryClientProvider>
-        </UserContext.Provider>
+        <UserProvider>
+          <Navigation />
+        </UserProvider>
       </LocalizationProvider>
     </ThemeProvider>
   );

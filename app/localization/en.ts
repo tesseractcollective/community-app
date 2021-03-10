@@ -5,4 +5,5 @@ export default {
   homeTabTitle: 'Home',
   profileTabTitle: 'Profile',
   loading: 'Loading',
+  groupsMyGroups: 'My Groups',
 };
