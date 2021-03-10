@@ -1,25 +1,18 @@
-import {useNavigation} from '@react-navigation/core';
 import React, { useState } from 'react';
-import {Button, RefreshControl, StyleSheet, Text, View} from 'react-native';
+import {RefreshControl, StyleSheet, Text, View} from 'react-native';
 import { Input } from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
 
 import GroupListItem from '../components/GroupListItem';
-import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Groups,
   AllGroupsDocument,
-  AllPostsDocument,
   usePagination,
   Groups_Bool_Exp,
   Groups_Order_By,
   Order_By,
-  Posts,
-  Posts_Bool_Exp,
-  Posts_Order_By,
 } from '../graphql';
-import {useUserId} from '../UserContext';
 
 const styles = StyleSheet.create({
   posts: {
@@ -53,8 +46,8 @@ export default function () {
 
   const groupFilter: Groups_Bool_Exp | undefined = searchText ? {
     _or: [
-      { name: { _ilike: searchText } },
-      { description: { _ilike: searchText } },
+      { name: { _ilike: `%${searchText}%` } },
+      { description: { _ilike: `%${searchText}%` } },
     ]
   } : undefined;
 

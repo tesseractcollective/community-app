@@ -67,11 +67,6 @@ export default function () {
     userGroups: {userId: {_eq: userId}},
   };
 
-  // filter stub for all groups search in all groups view
-  // const groupFilter: Groups_Bool_Exp = {
-  //   name: { _ilike: "" }
-  // }
-
   const {
     items: groups,
     error: groupError,
