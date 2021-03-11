@@ -12,22 +12,6 @@ import {
 const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
 
-/** column ordering options */
-enum Order_By {
-  /** in the ascending order, nulls last */
-  Asc = 'asc',
-  /** in the ascending order, nulls first */
-  AscNullsFirst = 'asc_nulls_first',
-  /** in the ascending order, nulls last */
-  AscNullsLast = 'asc_nulls_last',
-  /** in the descending order, nulls first */
-  Desc = 'desc',
-  /** in the descending order, nulls first */
-  DescNullsFirst = 'desc_nulls_first',
-  /** in the descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last',
-}
-
 export interface PaginationListProps<T> {
   document: DocumentNode;
   resultField: string;
@@ -93,7 +77,7 @@ export function usePagination<T extends {[key: string]: any}>(
 ) {
   const limit = pageSize;
   const [offset, setOffset] = useState(0);
-  const [itemsMap, setItemsMap] = useState<{[key: string]: T}>({});
+  const [itemsMap, setItemsMap] = useState<Map<string, T>>(new Map());
   const [items, setItems] = useState<Array<T>>([]);
   const [cachedWhere, setCachedWhere] = useState(where);
 
@@ -117,41 +101,6 @@ export function usePagination<T extends {[key: string]: any}>(
     reexecuteQuery({requestPolicy: 'network-only'});
   };
 
-  const sortItems = (a: T, b: T) => {
-    if (!orderBy) {
-      return 0;
-    }
-
-    if (Array.isArray(orderBy)) {
-      for (let orderItem of orderBy) {
-        for (let orderItemKey in orderItem) {
-          const sortResult = sortByKeyAndOrderBy(
-            a,
-            b,
-            orderItemKey,
-            orderItem[orderItemKey],
-          );
-          if (sortResult !== 0) {
-            return sortResult;
-          }
-        }
-      }
-    } else {
-      for (let orderItemKey in orderBy) {
-        const sortResult = sortByKeyAndOrderBy(
-          a,
-          b,
-          orderItemKey,
-          orderBy[orderItemKey],
-        );
-        if (sortResult !== 0) {
-          return sortResult;
-        }
-      }
-    }
-    return 0;
-  };
-
   useEffect(() => {
     if (!deepEqual(where, cachedWhere)) {
       setOffset(0);
@@ -161,83 +110,26 @@ export function usePagination<T extends {[key: string]: any}>(
 
   useEffect(() => {
     if (pageItems && !fetching) {
-      const pageItemsMap = pageItems.reduce<{[key: string]: T}>(
-        (previous, item) => {
-          previous[item[primaryKey]] = item;
-          return previous;
-        },
-        {},
-      );
+      const newItems = new Array<T>();
+      const newItemsMap = new Map<string, T>();
 
-      let newItemsMap;
-      if (offset === 0) {
-        newItemsMap = pageItemsMap;
-      } else {
-        newItemsMap = {
-          ...itemsMap,
-          ...pageItemsMap,
-        };
+      if (offset !== 0) {
+        for(const [key, item] of itemsMap.entries()) {
+            newItemsMap.set(key, item);
+            newItems.push(item);
+          }
       }
 
-      const sorted = [...Object.values(newItemsMap)].sort(sortItems);
-      setItems(sorted);
+      for (const item of pageItems) {
+        newItemsMap.set(item[primaryKey], item);
+        newItems.push(item);
+      }
+      setItems(newItems);
       setItemsMap(newItemsMap);
     }
   }, [pageItems, fetching, offset]);
 
   return {items, error, fetching, refresh, loadNextPage};
-}
-
-export function sortByKeyAndOrderBy<T extends {[key: string]: any}>(
-  a: T,
-  b: T,
-  key: string,
-  order: Order_By,
-) {
-  const aValue = a[key];
-  const bValue = b[key];
-  if (aValue === bValue) {
-    return 0;
-  }
-  if (typeof aValue === 'string') {
-    switch (order) {
-      case Order_By.Asc:
-      case Order_By.AscNullsFirst:
-      case Order_By.AscNullsLast:
-        return aValue.localeCompare(bValue);
-      case Order_By.Desc:
-      case Order_By.DescNullsFirst:
-      case Order_By.DescNullsLast:
-        return bValue.localeCompare(aValue);
-    }
-  }
-  if (typeof aValue === 'number') {
-    switch (order) {
-      case Order_By.Asc:
-      case Order_By.AscNullsFirst:
-      case Order_By.AscNullsLast:
-        return aValue - bValue;
-      case Order_By.Desc:
-      case Order_By.DescNullsFirst:
-      case Order_By.DescNullsLast:
-        return bValue - aValue;
-    }
-  }
-  if (typeof aValue === 'boolean') {
-    switch (order) {
-      case Order_By.Asc:
-      case Order_By.AscNullsFirst:
-      case Order_By.AscNullsLast:
-        return aValue ? -1 : 1;
-      case Order_By.Desc:
-      case Order_By.DescNullsFirst:
-      case Order_By.DescNullsLast:
-        return bValue ? -1 : 1;
-    }
-  }
-  if (typeof aValue === 'object') {
-  }
-  return 0;
 }
 
 export function deepEqual(a: any, b: any): boolean {
