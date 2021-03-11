@@ -9,7 +9,7 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import { hasVariableDefinition, isQuery } from '../graphql/graphqlHelpers';
+import {hasVariableDefinition, isQuery} from '../graphql/graphqlHelpers';
 
 const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
@@ -35,32 +35,10 @@ export default function <T extends {[key: string]: any}>(
     pageSize,
     ...rest
   } = props;
-  
-  // introspect GraphQL document for validation and resultField
-  let resultField = "";
-  let isValidDocument = false;
-  const queryOperation = document.definitions[0];
-  if (isQuery(queryOperation) &&
-    hasVariableDefinition(queryOperation.variableDefinitions, "limit") &&
-    hasVariableDefinition(queryOperation.variableDefinitions, "offset") &&
-    hasVariableDefinition(queryOperation.variableDefinitions, "where") &&
-    hasVariableDefinition(queryOperation.variableDefinitions, "orderBy") &&
-    queryOperation.selectionSet.selections.length > 0) {
-      const queryField = queryOperation.selectionSet.selections[0];
-      if (queryField.kind === "Field") {
-        resultField = queryField.name.value;
-        isValidDocument = true;
-      }
-  }
-  if (!isValidDocument) {
-    throw new Error('graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`')
-  }
-
   const keyExtractorKey = primaryKey || defaultPrimaryKey;
 
   const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
     document,
-    resultField,
     where,
     orderBy,
     primaryKey,
@@ -90,12 +68,35 @@ export default function <T extends {[key: string]: any}>(
 
 export function usePagination<T extends {[key: string]: any}>(
   document: DocumentNode,
-  resultField: string,
   where?: {[key: string]: any},
   orderBy?: {[key: string]: any},
   primaryKey: string = defaultPrimaryKey,
   pageSize: number = defaultPageSize,
 ) {
+  // introspect GraphQL document for validation and resultField
+  let resultField = '';
+  let isValidDocument = false;
+  const queryOperation = document.definitions[0];
+  if (
+    isQuery(queryOperation) &&
+    hasVariableDefinition(queryOperation.variableDefinitions, 'limit') &&
+    hasVariableDefinition(queryOperation.variableDefinitions, 'offset') &&
+    hasVariableDefinition(queryOperation.variableDefinitions, 'where') &&
+    hasVariableDefinition(queryOperation.variableDefinitions, 'orderBy') &&
+    queryOperation.selectionSet.selections.length > 0
+  ) {
+    const queryField = queryOperation.selectionSet.selections[0];
+    if (queryField.kind === 'Field') {
+      resultField = queryField.name.value;
+      isValidDocument = true;
+    }
+  }
+  if (!isValidDocument) {
+    throw new Error(
+      'graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`',
+    );
+  }
+
   const limit = pageSize;
   const [offset, setOffset] = useState(0);
   const [itemsMap, setItemsMap] = useState<Map<string, T>>(new Map());
