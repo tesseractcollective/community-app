@@ -114,10 +114,10 @@ export function usePagination<T extends {[key: string]: any}>(
       const newItemsMap = new Map<string, T>();
 
       if (offset !== 0) {
-        for(const [key, item] of itemsMap.entries()) {
-            newItemsMap.set(key, item);
-            newItems.push(item);
-          }
+        for (const [key, item] of itemsMap.entries()) {
+          newItemsMap.set(key, item);
+          newItems.push(item);
+        }
       }
 
       for (const item of pageItems) {
