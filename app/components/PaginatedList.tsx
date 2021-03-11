@@ -73,42 +73,45 @@ export function usePagination<T extends {[key: string]: any}>(
   primaryKey: string = defaultPrimaryKey,
   pageSize: number = defaultPageSize,
 ) {
-  // introspect GraphQL document for validation and resultField
-  let resultField = '';
-  let isValidDocument = false;
-  const queryOperation = document.definitions[0];
-  if (
-    isQuery(queryOperation) &&
-    hasVariableDefinition(queryOperation.variableDefinitions, 'limit') &&
-    hasVariableDefinition(queryOperation.variableDefinitions, 'offset') &&
-    hasVariableDefinition(queryOperation.variableDefinitions, 'where') &&
-    hasVariableDefinition(queryOperation.variableDefinitions, 'orderBy') &&
-    queryOperation.selectionSet.selections.length > 0
-  ) {
-    const queryField = queryOperation.selectionSet.selections[0];
-    if (queryField.kind === 'Field') {
-      resultField = queryField.name.value;
-      isValidDocument = true;
-    }
-  }
-  if (!isValidDocument) {
-    throw new Error(
-      'graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`',
-    );
-  }
 
   const limit = pageSize;
+  const [resultField, setResultField] = useState("");
   const [offset, setOffset] = useState(0);
   const [itemsMap, setItemsMap] = useState<Map<string, T>>(new Map());
   const [items, setItems] = useState<Array<T>>([]);
   const [cachedWhere, setCachedWhere] = useState(where);
+
+  useEffect(() => {
+    // introspect GraphQL document for validation and resultField
+    let isValidDocument = false;
+    const queryOperation = document.definitions[0];
+    if (
+      isQuery(queryOperation) &&
+      hasVariableDefinition(queryOperation.variableDefinitions, 'limit') &&
+      hasVariableDefinition(queryOperation.variableDefinitions, 'offset') &&
+      hasVariableDefinition(queryOperation.variableDefinitions, 'where') &&
+      hasVariableDefinition(queryOperation.variableDefinitions, 'orderBy') &&
+      queryOperation.selectionSet.selections.length > 0
+    ) {
+      const queryField = queryOperation.selectionSet.selections[0];
+      if (queryField.kind === 'Field') {
+        setResultField(queryField.name.value);
+        isValidDocument = true;
+      }
+    }
+    if (!isValidDocument) {
+      throw new Error(
+        'graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`',
+      );
+    }
+  }, [document]);
 
   const [queryResult, reexecuteQuery] = useQuery<T>({
     query: document,
     variables: {limit, offset, where, orderBy},
   });
 
-  const pageItems = queryResult.data
+  const pageItems = (queryResult.data && resultField)
     ? ((queryResult.data as any)[resultField] as Array<T>)
     : undefined;
   const error = queryResult.error;
