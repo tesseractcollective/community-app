@@ -1,16 +1,15 @@
-import { useNavigation } from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Button, RefreshControl, StyleSheet, Text, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 import GroupListItem from '../components/GroupListItem';
+import PaginatedList from '../components/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Groups,
   AllGroupsDocument,
   AllPostsDocument,
-  usePagination,
   Groups_Bool_Exp,
   Groups_Order_By,
   Order_By,
@@ -30,34 +29,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function useGroupsPagination(
-  where?: Groups_Bool_Exp,
-  orderBy: Groups_Order_By = {name: Order_By.Asc},
-) {
-  return usePagination<Groups>(
-    AllGroupsDocument,
-    'groups',
-    'name',
-    where,
-    orderBy,
-    'id',
-    100,
-  );
-}
-
-function usePostPagination(
-  where?: Posts_Bool_Exp,
-  orderBy: Posts_Order_By = {createdAt: Order_By.Asc},
-) {
-  return usePagination<Posts>(
-    AllPostsDocument,
-    'posts',
-    'createdAt',
-    where,
-    orderBy,
-  );
-}
-
 export default function () {
   const translations = useTranslations();
   const navigation = useNavigation();
@@ -66,14 +37,10 @@ export default function () {
   const whereMyGroups: Groups_Bool_Exp = {
     userGroups: {userId: {_eq: userId}},
   };
-
-  const {
-    items: groups,
-    error: groupError,
-    fetching: groupFetching,
-    refresh: groupRefresh,
-    loadNextPage: groupLoadNextPage,
-  } = useGroupsPagination(whereMyGroups);
+  const orderByGroups: Groups_Order_By = {name: Order_By.Asc};
+  const renderGroup = ({item}: {item: Groups}) => {
+    return <GroupListItem group={item} />;
+  };
 
   const whereMyPosts: Posts_Bool_Exp = {
     _or: [
@@ -82,72 +49,40 @@ export default function () {
       {userId: {_is_null: true}},
     ],
   };
-  const {
-    items: posts,
-    error: postError,
-    fetching: postFetching,
-    refresh: postRefresh,
-    loadNextPage: postLoadNextPage,
-  } = usePostPagination(whereMyPosts);
-
-  const renderGroup = ({item}: {item: Groups}) => {
-    return <GroupListItem group={item} />;
-  };
-
+  const orderByPosts: Posts_Order_By = {createdAt: Order_By.Asc};
   const renderPost = ({item}: {item: Posts}) => {
     return <PostListItem post={item} />;
   };
 
   return (
     <View>
-      {groupError ? (
-        <Text>{groupError.message}</Text>
-      ) : postError ? (
-        <Text>{postError.message}</Text>
-      ) : (
-        <>
-          <Text>{translations.myGroups}</Text>
+      <Text>{translations.myGroups}</Text>
 
-          {groups.length ? (
-            <FlatList
-              style={styles.groups}
-              horizontal={true}
-              refreshControl={
-                <RefreshControl
-                  refreshing={groupFetching}
-                  onRefresh={groupRefresh}
-                />
-              }
-              data={groups}
-              renderItem={renderGroup}
-              keyExtractor={(group) => group.id}
-              onEndReachedThreshold={1}
-              onEndReached={groupLoadNextPage}
-            />
-          ) : (
-            <Text>{translations.noGroups}</Text>
-          )}
-          <Button 
-            title={translations.allGroups}
-            onPress={() => { navigation.navigate("AllGroups") }}
-            />
+      <PaginatedList
+        style={styles.groups}
+        horizontal={true}
+        document={AllGroupsDocument}
+        resultField="groups"
+        renderItem={renderGroup}
+        where={whereMyGroups}
+        orderBy={orderByGroups}
+      />
+      <Button
+        title={translations.allGroups}
+        onPress={() => {
+          navigation.navigate('AllGroups');
+        }}
+      />
 
-          <FlatList
-            style={styles.posts}
-            refreshControl={
-              <RefreshControl
-                refreshing={postFetching}
-                onRefresh={postRefresh}
-              />
-            }
-            data={posts}
-            renderItem={renderPost}
-            keyExtractor={(post) => post.id}
-            onEndReachedThreshold={1}
-            onEndReached={postLoadNextPage}
-          />
-        </>
-      )}
+      <Text>{translations.activityFeed}</Text>
+      <PaginatedList
+        style={styles.posts}
+        document={AllPostsDocument}
+        resultField="posts"
+        renderItem={renderPost}
+        where={whereMyPosts}
+        orderBy={orderByPosts}
+      />
     </View>
   );
 }
