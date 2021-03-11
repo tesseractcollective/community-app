@@ -2,11 +2,31 @@ import React, {useEffect, useState} from 'react';
 import {DocumentNode} from 'graphql';
 import {useQuery} from 'urql';
 import {FlatList} from 'react-native-gesture-handler';
-import {RefreshControl, ListRenderItem, Text, ScrollViewProps} from 'react-native';
-import {Order_By} from '../graphql';
+import {
+  RefreshControl,
+  ListRenderItem,
+  Text,
+  ScrollViewProps,
+} from 'react-native';
 
 const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
+
+/** column ordering options */
+enum Order_By {
+  /** in the ascending order, nulls last */
+  Asc = 'asc',
+  /** in the ascending order, nulls first */
+  AscNullsFirst = 'asc_nulls_first',
+  /** in the ascending order, nulls last */
+  AscNullsLast = 'asc_nulls_last',
+  /** in the descending order, nulls first */
+  Desc = 'desc',
+  /** in the descending order, nulls first */
+  DescNullsFirst = 'desc_nulls_first',
+  /** in the descending order, nulls last */
+  DescNullsLast = 'desc_nulls_last',
+}
 
 export interface PaginationListProps<T> {
   document: DocumentNode;
