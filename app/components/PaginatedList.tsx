@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {DocumentNode} from 'graphql';
 import {useQuery} from 'urql';
 import {FlatList} from 'react-native-gesture-handler';
+import isEqual from 'lodash.isequal';
 import {
   RefreshControl,
   ListRenderItem,
@@ -102,7 +103,7 @@ export function usePagination<T extends {[key: string]: any}>(
   };
 
   useEffect(() => {
-    if (!deepEqual(where, cachedWhere)) {
+    if (!isEqual(where, cachedWhere)) {
       setOffset(0);
       setCachedWhere(where);
     }
@@ -127,29 +128,4 @@ export function usePagination<T extends {[key: string]: any}>(
   }, [pageItems, fetching, offset]);
 
   return {items, error, fetching, refresh, loadNextPage};
-}
-
-export function deepEqual(a: any, b: any): boolean {
-  function isObject(object: any) {
-    return object != null && typeof object === 'object';
-  }
-
-  if (a === b) {
-    return true;
-  }
-
-  if (!isObject(a) || !isObject(b)) {
-    return false;
-  }
-
-  const keys = new Set([...Object.keys(a), ...Object.keys(b)]).values();
-  for (const key of keys) {
-    const val1 = a[key];
-    const val2 = b[key];
-    if (!deepEqual(val1, val2)) {
-      return false;
-    }
-  }
-
-  return true;
 }
