@@ -9,13 +9,13 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
+import { hasVariableDefinition, isQuery } from '../graphql/graphqlHelpers';
 
 const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
 
 export interface PaginationListProps<T> {
   document: DocumentNode;
-  resultField: string;
   renderItem: ListRenderItem<T>;
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
@@ -28,7 +28,6 @@ export default function <T extends {[key: string]: any}>(
 ) {
   const {
     document,
-    resultField,
     renderItem,
     where,
     orderBy,
@@ -36,6 +35,27 @@ export default function <T extends {[key: string]: any}>(
     pageSize,
     ...rest
   } = props;
+  
+  // introspect GraphQL document for validation and resultField
+  let resultField = "";
+  let isValidDocument = false;
+  const queryOperation = document.definitions[0];
+  if (isQuery(queryOperation) &&
+    hasVariableDefinition(queryOperation.variableDefinitions, "limit") &&
+    hasVariableDefinition(queryOperation.variableDefinitions, "offset") &&
+    hasVariableDefinition(queryOperation.variableDefinitions, "where") &&
+    hasVariableDefinition(queryOperation.variableDefinitions, "orderBy") &&
+    queryOperation.selectionSet.selections.length > 0) {
+      const queryField = queryOperation.selectionSet.selections[0];
+      if (queryField.kind === "Field") {
+        resultField = queryField.name.value;
+        isValidDocument = true;
+      }
+  }
+  if (!isValidDocument) {
+    throw new Error('graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`')
+  }
+
   const keyExtractorKey = primaryKey || defaultPrimaryKey;
 
   const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
