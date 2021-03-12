@@ -62,7 +62,6 @@ export default function () {
         style={styles.groups}
         horizontal={true}
         document={AllGroupsDocument}
-        resultField="groups"
         renderItem={renderGroup}
         where={whereMyGroups}
         orderBy={orderByGroups}
@@ -78,7 +77,6 @@ export default function () {
       <PaginatedList
         style={styles.posts}
         document={AllPostsDocument}
-        resultField="posts"
         renderItem={renderPost}
         where={whereMyPosts}
         orderBy={orderByPosts}

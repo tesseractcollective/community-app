@@ -44,7 +44,6 @@ export default function () {
       <PaginatedList
         style={styles.groups}
         document={AllGroupsDocument}
-        resultField="groups"
         renderItem={renderGroup}
         where={groupFilter}
         orderBy={groupOrderBy}
