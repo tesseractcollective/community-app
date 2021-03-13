@@ -9,7 +9,7 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import {hasVariableDefinition, isQuery} from '../graphql/graphqlHelpers';
+import {getResultFieldName, hasVariableDefinition, isQuery} from '../graphql/graphqlHelpers';
 
 const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
@@ -83,23 +83,17 @@ export function usePagination<T extends {[key: string]: any}>(
 
   useEffect(() => {
     // introspect GraphQL document for validation and resultField
-    let isValidDocument = false;
-    const queryOperation = document.definitions[0];
+    const fieldName = getResultFieldName(document);
     if (
-      isQuery(queryOperation) &&
-      hasVariableDefinition(queryOperation.variableDefinitions, 'limit') &&
-      hasVariableDefinition(queryOperation.variableDefinitions, 'offset') &&
-      hasVariableDefinition(queryOperation.variableDefinitions, 'where') &&
-      hasVariableDefinition(queryOperation.variableDefinitions, 'orderBy') &&
-      queryOperation.selectionSet.selections.length > 0
+      fieldName &&
+      isQuery(document) &&
+      hasVariableDefinition(document, 'limit') &&
+      hasVariableDefinition(document, 'offset') &&
+      hasVariableDefinition(document, 'where') &&
+      hasVariableDefinition(document, 'orderBy')
     ) {
-      const queryField = queryOperation.selectionSet.selections[0];
-      if (queryField.kind === 'Field') {
-        setResultField(queryField.name.value);
-        isValidDocument = true;
-      }
-    }
-    if (!isValidDocument) {
+      setResultField(fieldName);
+    } else {
       throw new Error(
         'graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`',
       );

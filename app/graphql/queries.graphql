@@ -33,13 +33,3 @@ query allPosts($limit: Int!, $offset: Int!, $where: posts_bool_exp, $orderBy: [p
     }
   }
 }
-
-query users {
-    users {
-        id
-        email
-        createdAt
-        updatedAt
-    }
-}
-

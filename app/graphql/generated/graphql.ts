@@ -13,6 +13,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   float8: any;
+  jsonb: any;
   timestamptz: any;
   uuid: any;
 };
@@ -571,9 +572,34 @@ export enum Groups_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+
+/** expression to compare columns of type jsonb. All fields are combined with logical 'AND'. */
+export type Jsonb_Comparison_Exp = {
+  /** is the column contained in the given json value */
+  _contained_in?: Maybe<Scalars['jsonb']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: Maybe<Scalars['jsonb']>;
+  _eq?: Maybe<Scalars['jsonb']>;
+  _gt?: Maybe<Scalars['jsonb']>;
+  _gte?: Maybe<Scalars['jsonb']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: Maybe<Scalars['String']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: Maybe<Array<Scalars['String']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: Maybe<Array<Scalars['String']>>;
+  _in?: Maybe<Array<Scalars['jsonb']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['jsonb']>;
+  _lte?: Maybe<Scalars['jsonb']>;
+  _neq?: Maybe<Scalars['jsonb']>;
+  _nin?: Maybe<Array<Scalars['jsonb']>>;
+};
+
 /** columns and relationships of "locations" */
 export type Locations = {
   __typename?: 'locations';
+  addressForLanguage: Scalars['jsonb'];
   city?: Maybe<Scalars['String']>;
   country: Scalars['String'];
   countryCode: Scalars['String'];
@@ -585,6 +611,12 @@ export type Locations = {
   name: Scalars['String'];
   state?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "locations" */
+export type LocationsAddressForLanguageArgs = {
+  path?: Maybe<Scalars['String']>;
 };
 
 /** aggregated selection of "locations" */
@@ -632,6 +664,11 @@ export type Locations_Aggregate_Order_By = {
   variance?: Maybe<Locations_Variance_Order_By>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Locations_Append_Input = {
+  addressForLanguage?: Maybe<Scalars['jsonb']>;
+};
+
 /** input type for inserting array relation for remote table "locations" */
 export type Locations_Arr_Rel_Insert_Input = {
   data: Array<Locations_Insert_Input>;
@@ -656,6 +693,7 @@ export type Locations_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Locations_Bool_Exp>>>;
   _not?: Maybe<Locations_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Locations_Bool_Exp>>>;
+  addressForLanguage?: Maybe<Jsonb_Comparison_Exp>;
   city?: Maybe<String_Comparison_Exp>;
   country?: Maybe<String_Comparison_Exp>;
   countryCode?: Maybe<String_Comparison_Exp>;
@@ -675,6 +713,21 @@ export enum Locations_Constraint {
   LocationsPkey = 'locations_pkey'
 }
 
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Locations_Delete_At_Path_Input = {
+  addressForLanguage?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Locations_Delete_Elem_Input = {
+  addressForLanguage?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Locations_Delete_Key_Input = {
+  addressForLanguage?: Maybe<Scalars['String']>;
+};
+
 /** input type for incrementing integer column in table "locations" */
 export type Locations_Inc_Input = {
   latitude?: Maybe<Scalars['float8']>;
@@ -683,6 +736,7 @@ export type Locations_Inc_Input = {
 
 /** input type for inserting data into table "locations" */
 export type Locations_Insert_Input = {
+  addressForLanguage?: Maybe<Scalars['jsonb']>;
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
@@ -782,6 +836,7 @@ export type Locations_On_Conflict = {
 
 /** ordering options when selecting data from "locations" */
 export type Locations_Order_By = {
+  addressForLanguage?: Maybe<Order_By>;
   city?: Maybe<Order_By>;
   country?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
@@ -800,8 +855,15 @@ export type Locations_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Locations_Prepend_Input = {
+  addressForLanguage?: Maybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "locations" */
 export enum Locations_Select_Column {
+  /** column name */
+  AddressForLanguage = 'addressForLanguage',
   /** column name */
   City = 'city',
   /** column name */
@@ -828,6 +890,7 @@ export enum Locations_Select_Column {
 
 /** input type for updating data in table "locations" */
 export type Locations_Set_Input = {
+  addressForLanguage?: Maybe<Scalars['jsonb']>;
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
@@ -895,6 +958,8 @@ export type Locations_Sum_Order_By = {
 
 /** update columns of table "locations" */
 export enum Locations_Update_Column {
+  /** column name */
+  AddressForLanguage = 'addressForLanguage',
   /** column name */
   City = 'city',
   /** column name */
@@ -1222,7 +1287,12 @@ export type Mutation_RootUpdate_Groups_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_LocationsArgs = {
+  _append?: Maybe<Locations_Append_Input>;
+  _delete_at_path?: Maybe<Locations_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Locations_Delete_Elem_Input>;
+  _delete_key?: Maybe<Locations_Delete_Key_Input>;
   _inc?: Maybe<Locations_Inc_Input>;
+  _prepend?: Maybe<Locations_Prepend_Input>;
   _set?: Maybe<Locations_Set_Input>;
   where: Locations_Bool_Exp;
 };
@@ -1230,7 +1300,12 @@ export type Mutation_RootUpdate_LocationsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Locations_By_PkArgs = {
+  _append?: Maybe<Locations_Append_Input>;
+  _delete_at_path?: Maybe<Locations_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Locations_Delete_Elem_Input>;
+  _delete_key?: Maybe<Locations_Delete_Key_Input>;
   _inc?: Maybe<Locations_Inc_Input>;
+  _prepend?: Maybe<Locations_Prepend_Input>;
   _set?: Maybe<Locations_Set_Input>;
   pk_columns: Locations_Pk_Columns_Input;
 };
@@ -2424,6 +2499,92 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type CreatePostMutationVariables = Exact<{
+  body: Scalars['String'];
+  userId: Scalars['uuid'];
+  groupId: Scalars['uuid'];
+  photoUrl?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'body' | 'photoUrl' | 'userId' | 'groupId' | 'updatedAt' | 'createdAt'>
+  )> }
+);
+
+export type CreatePostAdminMutationVariables = Exact<{
+  body: Scalars['String'];
+  photoUrl?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CreatePostAdminMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'body' | 'photoUrl' | 'userId' | 'groupId' | 'updatedAt' | 'createdAt'>
+  )> }
+);
+
+export type UpdatePostMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  body: Scalars['String'];
+  photoUrl?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdatePostMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_posts_by_pk?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'body' | 'photoUrl' | 'userId' | 'groupId' | 'updatedAt' | 'createdAt'>
+  )> }
+);
+
+export type DeletePostMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeletePostMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_posts_by_pk?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id'>
+  )> }
+);
+
+export type AddUserToGroupMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  groupId: Scalars['uuid'];
+}>;
+
+
+export type AddUserToGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_userGroups_one?: Maybe<(
+    { __typename?: 'userGroups' }
+    & Pick<UserGroups, 'userId' | 'groupId'>
+  )> }
+);
+
+export type RemoveUserFromGroupMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  groupId: Scalars['uuid'];
+}>;
+
+
+export type RemoveUserFromGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_userGroups?: Maybe<(
+    { __typename?: 'userGroups_mutation_response' }
+    & Pick<UserGroups_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type AllGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
   offset: Scalars['Int'];
@@ -2461,17 +2622,6 @@ export type AllPostsQuery = (
       { __typename?: 'users' }
       & Pick<Users, 'name' | 'id'>
     )> }
-  )> }
-);
-
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UsersQuery = (
-  { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'email' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
@@ -3437,6 +3587,25 @@ export default {
         "kind": "OBJECT",
         "name": "locations",
         "fields": [
+          {
+            "name": "addressForLanguage",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": [
+              {
+                "name": "path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
           {
             "name": "city",
             "type": {
@@ -4804,7 +4973,42 @@ export default {
             },
             "args": [
               {
+                "name": "_append",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_at_path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_elem",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_key",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
                 "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_prepend",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Any"
@@ -4837,7 +5041,42 @@ export default {
             },
             "args": [
               {
+                "name": "_append",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_at_path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_elem",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_key",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
                 "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_prepend",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Any"
@@ -8567,6 +8806,98 @@ export default {
   }
 } as unknown as IntrospectionQuery;
 
+export const CreatePostDocument = gql`
+    mutation createPost($body: String!, $userId: uuid!, $groupId: uuid!, $photoUrl: String) {
+  insert_posts_one(
+    object: {body: $body, userId: $userId, groupId: $groupId, photoUrl: $photoUrl}
+  ) {
+    id
+    body
+    photoUrl
+    userId
+    groupId
+    updatedAt
+    createdAt
+  }
+}
+    `;
+
+export function useCreatePostMutation() {
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
+};
+export const CreatePostAdminDocument = gql`
+    mutation createPostAdmin($body: String!, $photoUrl: String) {
+  insert_posts_one(object: {body: $body, photoUrl: $photoUrl}) {
+    id
+    body
+    photoUrl
+    userId
+    groupId
+    updatedAt
+    createdAt
+  }
+}
+    `;
+
+export function useCreatePostAdminMutation() {
+  return Urql.useMutation<CreatePostAdminMutation, CreatePostAdminMutationVariables>(CreatePostAdminDocument);
+};
+export const UpdatePostDocument = gql`
+    mutation updatePost($id: uuid!, $body: String!, $photoUrl: String) {
+  update_posts_by_pk(
+    pk_columns: {id: $id}
+    _set: {body: $body, photoUrl: $photoUrl}
+  ) {
+    id
+    body
+    photoUrl
+    userId
+    groupId
+    updatedAt
+    createdAt
+  }
+}
+    `;
+
+export function useUpdatePostMutation() {
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
+};
+export const DeletePostDocument = gql`
+    mutation deletePost($id: uuid!) {
+  delete_posts_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+
+export function useDeletePostMutation() {
+  return Urql.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument);
+};
+export const AddUserToGroupDocument = gql`
+    mutation addUserToGroup($userId: uuid!, $groupId: uuid!) {
+  insert_userGroups_one(object: {groupId: $groupId, userId: $userId}) {
+    userId
+    groupId
+  }
+}
+    `;
+
+export function useAddUserToGroupMutation() {
+  return Urql.useMutation<AddUserToGroupMutation, AddUserToGroupMutationVariables>(AddUserToGroupDocument);
+};
+export const RemoveUserFromGroupDocument = gql`
+    mutation removeUserFromGroup($userId: uuid!, $groupId: uuid!) {
+  delete_userGroups(
+    where: {_and: [{userId: {_eq: $userId}}, {groupId: {_eq: $groupId}}]}
+  ) {
+    affected_rows
+  }
+}
+    `;
+
+export function useRemoveUserFromGroupMutation() {
+  return Urql.useMutation<RemoveUserFromGroupMutation, RemoveUserFromGroupMutationVariables>(RemoveUserFromGroupDocument);
+};
 export const AllGroupsDocument = gql`
     query allGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp, $orderBy: [groups_order_by!]) {
   groups(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
@@ -8612,18 +8943,4 @@ export const AllPostsDocument = gql`
 
 export function useAllPostsQuery(options: Omit<Urql.UseQueryArgs<AllPostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllPostsQuery>({ query: AllPostsDocument, ...options });
-};
-export const UsersDocument = gql`
-    query users {
-  users {
-    id
-    email
-    createdAt
-    updatedAt
-  }
-}
-    `;
-
-export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
 };
