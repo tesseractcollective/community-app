@@ -1,74 +1,182 @@
 import {useCallback, useState} from 'react';
-import {DocumentNode, TypeNode} from 'graphql';
 import {useMutation} from 'urql';
-import {Button, ButtonProps, Input} from 'react-native-elements';
+import {Button, ButtonProps} from 'react-native-elements';
 
 import {
-  getResultFieldName,
-  getVariableDefinition,
-  isMutation,
-} from '../graphql/graphqlHelpers';
+  getFieldFragmentInfo,
+  HasuraDataConfig,
+} from '../graphql/HasuraConfigType';
+import {print} from 'graphql';
 
-export interface UseMutatorProps {
-  document: DocumentNode;
-}
-
-export interface WithDocument {
-  document: DocumentNode;
-  [key: string]: any;
+export interface UseMutatorProps<T> {
+  config: HasuraDataConfig;
+  item?: T;
+  variables?: {[key: string]: any};
+  onConflict?: {[key: string]: any};
 }
 
 export interface Mutator {
-  document: DocumentNode;
   setVariable: (key: string, value: any) => void;
   save: () => void;
+  deleteAction?: () => void;
 }
 
 export interface MutatorState<T> {
   resultItem?: T;
   error?: Error;
-  saving: boolean;
+  mutating: boolean;
 }
 
-export function useMutator<T>(
-  props: UseMutatorProps,
-): {mutator: Mutator; state: MutatorState<T>} {
-  const {document} = props;
+interface MutationConfig {
+  mutation: string;
+  operationName: string;
+  pkColumns?: {[key: string]: any};
+}
 
-  const resultField = getResultFieldName(document);
-  if (!isMutation(document) || !resultField) {
-    throw new Error('GraphQL document must be a mutation');
+function createDeleteMutation(
+  item: {[key: string]: any},
+  config: HasuraDataConfig,
+): MutationConfig {
+  const name = config.typename;
+  const operationName = `delete_${name}_by_pk`;
+  const args = config.primaryKey
+    .map((key) => `${key}:${item[key]}`)
+    .join(', ');
+
+  const {fragment, fragmentName} = getFieldFragmentInfo(
+    config,
+    config.overrides?.fieldFragments?.delete_by_pk,
+  );
+
+  const mutation = `mutation ${name}DeleteMutation {
+      ${operationName}(${args}) {
+        ...${fragmentName}
+      }
+    }
+    ${print(fragment)}`;
+
+  return {mutation, operationName};
+}
+
+function createInsertMutation(
+  config: HasuraDataConfig,
+  onConflict?: {[key: string]: any},
+): MutationConfig {
+  const name = config.typename;
+  const {fragment, fragmentName} = getFieldFragmentInfo(
+    config,
+    config.overrides?.fieldFragments?.insert_core_one,
+  );
+
+  const onConflictVariable = onConflict
+    ? `, $onConflict:${name}_on_conflict`
+    : '';
+  const onConflictArg = onConflict ? ', on_conflict:$onConflict' : '';
+
+  const operationName = `insert_${name}_one`;
+  const mutation = `mutation ${name}Mutation($object:${name}_insert_input!${onConflictVariable}) {
+    ${operationName}(object:$object${onConflictArg}) {
+      ...${fragmentName}
+    }
+  }
+  ${print(fragment)}`;
+
+  return {mutation, operationName};
+}
+
+function createUpdateMutation(
+  item: {[key: string]: any},
+  config: HasuraDataConfig,
+): MutationConfig {
+  const name = config.typename;
+  const {fragment, fragmentName} = getFieldFragmentInfo(
+    config,
+    config.overrides?.fieldFragments?.update_core,
+  );
+
+  const operationName = `update_${name}_by_pk`;
+  const mutation = `mutation ${name}Mutation($object:${name}_set_input!) {
+    ${operationName}(_set:$object) {
+      ...${fragmentName}
+    }
+  }
+  ${print(fragment)}`;
+
+  const pkColumns: {[key: string]: any} = {};
+  for (const key of config.primaryKey) {
+    pkColumns[key] = item[key];
   }
 
-  const [mutationResult, executeMutation] = useMutation(document);
-  const [variables, setVariables] = useState<{[key: string]: any}>({});
+  return {mutation, operationName, pkColumns};
+}
+
+export function useMutator<T extends {[key: string]: any}>(
+  props: UseMutatorProps<T>,
+): {mutator: Mutator; state: MutatorState<T>} {
+  const {config, item, variables, onConflict} = props;
+
+  const deleteConfig = createDeleteMutation(item || {}, config);
+  let operationName: string;
+  let mutation: string;
+  let pkColumns: {[key: string]: any} | undefined;
+  if (item) {
+    const mutationConfig = createUpdateMutation(item, config);
+    operationName = mutationConfig.operationName;
+    mutation = mutationConfig.mutation;
+    pkColumns = mutationConfig.pkColumns;
+  } else {
+    const mutationConfig = createInsertMutation(config, onConflict);
+    operationName = mutationConfig.operationName;
+    mutation = mutationConfig.mutation;
+    pkColumns = mutationConfig.pkColumns;
+  }
+
+  const [mutationResult, executeMutation] = useMutation(mutation);
+  const [deleteResult, executeDelete] = useMutation(deleteConfig.mutation);
+  const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>({
+    ...item,
+    ...variables,
+  });
 
   const save = useCallback(async () => {
-    await executeMutation(variables);
-  }, [document, variables]);
+    await executeMutation({
+      object: objectVariables,
+      pkColumns,
+      onConflict: item ? undefined : onConflict,
+    });
+  }, [objectVariables]);
 
-  const resultItem =
-    mutationResult.data && resultField
-      ? (mutationResult.data as any)[resultField]
-      : undefined;
+  const deleteAction = item
+    ? () => {
+        executeDelete().then(() => {});
+      }
+    : undefined;
+
+  const resultItem = mutationResult.data
+    ? mutationResult.data[operationName]
+    : undefined;
+
+  const deleteResultItem = deleteResult.data
+    ? deleteResult.data[deleteConfig.operationName]
+    : undefined;
 
   const setVariable = (key: string, value: any) => {
-    setVariables({
-      ...variables,
+    setObjectVariables({
+      ...objectVariables,
       [key]: value,
     });
   };
 
   return {
     mutator: {
-      document,
       save,
       setVariable,
+      deleteAction,
     },
     state: {
-      resultItem,
-      error: mutationResult.error,
-      saving: mutationResult.fetching,
+      resultItem: resultItem || deleteResultItem,
+      error: mutationResult.error || deleteResult.error,
+      mutating: mutationResult.fetching || deleteResult.fetching,
     },
   };
 }
@@ -82,40 +190,43 @@ export interface MutatorSaveProps {
   mutator: Mutator;
 }
 
-function inputForType(type: TypeNode, isRequired = false, isList = false) {
-  if (type.kind === 'NonNullType') {
-    return inputForType(type.type, true, isList);
-  }
-  if (type.kind === 'ListType') {
-    return inputForType(type.type, isRequired, true);
-  }
-  if (type.kind === 'NamedType') {
-    switch (type.name.value) {
-      case 'Boolean':
-      case 'Int':
-      case 'Float':
-      case 'float8':
-      case 'timestamptz':
-      case 'jsonb':
-      case 'json':
-      case 'ID':
-      case 'uuid':
-      case 'String':
-      default:
-        return Input
-    }
-  }
-}
+// function inputForType(mutator: Mutator, type: TypeNode, isRequired = false) {
+//   if (type.kind === 'NonNullType') {
+//     return inputForType(mutator, type.type, true);
+//   }
+//   if (type.kind === 'ListType') {
+//     throw new Error('List types not supported yet');
+//   }
+//   if (type.kind === 'NamedType') {
+//     switch (type.name.value) {
+//       case 'Boolean':
+//       case 'Int':
+//       case 'Float':
+//       case 'float8':
+//       case 'timestamptz':
+//       case 'jsonb':
+//       case 'json':
+//       case 'ID':
+//       case 'uuid':
+//       case 'String':
+//       default: {
+//         const graphqlType = mutator.schema.getType(type.name.value);
+//         if (isScalarType(graphqlType)) {
+//           // just use default input
+//           return Input;
+//         } else if (isObjectType(graphqlType)) {
+//           // TODO: create form with type
+//         }
+//       }
+//     }
+//   }
+// }
 
 export function MutatorInput(props: MutatorInputProps) {
   const {mutator, input} = props;
 
-  const definition = getVariableDefinition(mutator.document, input);
-  if (!definition) {
-    throw new Error(`GraphQL mutation does not have variable ${input}`);
-  }
-
-  return inputForType(definition.type);
+  // return inputForType(mutator, definition.type);
+  return null;
 }
 
 export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
@@ -124,15 +235,9 @@ export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
 }
 
 export interface GraphQLFieldElementProps {
-  withDocument: WithDocument;
   input: string;
 }
 
 export function GraphQLFieldElement(props: GraphQLFieldElementProps) {
-  const {withDocument, input} = props;
-
-  const definition = getVariableDefinition(withDocument.document, input);
-  if (!definition) {
-    throw new Error(`GraphQL document does not have variable ${input}`);
-  }
+  const {input} = props;
 }

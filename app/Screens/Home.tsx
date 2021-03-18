@@ -8,8 +8,6 @@ import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Groups,
-  AllGroupsDocument,
-  AllPostsDocument,
   Groups_Bool_Exp,
   Groups_Order_By,
   Order_By,
@@ -17,6 +15,7 @@ import {
   Posts_Bool_Exp,
   Posts_Order_By,
 } from '../graphql';
+import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 const styles = StyleSheet.create({
@@ -49,7 +48,7 @@ export default function () {
       {userId: {_is_null: true}},
     ],
   };
-  const orderByPosts: Posts_Order_By = {createdAt: Order_By.Asc};
+  const orderByPosts: Posts_Order_By = {createdAt: Order_By.Desc};
   const renderPost = ({item}: {item: Posts}) => {
     return <PostListItem post={item} />;
   };
@@ -61,7 +60,7 @@ export default function () {
       <PaginatedList
         style={styles.groups}
         horizontal={true}
-        document={AllGroupsDocument}
+        config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={whereMyGroups}
         orderBy={orderByGroups}
@@ -76,7 +75,7 @@ export default function () {
       <Text>{translations.activityFeed}</Text>
       <PaginatedList
         style={styles.posts}
-        document={AllPostsDocument}
+        config={HasuraConfig.posts}
         renderItem={renderPost}
         where={whereMyPosts}
         orderBy={orderByPosts}

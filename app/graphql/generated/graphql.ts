@@ -2499,6 +2499,29 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type GroupFieldsFragment = (
+  { __typename?: 'groups' }
+  & Pick<Groups, 'id' | 'name' | 'description' | 'createdAt' | 'updatedAt' | 'photoUrl'>
+  & { location?: Maybe<(
+    { __typename?: 'locations' }
+    & Pick<Locations, 'id' | 'name' | 'city' | 'country' | 'countryCode' | 'formattedAddress' | 'latitude' | 'longitude' | 'state'>
+  )> }
+);
+
+export type PostFieldsFragment = (
+  { __typename?: 'posts' }
+  & Pick<Posts, 'id' | 'body' | 'createdAt' | 'updatedAt' | 'photoUrl'>
+  & { user?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'name' | 'id'>
+  )> }
+);
+
+export type UserGroupFieldsFragment = (
+  { __typename?: 'userGroups' }
+  & Pick<UserGroups, 'id' | 'userId' | 'groupId'>
+);
+
 export type CreatePostMutationVariables = Exact<{
   body: Scalars['String'];
   userId: Scalars['uuid'];
@@ -2582,6 +2605,20 @@ export type RemoveUserFromGroupMutation = (
   & { delete_userGroups?: Maybe<(
     { __typename?: 'userGroups_mutation_response' }
     & Pick<UserGroups_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type CreateGroupMutationVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  location?: Maybe<Locations_Obj_Rel_Insert_Input>;
+}>;
+
+
+export type CreateGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_groups_one?: Maybe<(
+    { __typename?: 'groups' }
+    & Pick<Groups, 'id'>
   )> }
 );
 
@@ -8805,7 +8842,47 @@ export default {
     "directives": []
   }
 } as unknown as IntrospectionQuery;
-
+export const GroupFieldsFragmentDoc = gql`
+    fragment groupFields on groups {
+  id
+  name
+  description
+  createdAt
+  updatedAt
+  photoUrl
+  location {
+    id
+    name
+    city
+    country
+    countryCode
+    formattedAddress
+    latitude
+    longitude
+    state
+  }
+}
+    `;
+export const PostFieldsFragmentDoc = gql`
+    fragment postFields on posts {
+  id
+  body
+  createdAt
+  updatedAt
+  photoUrl
+  user {
+    name
+    id
+  }
+}
+    `;
+export const UserGroupFieldsFragmentDoc = gql`
+    fragment userGroupFields on userGroups {
+  id
+  userId
+  groupId
+}
+    `;
 export const CreatePostDocument = gql`
     mutation createPost($body: String!, $userId: uuid!, $groupId: uuid!, $photoUrl: String) {
   insert_posts_one(
@@ -8897,6 +8974,17 @@ export const RemoveUserFromGroupDocument = gql`
 
 export function useRemoveUserFromGroupMutation() {
   return Urql.useMutation<RemoveUserFromGroupMutation, RemoveUserFromGroupMutationVariables>(RemoveUserFromGroupDocument);
+};
+export const CreateGroupDocument = gql`
+    mutation createGroup($name: String, $location: locations_obj_rel_insert_input) {
+  insert_groups_one(object: {name: $name, location: $location}) {
+    id
+  }
+}
+    `;
+
+export function useCreateGroupMutation() {
+  return Urql.useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CreateGroupDocument);
 };
 export const AllGroupsDocument = gql`
     query allGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp, $orderBy: [groups_order_by!]) {
