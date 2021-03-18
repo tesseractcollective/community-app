@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {View} from 'react-native';
 
-import Home from './screens/Home';
+import Home from './screens/home';
 import GroupDetail from './screens/GroupDetail';
 import PostDetail from './screens/PostDetail';
 import {Groups} from './graphql';
