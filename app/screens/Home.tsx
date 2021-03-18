@@ -1,7 +1,8 @@
-import {useNavigation} from '@react-navigation/core';
 import React from 'react';
+import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
+import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import GroupListItem from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -62,6 +63,18 @@ export default function () {
   const translations = useTranslations();
   const navigation = useNavigation();
   const userId = useUserId();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: (props: any) => (
+        <Button
+          type="clear"
+          onPress={() => navigation.navigate('PostCreate', {userId})}
+          icon={<FeatherIcons name="plus" size={24} color={props.tintColor} />}
+        />
+      ),
+    });
+  }, [navigation, userId]);
 
   const whereMyGroups: Groups_Bool_Exp = {
     userGroups: {userId: {_eq: userId}},

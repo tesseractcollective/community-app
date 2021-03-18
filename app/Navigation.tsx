@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
@@ -11,8 +11,6 @@ import {useTranslations} from './components/TranslationProvider';
 import GroupsAll from './screens/GroupsAll';
 import PostCreate, {PostCreateRouterProps} from './screens/PostCreate';
 import PostDetail, {PostDetailRouterProps} from './screens/PostDetail';
-import {Button, Icon} from 'react-native-elements';
-import {useUserId} from './UserContext';
 
 type HomeStackParams = {
   Home: undefined;
@@ -28,26 +26,13 @@ const HomeStack = createStackNavigator<HomeStackParams>();
 
 function HomeStackNavigator() {
   const translations = useTranslations();
-  const navigation = useNavigation();
-  const userId = useUserId();
 
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="Home"
         component={Home}
-        options={{
-          title: translations.homeTabTitle,
-          headerRight: (props) => (
-            <Button
-              type="clear"
-              onPress={() => navigation.navigate('PostCreate', {userId})}
-              icon={
-                <FeatherIcons name="plus" size={24} color={props.tintColor} />
-              }
-            />
-          ),
-        }}
+        options={{title: translations.homeTabTitle}}
       />
       <HomeStack.Screen
         name="GroupDetail"

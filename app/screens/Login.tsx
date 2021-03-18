@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import Auth0 from 'react-native-auth0';
@@ -44,10 +44,10 @@ export default function (props: LoginProps) {
   const logout = () => {
     auth0.webAuth
       .clearSession({ federated: true })
-      .then(success => {
+      .then(() => {
         setToken(undefined);
       })
-      .catch(error => {
+      .catch(() => {
         console.log('Log out cancelled');
       });
   }

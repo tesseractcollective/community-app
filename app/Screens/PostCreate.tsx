@@ -1,10 +1,20 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/core';
-import {ActivityIndicatorComponent, Text, View} from 'react-native';
+import React, { useEffect } from 'react';
+import {useNavigation} from '@react-navigation/core';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 
-import { MutatorSaveButton, MutatorTextInput, useMutator } from '../components/Mutator';
-import { Posts } from '../graphql';
+import {
+  MutatorSaveButton,
+  MutatorTextInput,
+  useMutator,
+} from '../components/Mutator';
+import {Posts} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
+
+const styles = StyleSheet.create({
+  indicator: {
+    margin: 16,
+  },
+});
 
 export interface PostCreateRouterProps {
   userId: string;
@@ -12,24 +22,27 @@ export interface PostCreateRouterProps {
 }
 
 export default function (props: any) {
-  const { userId, groupId } = props.route.params;
-  
+  const {userId, groupId} = props.route.params;
+
   const navigation = useNavigation();
-  
-  const { mutator, state } = useMutator<Posts>({
+
+  const {mutator, state} = useMutator<Posts>({
     config: HasuraConfig.posts,
-    variables: { userId, groupId }
+    variables: {userId, groupId},
   });
 
-  if (state.resultItem) {
-    // TODO: make sure new post loads 
-    navigation.goBack();
-  }
+  useEffect(() => {
+    if (state.resultItem) {
+      navigation.goBack();
+    }
+  }, [state.resultItem])
 
   return (
     <View>
-      {/* { state.mutating ? <ActivityIndicatorComponent /> : null }
-      { state.error ? <Text>{state.error.message}</Text> : null } */}
+      {state.mutating ? (
+        <ActivityIndicator style={styles.indicator} size="large" />
+      ) : null}
+      {state.error ? <Text>{state.error.message}</Text> : null}
       <MutatorTextInput mutator={mutator} input="body" />
       <MutatorSaveButton mutator={mutator} />
     </View>

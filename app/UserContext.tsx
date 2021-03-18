@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {createClient, Provider as UrqlProvider, useQuery} from 'urql';
+import {createClient, Provider as UrqlProvider} from 'urql';
 import jwtDecode from 'jwt-decode';
 
 import Login from './screens/Login';
