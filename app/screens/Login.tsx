@@ -5,7 +5,6 @@ import Auth0 from 'react-native-auth0';
 
 import { useTranslations } from '../components/TranslationProvider';
 import constants from '../config';
-import { UserContext } from '../UserContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,9 +15,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function () {
+export interface LoginProps {
+  setToken: (token?: string) => void
+}
+
+export default function (props: LoginProps) {
+  const { setToken } = props;
   const [loginError, setLoginError] = useState<Error | undefined>(undefined);
-  const { setToken } = useContext(UserContext);
   const translations = useTranslations();
 
   const auth0 = new Auth0({

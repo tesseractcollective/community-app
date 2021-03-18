@@ -58,7 +58,7 @@ export const UserProvider = ({children}: any) => {
   return (
     <UrqlProvider value={client}>
       <UserContext.Provider value={userContextValue}>
-        <Login />
+        <Login setToken={setToken} />
       </UserContext.Provider>
     </UrqlProvider>
   );
