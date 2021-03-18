@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import { Button } from 'react-native-elements';
 
 import GroupListItem from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -33,6 +34,15 @@ export default function () {
   const navigation = useNavigation();
   const userId = useUserId();
 
+  navigation.setOptions({
+    headerRight: () => (
+      <Button
+        onPress={() => navigation.navigate('PostCreate', { userId })}
+        title="New"
+      />
+    ),
+  })
+
   const whereMyGroups: Groups_Bool_Exp = {
     userGroups: {userId: {_eq: userId}},
   };
@@ -55,7 +65,7 @@ export default function () {
 
   return (
     <View>
-      <Text>{translations.myGroups}</Text>
+      <Text>{translations.groupsMyGroups}</Text>
 
       <PaginatedList
         style={styles.groups}
@@ -66,9 +76,9 @@ export default function () {
         orderBy={orderByGroups}
       />
       <Button
-        title={translations.allGroups}
+        title={translations.groupsAll}
         onPress={() => {
-          navigation.navigate('AllGroups');
+          navigation.navigate('GroupsAll');
         }}
       />
 

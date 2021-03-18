@@ -6,8 +6,12 @@ export default {
   profileTabTitle: 'Profile',
   activityFeed: 'Activity Feed',
   loading: 'Loading',
-  myGroups: 'My Collectives',
-  noGroups: "You haven't joined any collectives yet",
-  allGroups: "All Collectives",
+  save: 'Save',
+  
+  groupsMyGroups: 'My Collectives',
+  groupsNoGroups: "You haven't joined any collectives yet",
+  groupsAll: "All Collectives",
+
+  postCreate: "Create Post",
   search: "Search",
 };

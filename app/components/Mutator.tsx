@@ -1,12 +1,13 @@
-import {useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useMutation} from 'urql';
-import {Button, ButtonProps} from 'react-native-elements';
+import {print} from 'graphql';
+import {Button, ButtonProps, Input, InputProps} from 'react-native-elements';
 
 import {
   getFieldFragmentInfo,
   HasuraDataConfig,
 } from '../graphql/HasuraConfigType';
-import {print} from 'graphql';
+import { useTranslations } from './TranslationProvider';
 
 export interface UseMutatorProps<T> {
   config: HasuraDataConfig;
@@ -16,6 +17,7 @@ export interface UseMutatorProps<T> {
 }
 
 export interface Mutator {
+  item: {[key: string]: any};
   setVariable: (key: string, value: any) => void;
   save: () => void;
   deleteAction?: () => void;
@@ -38,16 +40,15 @@ function createDeleteMutation(
   config: HasuraDataConfig,
 ): MutationConfig {
   const name = config.typename;
-  const operationName = `delete_${name}_by_pk`;
-  const args = config.primaryKey
-    .map((key) => `${key}:${item[key]}`)
-    .join(', ');
-
   const {fragment, fragmentName} = getFieldFragmentInfo(
     config,
     config.overrides?.fieldFragments?.delete_by_pk,
   );
-
+  
+  const operationName = `delete_${name}_by_pk`;
+  const args = config.primaryKey
+    .map((key) => `${key}:${item[key]}`)
+    .join(', ');
   const mutation = `mutation ${name}DeleteMutation {
       ${operationName}(${args}) {
         ...${fragmentName}
@@ -73,7 +74,7 @@ function createInsertMutation(
     : '';
   const onConflictArg = onConflict ? ', on_conflict:$onConflict' : '';
 
-  const operationName = `insert_${name}_one`;
+  const operationName = config.overrides?.operationNames?.insert_core_one || `insert_${name}_one`;
   const mutation = `mutation ${name}Mutation($object:${name}_insert_input!${onConflictVariable}) {
     ${operationName}(object:$object${onConflictArg}) {
       ...${fragmentName}
@@ -169,6 +170,7 @@ export function useMutator<T extends {[key: string]: any}>(
 
   return {
     mutator: {
+      item: variables || {},
       save,
       setVariable,
       deleteAction,
@@ -188,6 +190,28 @@ export interface MutatorInputProps {
 
 export interface MutatorSaveProps {
   mutator: Mutator;
+}
+
+export function MutatorTextInput(props: MutatorInputProps & InputProps) {
+  const {mutator, input, ...rest} = props;
+
+  const value = mutator.item[input];
+
+  return (
+    <Input {...rest} 
+      value={value}
+      onChangeText={(text) => mutator.setVariable(input, text)}
+    />
+  )
+}
+
+export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
+  const {mutator, ...rest} = props;
+
+  const translations = useTranslations();
+  const title = rest.title || translations.save;
+
+  return <Button {...rest} title={title} onPress={mutator.save} />;
 }
 
 // function inputForType(mutator: Mutator, type: TypeNode, isRequired = false) {
@@ -221,23 +245,3 @@ export interface MutatorSaveProps {
 //     }
 //   }
 // }
-
-export function MutatorInput(props: MutatorInputProps) {
-  const {mutator, input} = props;
-
-  // return inputForType(mutator, definition.type);
-  return null;
-}
-
-export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
-  const {mutator, ...rest} = props;
-  return <Button {...rest} onPress={mutator.save} />;
-}
-
-export interface GraphQLFieldElementProps {
-  input: string;
-}
-
-export function GraphQLFieldElement(props: GraphQLFieldElementProps) {
-  const {input} = props;
-}

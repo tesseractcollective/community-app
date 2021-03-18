@@ -39,7 +39,7 @@ export default function () {
   return (
     <>
       <Input
-        placeholder={translations.allGroups}
+        placeholder={translations.groupsAll}
         onChangeText={setSearchText}
       />
       <PaginatedList
