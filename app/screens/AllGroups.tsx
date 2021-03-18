@@ -1,21 +1,18 @@
+import { GraphQLObjectType } from 'graphql';
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Input} from 'react-native-elements';
 
 import GroupListItem from '../components/GroupListItem';
-import { MutatorInput, MutatorSaveButton, useMutator } from '../components/Mutator';
 import PaginatedList from '../components/PaginatedList';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Groups,
-  AllGroupsDocument,
   Groups_Bool_Exp,
   Groups_Order_By,
   Order_By,
-  CreatePostDocument,
-  useCreatePostMutation,
-  Posts,
 } from '../graphql';
+import HasuraConfig from '../graphql/HasuraConfig';
 
 const styles = StyleSheet.create({
   groups: {
@@ -38,13 +35,6 @@ export default function () {
   const renderGroup = ({item}: {item: Groups}) => {
     return <GroupListItem group={item} />;
   };
-
-  const { mutator, state } = useMutator<Posts>({ document: CreatePostDocument });
-  const [postMutationState, executeMutation] = useCreatePostMutation();
-  // executeMutation({});
-
-  mutator.setVariable("body", "my post body");
-  mutator.save();
  
   return (
     <>
@@ -52,13 +42,9 @@ export default function () {
         placeholder={translations.allGroups}
         onChangeText={setSearchText}
       />
-
-      <MutatorInput mutator={mutator} input="body" />
-      <MutatorSaveButton mutator={mutator} />
-
       <PaginatedList
         style={styles.groups}
-        document={AllGroupsDocument}
+        config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={groupFilter}
         orderBy={groupOrderBy}

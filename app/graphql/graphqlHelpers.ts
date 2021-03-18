@@ -13,15 +13,28 @@ export function isQuery(document: DocumentNode) {
   return node?.kind === 'OperationDefinition' && node.operation === 'query';
 }
 
-export function getVariableDefinition(document: DocumentNode, name: string): VariableDefinitionNode | undefined {
-  return getVariableDefinitions(document, name)?.find(d => d.variable.name.value === name);
+export function isFragment(document: DocumentNode) {
+  const node = document.definitions[0];
+  return node?.kind === 'FragmentDefinition';
 }
 
+export function getVariableDefinition(document: DocumentNode, name: string): VariableDefinitionNode | undefined {
+  return getVariableDefinitions(document)?.find(d => d.variable.name.value === name);
+}
 
-export function getVariableDefinitions(document: DocumentNode, name: string): ReadonlyArray<VariableDefinitionNode> | undefined {
+export function getVariableDefinitions(document: DocumentNode): ReadonlyArray<VariableDefinitionNode> | undefined {
   for (const definition of document.definitions) {
     if (definition.kind === 'OperationDefinition') {
       return definition.variableDefinitions;
+    }
+  }
+  return undefined;
+}
+
+export function getFragmentName(document: DocumentNode): string | undefined {
+  for (const definition of document.definitions) {
+    if (definition.kind === 'FragmentDefinition') {
+      return definition.name.value;
     }
   }
   return undefined;

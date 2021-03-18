@@ -52,3 +52,9 @@ mutation removeUserFromGroup($userId: uuid!, $groupId: uuid!) {
     affected_rows
   }
 }
+
+mutation createGroup($name:String, $location:locations_obj_rel_insert_input) {
+  insert_groups_one(object: {name: $name, location: $location}) {
+    id
+  }
+}

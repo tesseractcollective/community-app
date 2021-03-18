@@ -1,0 +1,37 @@
+fragment groupFields on groups {
+  id
+  name
+  description
+  createdAt
+  updatedAt
+  photoUrl
+  location {
+    id
+    name
+    city
+    country
+    countryCode
+    formattedAddress
+    latitude
+    longitude
+    state
+  }
+}
+
+fragment postFields on posts {
+  id
+  body
+  createdAt
+  updatedAt
+  photoUrl
+  user {
+    name
+    id
+  }
+}
+
+fragment userGroupFields on userGroups {
+  id
+  userId
+  groupId
+}

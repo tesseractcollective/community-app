@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {DocumentNode} from 'graphql';
 import {useQuery} from 'urql';
 import {FlatList} from 'react-native-gesture-handler';
 import isEqual from 'lodash.isequal';
@@ -9,13 +8,17 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import {getResultFieldName, hasVariableDefinition, isQuery} from '../graphql/graphqlHelpers';
+import {
+  getFieldFragmentInfo,
+  HasuraDataConfig,
+  keyExtractor,
+} from '../graphql/HasuraConfigType';
+import {print} from 'graphql';
 
-const defaultPrimaryKey = 'id';
 const defaultPageSize = 50;
 
 export interface PaginationListProps<T> {
-  document: DocumentNode;
+  config: HasuraDataConfig;
   renderItem: ListRenderItem<T>;
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
@@ -26,22 +29,12 @@ export interface PaginationListProps<T> {
 export default function <T extends {[key: string]: any}>(
   props: PaginationListProps<T> & ScrollViewProps,
 ) {
-  const {
-    document,
-    renderItem,
-    where,
-    orderBy,
-    primaryKey,
-    pageSize,
-    ...rest
-  } = props;
-  const keyExtractorKey = primaryKey || defaultPrimaryKey;
+  const {config, renderItem, where, orderBy, pageSize, ...rest} = props;
 
   const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
-    document,
+    config,
     where,
     orderBy,
-    primaryKey,
     pageSize,
   );
 
@@ -57,7 +50,7 @@ export default function <T extends {[key: string]: any}>(
           }
           data={items}
           renderItem={renderItem}
-          keyExtractor={(item) => item[keyExtractorKey]}
+          keyExtractor={(item) => keyExtractor(config, item)}
           onEndReachedThreshold={1}
           onEndReached={loadNextPage}
         />
@@ -67,46 +60,39 @@ export default function <T extends {[key: string]: any}>(
 }
 
 export function usePagination<T extends {[key: string]: any}>(
-  document: DocumentNode,
+  config: HasuraDataConfig,
   where?: {[key: string]: any},
   orderBy?: {[key: string]: any},
-  primaryKey: string = defaultPrimaryKey,
   pageSize: number = defaultPageSize,
 ) {
-
   const limit = pageSize;
-  const [resultField, setResultField] = useState("");
   const [offset, setOffset] = useState(0);
   const [itemsMap, setItemsMap] = useState<Map<string, T>>(new Map());
   const [items, setItems] = useState<Array<T>>([]);
   const [cachedWhere, setCachedWhere] = useState(where);
 
-  useEffect(() => {
-    // introspect GraphQL document for validation and resultField
-    const fieldName = getResultFieldName(document);
-    if (
-      fieldName &&
-      isQuery(document) &&
-      hasVariableDefinition(document, 'limit') &&
-      hasVariableDefinition(document, 'offset') &&
-      hasVariableDefinition(document, 'where') &&
-      hasVariableDefinition(document, 'orderBy')
-    ) {
-      setResultField(fieldName);
-    } else {
-      throw new Error(
-        'graphql document must be a query with the variables `limit`, `offset`, `where` and `orderBy`',
-      );
+  const name = config.typename;
+  const {fragment, fragmentName} = getFieldFragmentInfo(
+    config,
+    config.overrides?.fieldFragments?.query_many,
+  );
+
+  const limitOffsetArgs =
+    pageSize > 0 ? `limit:${limit}, offset:${offset}, ` : '';
+  const query = `query ${name}Query($where: ${name}_bool_exp, $orderBy: [${name}_order_by!]) {
+    ${name}(${limitOffsetArgs}where:$where, order_by:$orderBy) {
+      ...${fragmentName}
     }
-  }, [document]);
+  }
+  ${print(fragment)}`;
 
   const [queryResult, reexecuteQuery] = useQuery<T>({
-    query: document,
-    variables: {limit, offset, where, orderBy},
+    query,
+    variables: {where, orderBy},
   });
 
-  const pageItems = (queryResult.data && resultField)
-    ? ((queryResult.data as any)[resultField] as Array<T>)
+  const pageItems = queryResult.data
+    ? ((queryResult.data as any)[name] as Array<T>)
     : undefined;
   const error = queryResult.error;
   const fetching = queryResult.fetching;
@@ -138,7 +124,7 @@ export function usePagination<T extends {[key: string]: any}>(
       }
 
       for (const item of pageItems) {
-        newItemsMap.set(item[primaryKey], item);
+        newItemsMap.set(keyExtractor(config, item), item);
       }
       setItems([...newItemsMap.values()]);
       setItemsMap(newItemsMap);
