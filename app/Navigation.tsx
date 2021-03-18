@@ -45,7 +45,7 @@ function HomeStackNavigator() {
       <HomeStack.Screen
         name="PostDetail"
         component={PostDetail}
-        options={({route}) => ({title: route.params.post.name})}
+        options={({route}) => ({title: route.params.post.body})}
       />
       <HomeStack.Screen
         name="AllGroups"

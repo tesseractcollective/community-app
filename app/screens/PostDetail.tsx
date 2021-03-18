@@ -11,7 +11,7 @@ export default function (props: any) {
         source={{ uri: post.photoUrl }}
       /> 
       <Text>{post.name}</Text>
-      <Text>{post.description}</Text>
+      <Text>{post.body}</Text>
     </View>
   );
 }

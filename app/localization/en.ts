@@ -1,4 +1,5 @@
 export default {
+  allGroups: 'All Groups',
   loginScreenTitle: 'Login',
   loginButtonText: 'Login',
   logoutButtonText: 'Log Out',
