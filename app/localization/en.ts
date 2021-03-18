@@ -7,6 +7,7 @@ export default {
   activityFeed: 'Activity Feed',
   loading: 'Loading',
   save: 'Save',
+  seeAll: 'See All',
   
   groupsMyGroups: 'My Collectives',
   groupsNoGroups: "You haven't joined any collectives yet",

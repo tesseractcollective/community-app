@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import { Button } from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 
 import GroupListItem from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -20,6 +20,26 @@ import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 const styles = StyleSheet.create({
+  list: {
+    backgroundColor: '#F2F2F2',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 16,
+    marginStart: 16,
+    marginEnd: 16,
+  },
+  sectionTitle: {
+    // fontFamily: "Montserrat-Medium",
+    color: '#222222',
+    fontSize: 24,
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
   posts: {
     height: '100%',
   },
@@ -27,21 +47,21 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
+  listButton: {
+    textTransform: 'uppercase',
+    borderRadius: 22,
+  },
+  listButtonContainer: {
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
 });
 
 export default function () {
   const translations = useTranslations();
   const navigation = useNavigation();
   const userId = useUserId();
-
-  navigation.setOptions({
-    headerRight: () => (
-      <Button
-        onPress={() => navigation.navigate('PostCreate', { userId })}
-        title="New"
-      />
-    ),
-  })
 
   const whereMyGroups: Groups_Bool_Exp = {
     userGroups: {userId: {_eq: userId}},
@@ -65,7 +85,18 @@ export default function () {
 
   return (
     <View>
-      <Text>{translations.groupsMyGroups}</Text>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
+        <Button
+          buttonStyle={styles.listButton}
+          title={translations.seeAll.toUpperCase()}
+          iconRight
+          icon={<Icon name="chevron-right" size={18} color="white" />}
+          onPress={() => {
+            navigation.navigate('GroupsAll');
+          }}
+        />
+      </View>
 
       <PaginatedList
         style={styles.groups}
@@ -75,14 +106,10 @@ export default function () {
         where={whereMyGroups}
         orderBy={orderByGroups}
       />
-      <Button
-        title={translations.groupsAll}
-        onPress={() => {
-          navigation.navigate('GroupsAll');
-        }}
-      />
 
-      <Text>{translations.activityFeed}</Text>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{translations.activityFeed}</Text>
+      </View>
       <PaginatedList
         style={styles.posts}
         config={HasuraConfig.posts}

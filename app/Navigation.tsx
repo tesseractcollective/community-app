@@ -1,21 +1,25 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {View} from 'react-native';
 
 import Home from './screens/Home';
-import GroupDetail, { GroupDetailRouterProps } from './screens/GroupDetail';
+import GroupDetail, {GroupDetailRouterProps} from './screens/GroupDetail';
 import {useTranslations} from './components/TranslationProvider';
 import GroupsAll from './screens/GroupsAll';
-import PostCreate, { PostCreateRouterProps } from './screens/PostCreate';
+import PostCreate, {PostCreateRouterProps} from './screens/PostCreate';
+import PostDetail, {PostDetailRouterProps} from './screens/PostDetail';
+import {Button, Icon} from 'react-native-elements';
+import {useUserId} from './UserContext';
 
 type HomeStackParams = {
   Home: undefined;
   GroupDetail: GroupDetailRouterProps;
   GroupsAll: undefined;
   PostCreate: PostCreateRouterProps;
+  PostDetail: PostDetailRouterProps;
 };
 
 const MainTabs = createBottomTabNavigator();
@@ -24,12 +28,26 @@ const HomeStack = createStackNavigator<HomeStackParams>();
 
 function HomeStackNavigator() {
   const translations = useTranslations();
+  const navigation = useNavigation();
+  const userId = useUserId();
+
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="Home"
         component={Home}
-        options={{title: translations.homeTabTitle}}
+        options={{
+          title: translations.homeTabTitle,
+          headerRight: (props) => (
+            <Button
+              type="clear"
+              onPress={() => navigation.navigate('PostCreate', {userId})}
+              icon={
+                <FeatherIcons name="plus" size={24} color={props.tintColor} />
+              }
+            />
+          ),
+        }}
       />
       <HomeStack.Screen
         name="GroupDetail"
@@ -41,6 +59,7 @@ function HomeStackNavigator() {
         component={GroupsAll}
         options={{title: translations.groupsAll}}
       />
+      <HomeStack.Screen name="PostDetail" component={PostDetail} />
       <HomeStack.Screen
         name="PostCreate"
         component={PostCreate}
@@ -68,28 +87,28 @@ export default () => {
 
   return (
     <NavigationContainer>
-        <MainTabs.Navigator>
-          <MainTabs.Screen
-            name="HomeStackNavigator"
-            component={HomeStackNavigator}
-            options={{
-              title: translations.homeTabTitle,
-              tabBarIcon: () => {
-                return <FeatherIcons name="home" />;
-              },
-            }}
-          />
-          <MainTabs.Screen
-            name="ProfileStackNavigator"
-            component={ProfileStackNavigator}
-            options={{
-              title: translations.profileTabTitle,
-              tabBarIcon: () => {
-                return <FeatherIcons name="user" />;
-              },
-            }}
-          />
-        </MainTabs.Navigator>
+      <MainTabs.Navigator>
+        <MainTabs.Screen
+          name="HomeStackNavigator"
+          component={HomeStackNavigator}
+          options={{
+            title: translations.homeTabTitle,
+            tabBarIcon: (props) => {
+              return <FeatherIcons name="home" {...props} />;
+            },
+          }}
+        />
+        <MainTabs.Screen
+          name="ProfileStackNavigator"
+          component={ProfileStackNavigator}
+          options={{
+            title: translations.profileTabTitle,
+            tabBarIcon: (props) => {
+              return <FeatherIcons name="user" {...props} />;
+            },
+          }}
+        />
+      </MainTabs.Navigator>
     </NavigationContainer>
   );
 };
