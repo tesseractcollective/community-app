@@ -1,6 +1,9 @@
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
+import { color } from 'react-native-reanimated';
+import { Button, Icon } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 import GroupListItem from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -20,6 +23,27 @@ import {
 import {useUserId} from '../UserContext';
 
 const styles = StyleSheet.create({
+  list: {
+    backgroundColor:"#F2F2F2"
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 28,
+    marginBottom: 38,
+    marginStart: 29,
+    marginEnd: 18,
+  },
+  sectionTitle: {
+
+    // fontFamily: "Montserrat-Medium",
+    color: "#222222",    
+    fontSize: 32,
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,    
+  },
   posts: {
     height: '100%',
   },
@@ -27,6 +51,15 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
+  listButton: {
+    textTransform: "uppercase",
+    borderRadius: 22, 
+  },
+  listButtonContainer: {
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,    
+  }
 });
 
 export default function () {
@@ -55,9 +88,29 @@ export default function () {
   };
 
   return (
-    <View>
-      <Text>{translations.myGroups}</Text>
-
+    <View style={styles.list}>
+      <View style={styles.sectionHeader}>
+        <Text
+          style={styles.sectionTitle}>
+          {translations.myGroups}
+        </Text>
+        <Button        
+          buttonStyle={styles.listButton}
+          title={translations.seeAll.toUpperCase()}
+          iconRight
+          icon={
+            <Icon
+              name="chevron-right"
+              size={18}
+              color="white"
+            />
+          }
+          onPress={() => {
+            navigation.navigate('AllGroups');            
+          }}
+      />   
+      </View>
+     
       <PaginatedList
         style={styles.groups}
         horizontal={true}
@@ -66,14 +119,6 @@ export default function () {
         where={whereMyGroups}
         orderBy={orderByGroups}
       />
-      <Button
-        title={translations.allGroups}
-        onPress={() => {
-          navigation.navigate('AllGroups');
-        }}
-      />
-
-      <Text>{translations.activityFeed}</Text>
       <PaginatedList
         style={styles.posts}
         document={AllPostsDocument}

@@ -8,6 +8,6 @@ export default {
   loading: 'Loading',
   myGroups: 'My Collectives',
   noGroups: "You haven't joined any collectives yet",
-  allGroups: "All Collectives",
+  seeAll: "See All",
   search: "Search",
 };
