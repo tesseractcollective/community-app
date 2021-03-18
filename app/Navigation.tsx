@@ -7,7 +7,9 @@ import {View} from 'react-native';
 
 import Home from './screens/Home';
 import GroupDetail from './screens/GroupDetail';
+import PostDetail from './screens/PostDetail';
 import {Groups} from './graphql';
+import {Posts} from './graphql';
 import {useTranslations} from './components/TranslationProvider';
 import AllGroups from './screens/AllGroups';
 
@@ -15,6 +17,9 @@ type HomeStackParams = {
   Home: undefined;
   GroupDetail: {
     group: Groups;
+  };
+  PostDetail: {
+    post: Posts;
   };
   AllGroups: undefined;
 };
@@ -36,6 +41,11 @@ function HomeStackNavigator() {
         name="GroupDetail"
         component={GroupDetail}
         options={({route}) => ({title: route.params.group.name})}
+      />
+      <HomeStack.Screen
+        name="PostDetail"
+        component={PostDetail}
+        options={({route}) => ({title: route.params.post.name})}
       />
       <HomeStack.Screen
         name="AllGroups"

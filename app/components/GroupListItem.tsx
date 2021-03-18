@@ -19,7 +19,7 @@ export default function (props: GroupListItemProps) {
     <ListItem bottomDivider onPress={onPress}>
       {/* <Avatar source={{uri: group.photoUrl}} /> */}
       <ListItem.Content>
-        <ListItem.Title>{group.name} TACO!</ListItem.Title>
+        <ListItem.Title>{group.name}</ListItem.Title>
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>
