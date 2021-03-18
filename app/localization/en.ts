@@ -1,5 +1,4 @@
 export default {
-  allGroups: 'All Groups',
   loginScreenTitle: 'Login',
   loginButtonText: 'Login',
   logoutButtonText: 'Log Out',
@@ -7,8 +6,12 @@ export default {
   profileTabTitle: 'Profile',
   activityFeed: 'Activity Feed',
   loading: 'Loading',
-  myGroups: 'My Collectives',
-  noGroups: "You haven't joined any collectives yet",
-  seeAll: "See All",
+  save: 'Save',
+  
+  groupsMyGroups: 'My Collectives',
+  groupsNoGroups: "You haven't joined any collectives yet",
+  groupsAll: "All Collectives",
+
+  postCreate: "Create Post",
   search: "Search",
 };

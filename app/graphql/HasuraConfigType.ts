@@ -33,8 +33,8 @@ export const getFieldFragmentInfo = (
 export interface HasuraDataConfig {
   typename: string;
   primaryKey: string[];
-  primaryKeyRequiredOnCreate?: boolean;
   fieldFragment: DocumentNode;
+  primaryKeyRequiredOnCreate?: boolean;
   overrides?: {
     operationNames?: {
       query_many?: string;

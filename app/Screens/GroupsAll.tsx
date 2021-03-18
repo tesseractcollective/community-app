@@ -1,4 +1,3 @@
-import { GraphQLObjectType } from 'graphql';
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Input} from 'react-native-elements';
@@ -39,7 +38,7 @@ export default function () {
   return (
     <>
       <Input
-        placeholder={translations.allGroups}
+        placeholder={translations.groupsAll}
         onChangeText={setSearchText}
       />
       <PaginatedList

@@ -5,23 +5,17 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {View} from 'react-native';
 
-import Home from './screens/home';
-import GroupDetail from './screens/GroupDetail';
-import PostDetail from './screens/PostDetail';
-import {Groups} from './graphql';
-import {Posts} from './graphql';
+import Home from './screens/Home';
+import GroupDetail, { GroupDetailRouterProps } from './screens/GroupDetail';
 import {useTranslations} from './components/TranslationProvider';
-import AllGroups from './screens/AllGroups';
+import GroupsAll from './screens/GroupsAll';
+import PostCreate, { PostCreateRouterProps } from './screens/PostCreate';
 
 type HomeStackParams = {
   Home: undefined;
-  GroupDetail: {
-    group: Groups;
-  };
-  PostDetail: {
-    post: Posts;
-  };
-  AllGroups: undefined;
+  GroupDetail: GroupDetailRouterProps;
+  GroupsAll: undefined;
+  PostCreate: PostCreateRouterProps;
 };
 
 const MainTabs = createBottomTabNavigator();
@@ -43,14 +37,14 @@ function HomeStackNavigator() {
         options={({route}) => ({title: route.params.group.name})}
       />
       <HomeStack.Screen
-        name="PostDetail"
-        component={PostDetail}
-        options={({route}) => ({title: route.params.post.body})}
+        name="GroupsAll"
+        component={GroupsAll}
+        options={{title: translations.groupsAll}}
       />
       <HomeStack.Screen
-        name="AllGroups"
-        component={AllGroups}
-        options={{title: translations.allGroups}}
+        name="PostCreate"
+        component={PostCreate}
+        options={{title: translations.postCreate}}
       />
     </HomeStack.Navigator>
   );
