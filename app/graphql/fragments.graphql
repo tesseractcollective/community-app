@@ -34,4 +34,8 @@ fragment userGroupFields on userGroups {
   id
   userId
   groupId
+  user {
+    id
+    name
+  }
 }

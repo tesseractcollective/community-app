@@ -7,13 +7,14 @@ import {
   getFieldFragmentInfo,
   HasuraDataConfig,
 } from '../graphql/HasuraConfigType';
-import { useTranslations } from './TranslationProvider';
+import {useTranslations} from './TranslationProvider';
 
 export interface UseMutatorProps<T> {
   config: HasuraDataConfig;
   item?: T;
   variables?: {[key: string]: any};
   onConflict?: {[key: string]: any};
+  afterMutationCallback?: () => void;
 }
 
 export interface Mutator {
@@ -44,15 +45,16 @@ function createDeleteMutation(
     config,
     config.overrides?.fieldFragments?.delete_by_pk,
   );
-  
-  const operationName = config.overrides?.operationNames?.delete_by_pk || `delete_${name}_by_pk`;
+
+  const operationName =
+    config.overrides?.operationNames?.delete_by_pk || `delete_${name}_by_pk`;
   const args = config.primaryKey
     .map((key) => {
       let value = item[key];
       if (typeof value === 'string') {
         value = `"${value}"`;
       }
-      return `${key}:${value}`
+      return `${key}:${value}`;
     })
     .join(', ');
   const mutation = `mutation ${name}DeleteMutation {
@@ -80,7 +82,8 @@ function createInsertMutation(
     : '';
   const onConflictArg = onConflict ? ', on_conflict:$onConflict' : '';
 
-  const operationName = config.overrides?.operationNames?.insert_core_one || `insert_${name}_one`;
+  const operationName =
+    config.overrides?.operationNames?.insert_core_one || `insert_${name}_one`;
   const mutation = `mutation ${name}Mutation($object:${name}_insert_input!${onConflictVariable}) {
     ${operationName}(object:$object${onConflictArg}) {
       ...${fragmentName}
@@ -101,7 +104,8 @@ function createUpdateMutation(
     config.overrides?.fieldFragments?.update_core,
   );
 
-  const operationName = config.overrides?.operationNames?.update_core || `update_${name}_by_pk`;
+  const operationName =
+    config.overrides?.operationNames?.update_core || `update_${name}_by_pk`;
   const mutation = `mutation ${name}Mutation($object:${name}_set_input!) {
     ${operationName}(_set:$object) {
       ...${fragmentName}
@@ -120,7 +124,7 @@ function createUpdateMutation(
 export function useMutator<T extends {[key: string]: any}>(
   props: UseMutatorProps<T>,
 ): {mutator: Mutator; state: MutatorState<T>} {
-  const {config, item, variables, onConflict} = props;
+  const {config, item, variables, onConflict, afterMutationCallback} = props;
 
   const deleteConfig = createDeleteMutation(item || {}, config);
   let operationName: string;
@@ -146,16 +150,26 @@ export function useMutator<T extends {[key: string]: any}>(
   });
 
   const save = useCallback(async () => {
+    const object = {
+      ...variables, // in case something passed in changed
+      ...objectVariables,
+    };
     await executeMutation({
-      object: objectVariables,
+      object: object,
       pkColumns,
       onConflict: item ? undefined : onConflict,
     });
-  }, [objectVariables]);
+    if (afterMutationCallback) {
+      afterMutationCallback();
+    }
+  }, [objectVariables, variables]);
 
   const deleteAction = item
     ? () => {
         executeDelete().then(() => {});
+        if (afterMutationCallback) {
+          afterMutationCallback();
+        }
       }
     : undefined;
 
@@ -204,11 +218,12 @@ export function MutatorTextInput(props: MutatorInputProps & InputProps) {
   const value = mutator.item[input];
 
   return (
-    <Input {...rest} 
+    <Input
+      {...rest}
       value={value}
       onChangeText={(text) => mutator.setVariable(input, text)}
     />
-  )
+  );
 }
 
 export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {

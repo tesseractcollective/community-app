@@ -13,6 +13,8 @@ export default {
   groupsMyGroups: 'My Collectives',
   groupsNoGroups: "You haven't joined any collectives yet",
   groupsAll: "All Collectives",
+  groupsAddMe: "Add me to Collective",
+  groupsRemoveMe: "Remove me from Collective",
 
   postCreate: "Create Post",
   search: "Search",

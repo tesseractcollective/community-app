@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
-import GroupListItem from '../components/GroupListItem';
+import { GroupListItemHome } from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
@@ -81,7 +81,7 @@ export default function () {
   };
   const orderByGroups: Groups_Order_By = {name: Order_By.Asc};
   const renderGroup = ({item}: {item: Groups}) => {
-    return <GroupListItem group={item} />;
+    return <GroupListItemHome group={item} />;
   };
 
   const whereMyPosts: Posts_Bool_Exp = {
