@@ -14,6 +14,7 @@ import {
   keyExtractor,
 } from '../graphql/HasuraConfigType';
 import {print} from 'graphql';
+import {useIsFocused} from '@react-navigation/core';
 
 const defaultPageSize = 50;
 
@@ -24,12 +25,24 @@ export interface PaginationListProps<T> {
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
   primaryKey?: string;
   pageSize?: number;
+  reloadOnFocus?: boolean;
 }
 
 export default function <T extends {[key: string]: any}>(
   props: PaginationListProps<T> & ScrollViewProps,
 ) {
-  const {config, renderItem, where, orderBy, pageSize, ...rest} = props;
+  const {
+    config,
+    renderItem,
+    where,
+    orderBy,
+    pageSize,
+    reloadOnFocus,
+    ...rest
+  } = props;
+  const isFocused = useIsFocused();
+  const [didLooseFocus, setDidLooseFocus] = useState(false);
+  const [isProgramaticRefresh, setIsProgramaticRefresh] = useState(false);
 
   const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
     config,
@@ -37,6 +50,21 @@ export default function <T extends {[key: string]: any}>(
     orderBy,
     pageSize,
   );
+
+  useEffect(() => {
+    if (reloadOnFocus) {
+      if (!fetching) {
+        setIsProgramaticRefresh(false);
+      }
+      if (!isFocused && !didLooseFocus) {
+        setDidLooseFocus(true);
+      } else if (isFocused && didLooseFocus) {
+        refresh();
+        setDidLooseFocus(false);
+        setIsProgramaticRefresh(true);
+      }
+    }
+  }, [isFocused, reloadOnFocus, didLooseFocus, fetching, refresh]);
 
   return (
     <>
@@ -46,7 +74,10 @@ export default function <T extends {[key: string]: any}>(
         <FlatList
           {...rest}
           refreshControl={
-            <RefreshControl refreshing={fetching} onRefresh={refresh} />
+            <RefreshControl
+              refreshing={fetching && !isProgramaticRefresh}
+              onRefresh={refresh}
+            />
           }
           data={items}
           renderItem={renderItem}
@@ -79,8 +110,10 @@ export function usePagination<T extends {[key: string]: any}>(
 
   const limitOffsetArgs =
     pageSize > 0 ? `limit:${limit}, offset:${offset}, ` : '';
+  const operationName =
+    config.overrides?.operationNames?.insert_core_one || name;
   const query = `query ${name}Query($where: ${name}_bool_exp, $orderBy: [${name}_order_by!]) {
-    ${name}(${limitOffsetArgs}where:$where, order_by:$orderBy) {
+    ${operationName}(${limitOffsetArgs}where:$where, order_by:$orderBy) {
       ...${fragmentName}
     }
   }
@@ -92,7 +125,7 @@ export function usePagination<T extends {[key: string]: any}>(
   });
 
   const pageItems = queryResult.data
-    ? ((queryResult.data as any)[name] as Array<T>)
+    ? ((queryResult.data as any)[operationName] as Array<T>)
     : undefined;
   const error = queryResult.error;
   const fetching = queryResult.fetching;

@@ -35,7 +35,7 @@ export default function (props: any) {
     if (state.resultItem) {
       navigation.goBack();
     }
-  }, [state.resultItem])
+  }, [state.resultItem]);
 
   return (
     <View>

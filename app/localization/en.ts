@@ -7,6 +7,7 @@ export default {
   activityFeed: 'Activity Feed',
   loading: 'Loading',
   save: 'Save',
+  delete: 'Delete',
   seeAll: 'See All',
   
   groupsMyGroups: 'My Collectives',

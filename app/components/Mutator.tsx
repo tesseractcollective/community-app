@@ -45,9 +45,15 @@ function createDeleteMutation(
     config.overrides?.fieldFragments?.delete_by_pk,
   );
   
-  const operationName = `delete_${name}_by_pk`;
+  const operationName = config.overrides?.operationNames?.delete_by_pk || `delete_${name}_by_pk`;
   const args = config.primaryKey
-    .map((key) => `${key}:${item[key]}`)
+    .map((key) => {
+      let value = item[key];
+      if (typeof value === 'string') {
+        value = `"${value}"`;
+      }
+      return `${key}:${value}`
+    })
     .join(', ');
   const mutation = `mutation ${name}DeleteMutation {
       ${operationName}(${args}) {
@@ -95,7 +101,7 @@ function createUpdateMutation(
     config.overrides?.fieldFragments?.update_core,
   );
 
-  const operationName = `update_${name}_by_pk`;
+  const operationName = config.overrides?.operationNames?.update_core || `update_${name}_by_pk`;
   const mutation = `mutation ${name}Mutation($object:${name}_set_input!) {
     ${operationName}(_set:$object) {
       ...${fragmentName}
@@ -212,6 +218,15 @@ export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
   const title = rest.title || translations.save;
 
   return <Button {...rest} title={title} onPress={mutator.save} />;
+}
+
+export function MutatorDeleteButton(props: MutatorSaveProps & ButtonProps) {
+  const {mutator, ...rest} = props;
+
+  const translations = useTranslations();
+  const title = rest.title || translations.delete;
+
+  return <Button {...rest} title={title} onPress={mutator.deleteAction} />;
 }
 
 // function inputForType(mutator: Mutator, type: TypeNode, isRequired = false) {

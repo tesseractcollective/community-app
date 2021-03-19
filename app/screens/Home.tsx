@@ -118,6 +118,7 @@ export default function () {
         renderItem={renderGroup}
         where={whereMyGroups}
         orderBy={orderByGroups}
+        reloadOnFocus
       />
 
       <View style={styles.sectionHeader}>
@@ -129,6 +130,7 @@ export default function () {
         renderItem={renderPost}
         where={whereMyPosts}
         orderBy={orderByPosts}
+        reloadOnFocus
       />
     </View>
   );
