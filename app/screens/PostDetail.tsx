@@ -29,11 +29,12 @@ export default function (props: any) {
   }, [state.resultItem]);
 
   return (
-    <View>
+    <View>      
       <Image source={{uri: post.photoUrl}} />
       <Text>{post.name}</Text>
       <Text>{post.body}</Text>
       {userId === post.user?.id ? (
+    
         <MutatorDeleteButton mutator={mutator} />
       ) : null}
     </View>
