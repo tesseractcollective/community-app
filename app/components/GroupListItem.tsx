@@ -42,8 +42,15 @@ export function GroupListItemHome(props: GroupListItemProps) {
   // see https://reactnativeelements.com/docs/listitem#linear-gradient--scale-feedback
   return (
     <ListItem
-      style={{ height: 100 }}
-      containerStyle={{ marginHorizontal: 8, borderRadius: 10, height: '80%' }}
+      style={{ 
+        height: 100
+      }}
+      containerStyle={{ 
+        marginHorizontal: 8, 
+        borderRadius: 10, 
+        height: '80%', 
+        elevation: 2
+      }}
       onPress={onPress}
       Component={TouchableScale}
       friction={90}
@@ -57,7 +64,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title style={{ color: whiteColor }}>
+        <ListItem.Title style={{ color: whiteColor, fontFamily: "Montserrat-Semibold", fontSize: 14, textTransform: 'uppercase' }}>
           {group.name}
         </ListItem.Title>
       </ListItem.Content>

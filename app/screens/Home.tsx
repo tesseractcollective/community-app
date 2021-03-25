@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
 import FeatherIcons from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { GroupListItemHome } from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -16,9 +17,11 @@ import {
   Posts,
   Posts_Bool_Exp,
   Posts_Order_By,
-} from '../graphql';
+} from '../graphql';      
 import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
+
+const seeAllButtonGradient = ['#F44336', '#FF9800'];
 
 const styles = StyleSheet.create({
   list: {
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
     marginEnd: 16,
   },
   sectionTitle: {
-    // fontFamily: "Montserrat-Medium",
+    fontFamily: "Montserrat-Medium",
     color: '#222222',
     fontSize: 24,
     textShadowColor: '#FFFFFF',
@@ -48,9 +51,15 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
-  listButton: {
-    textTransform: 'uppercase',
+  listButton: {    
     borderRadius: 22,
+  },
+  listButtonTitle: {    
+    textTransform: 'uppercase',
+    paddingStart: 8,
+    fontFamily: "Montserrat-Bold",
+    fontSize: 11,
+    
   },
   listButtonContainer: {
     textShadowColor: '#FFFFFF',
@@ -102,9 +111,16 @@ export default function () {
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
           buttonStyle={styles.listButton}
+          titleStyle={styles.listButtonTitle}
           title={translations.seeAll.toUpperCase()}
           iconRight
           icon={<Icon name="chevron-right" size={18} color="white" />}
+          linearGradientProps={{
+            colors: seeAllButtonGradient,
+            start: {x: 0, y: 0},
+            end: {x: 0, y: 0.8},
+          }}
+          ViewComponent={LinearGradient} 
           onPress={() => {
             navigation.navigate('GroupsAll');
           }}
@@ -113,6 +129,7 @@ export default function () {
 
       <PaginatedList
         style={styles.groups}
+        showsHorizontalScrollIndicator={false}
         horizontal={true}
         config={HasuraConfig.groups}
         renderItem={renderGroup}
@@ -121,9 +138,9 @@ export default function () {
         reloadOnFocus
       />
 
-      <View style={styles.sectionHeader}>
+      {/* <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.activityFeed}</Text>
-      </View>
+      </View> */}
       <PaginatedList
         style={styles.posts}
         config={HasuraConfig.posts}
