@@ -7,17 +7,17 @@ import {
 
 const HasuraConfig: HasuraConfigType = {
   groups: {
-    typename: 'groups',
+    typename: 'group',
     primaryKey: ['id'],
     fieldFragment: GroupFieldsFragmentDoc,
   },
   userGroups: {
-    typename: 'userGroups',
-    primaryKey: ['id'],
+    typename: 'userGroup',
+    primaryKey: ['userId', 'groupId'],
     fieldFragment: UserGroupFieldsFragmentDoc,
   },
   posts: {
-    typename: 'posts',
+    typename: 'post',
     primaryKey: ['id'],
     fieldFragment: PostFieldsFragmentDoc,
   },

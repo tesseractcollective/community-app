@@ -10,12 +10,12 @@ import {
 import PaginatedList, {usePagination} from '../components/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
-import {Groups, Posts, Posts_Order_By, UserGroups, Order_By, UserGroups_Bool_Exp} from '../graphql';
+import {Group, Post, Post_Order_By, UserGroup, Order_By, UserGroup_Bool_Exp} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 export interface GroupDetailRouterProps {
-  group: Groups;
+  group: Group;
 }
 
 const gradient = ['#FF9800', '#F44336'];
@@ -24,23 +24,23 @@ export default function (props: any) {
   const {group} = props.route.params;
 
   const translations = useTranslations();
-  const where: UserGroups_Bool_Exp = {groupId: {_eq: group.id}};
-  const pagination = usePagination<UserGroups>(HasuraConfig.userGroups, where);
+  const where: UserGroup_Bool_Exp = {groupId: {_eq: group.id}};
+  const pagination = usePagination<UserGroup>(HasuraConfig.userGroups, where);
   const userId = useUserId();
   
   const myUserGroup = pagination.items?.find((item) => item.userId === userId);
 
-  const {mutator, state} = useMutator<UserGroups>({
+  const {mutator, state} = useMutator<UserGroup>({
     config: HasuraConfig.userGroups,
-    variables: {userId, groupId: group.id, id: myUserGroup?.id},
+    variables: {userId, groupId: group.id},
     item: myUserGroup,
     afterMutationCallback: () => { pagination.refresh() },
   });
 
-  const renderPost = ({item}: {item: Posts}) => {
+  const renderPost = ({item}: {item: Post}) => {
     return <PostListItem post={item} />;
   };
-  const orderByPosts: Posts_Order_By = {createdAt: Order_By.Desc};
+  const orderByPosts: Post_Order_By = {createdAt: Order_By.Desc};
 
   return (
     <View>

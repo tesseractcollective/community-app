@@ -6,7 +6,7 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import {useTranslations} from '../components/TranslationProvider';
 import {
-    Users
+    User
 } from '../graphql';      
 import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';

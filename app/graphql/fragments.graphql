@@ -1,10 +1,9 @@
-fragment groupFields on groups {
+fragment groupFields on group {
   id
   name
   description
   createdAt
   updatedAt
-  photoUrl
   location {
     id
     name
@@ -18,20 +17,18 @@ fragment groupFields on groups {
   }
 }
 
-fragment postFields on posts {
+fragment postFields on post {
   id
   body
   createdAt
   updatedAt
-  photoUrl
   user {
     name
     id
   }
 }
 
-fragment userGroupFields on userGroups {
-  id
+fragment userGroupFields on userGroup {
   userId
   groupId
   user {

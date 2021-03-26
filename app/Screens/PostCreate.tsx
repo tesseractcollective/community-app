@@ -7,7 +7,7 @@ import {
   MutatorTextInput,
   useMutator,
 } from '../components/Mutator';
-import {Posts} from '../graphql';
+import {Post} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
 import { Avatar, Icon } from 'react-native-elements';
 
@@ -21,7 +21,7 @@ export default function (props: any) {
 
   const navigation = useNavigation();
 
-  const {mutator, state} = useMutator<Posts>({
+  const {mutator, state} = useMutator<Post>({
     config: HasuraConfig.posts,
     variables: {userId, groupId},
   });

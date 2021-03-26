@@ -6,9 +6,9 @@ import GroupListItem from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
 import {useTranslations} from '../components/TranslationProvider';
 import {
-  Groups,
-  Groups_Bool_Exp,
-  Groups_Order_By,
+  Group,
+  Group_Bool_Exp,
+  Group_Order_By,
   Order_By,
 } from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
@@ -24,14 +24,14 @@ export default function () {
 
   const [searchText, setSearchText] = useState('');
 
-  const groupFilter: Groups_Bool_Exp = {
+  const groupFilter: Group_Bool_Exp = {
     _or: [
       {name: {_ilike: `%${searchText}%`}},
       {description: {_ilike: `%${searchText}%`}},
     ],
   };
-  const groupOrderBy: Groups_Order_By = {name: Order_By.Asc};
-  const renderGroup = ({item}: {item: Groups}) => {
+  const groupOrderBy: Group_Order_By = {name: Order_By.Asc};
+  const renderGroup = ({item}: {item: Group}) => {
     return <GroupListItem group={item} />;
   };
  

@@ -1,12 +1,12 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
-import { Posts } from '../graphql';
+import { Post } from '../graphql';
 import { TextInput } from 'react-native-gesture-handler';
 import { StyleSheet, Text, View } from 'react-native';
 
 interface PostListItemProps {
-  post: Posts
+  post: Post
 }
 
 export default function (props: PostListItemProps) {

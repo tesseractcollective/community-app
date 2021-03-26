@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
-import {Groups} from '../graphql';
+import {Group} from '../graphql';
 import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -9,7 +9,7 @@ const gradient = ['#FF9800', '#F44336'];
 const whiteColor = 'white';
 
 export interface GroupListItemProps {
-  group: Groups;
+  group: Group;
 }
 
 export default function (props: GroupListItemProps) {

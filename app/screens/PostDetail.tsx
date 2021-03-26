@@ -4,12 +4,12 @@ import {Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
 
 import {useMutator, MutatorDeleteButton} from '../components/Mutator';
-import {Posts} from '../graphql';
+import {Post} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 export interface PostDetailRouterProps {
-  post: Posts;
+  post: Post;
 }
 
 export default function (props: any) {
@@ -17,7 +17,7 @@ export default function (props: any) {
 
   const userId = useUserId();
   const navigation = useNavigation();
-  const {mutator, state} = useMutator<Posts>({
+  const {mutator, state} = useMutator<Post>({
     config: HasuraConfig.posts,
     item: post,
   });

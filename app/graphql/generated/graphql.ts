@@ -48,9 +48,9 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
-/** columns and relationships of "devices" */
-export type Devices = {
-  __typename?: 'devices';
+/** columns and relationships of "device" */
+export type Device = {
+  __typename?: 'device';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id: Scalars['uuid'];
   name?: Maybe<Scalars['String']>;
@@ -58,83 +58,83 @@ export type Devices = {
   type: Scalars['String'];
   updatedAt?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
-  user: Users;
+  user: User;
   userId: Scalars['uuid'];
 };
 
-/** aggregated selection of "devices" */
-export type Devices_Aggregate = {
-  __typename?: 'devices_aggregate';
-  aggregate?: Maybe<Devices_Aggregate_Fields>;
-  nodes: Array<Devices>;
+/** aggregated selection of "device" */
+export type Device_Aggregate = {
+  __typename?: 'device_aggregate';
+  aggregate?: Maybe<Device_Aggregate_Fields>;
+  nodes: Array<Device>;
 };
 
-/** aggregate fields of "devices" */
-export type Devices_Aggregate_Fields = {
-  __typename?: 'devices_aggregate_fields';
+/** aggregate fields of "device" */
+export type Device_Aggregate_Fields = {
+  __typename?: 'device_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Devices_Max_Fields>;
-  min?: Maybe<Devices_Min_Fields>;
+  max?: Maybe<Device_Max_Fields>;
+  min?: Maybe<Device_Min_Fields>;
 };
 
 
-/** aggregate fields of "devices" */
-export type Devices_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Devices_Select_Column>>;
+/** aggregate fields of "device" */
+export type Device_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Device_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "devices" */
-export type Devices_Aggregate_Order_By = {
+/** order by aggregate values of table "device" */
+export type Device_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Devices_Max_Order_By>;
-  min?: Maybe<Devices_Min_Order_By>;
+  max?: Maybe<Device_Max_Order_By>;
+  min?: Maybe<Device_Min_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "devices" */
-export type Devices_Arr_Rel_Insert_Input = {
-  data: Array<Devices_Insert_Input>;
-  on_conflict?: Maybe<Devices_On_Conflict>;
+/** input type for inserting array relation for remote table "device" */
+export type Device_Arr_Rel_Insert_Input = {
+  data: Array<Device_Insert_Input>;
+  on_conflict?: Maybe<Device_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "devices". All fields are combined with a logical 'AND'. */
-export type Devices_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Devices_Bool_Exp>>>;
-  _not?: Maybe<Devices_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Devices_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "device". All fields are combined with a logical 'AND'. */
+export type Device_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Device_Bool_Exp>>>;
+  _not?: Maybe<Device_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Device_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   token?: Maybe<String_Comparison_Exp>;
   type?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  user?: Maybe<Users_Bool_Exp>;
+  user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "devices" */
-export enum Devices_Constraint {
+/** unique or primary key constraints on table "device" */
+export enum Device_Constraint {
   /** unique or primary key constraint */
   DevicesPkey = 'devices_pkey',
   /** unique or primary key constraint */
   DevicesTokenKey = 'devices_token_key'
 }
 
-/** input type for inserting data into table "devices" */
-export type Devices_Insert_Input = {
+/** input type for inserting data into table "device" */
+export type Device_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
-export type Devices_Max_Fields = {
-  __typename?: 'devices_max_fields';
+export type Device_Max_Fields = {
+  __typename?: 'device_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -144,8 +144,8 @@ export type Devices_Max_Fields = {
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by max() on columns of table "devices" */
-export type Devices_Max_Order_By = {
+/** order by max() on columns of table "device" */
+export type Device_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
@@ -156,8 +156,8 @@ export type Devices_Max_Order_By = {
 };
 
 /** aggregate min on columns */
-export type Devices_Min_Fields = {
-  __typename?: 'devices_min_fields';
+export type Device_Min_Fields = {
+  __typename?: 'device_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -167,8 +167,8 @@ export type Devices_Min_Fields = {
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by min() on columns of table "devices" */
-export type Devices_Min_Order_By = {
+/** order by min() on columns of table "device" */
+export type Device_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
@@ -178,47 +178,47 @@ export type Devices_Min_Order_By = {
   userId?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "devices" */
-export type Devices_Mutation_Response = {
-  __typename?: 'devices_mutation_response';
+/** response of any mutation on the table "device" */
+export type Device_Mutation_Response = {
+  __typename?: 'device_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<Devices>;
+  returning: Array<Device>;
 };
 
-/** input type for inserting object relation for remote table "devices" */
-export type Devices_Obj_Rel_Insert_Input = {
-  data: Devices_Insert_Input;
-  on_conflict?: Maybe<Devices_On_Conflict>;
+/** input type for inserting object relation for remote table "device" */
+export type Device_Obj_Rel_Insert_Input = {
+  data: Device_Insert_Input;
+  on_conflict?: Maybe<Device_On_Conflict>;
 };
 
-/** on conflict condition type for table "devices" */
-export type Devices_On_Conflict = {
-  constraint: Devices_Constraint;
-  update_columns: Array<Devices_Update_Column>;
-  where?: Maybe<Devices_Bool_Exp>;
+/** on conflict condition type for table "device" */
+export type Device_On_Conflict = {
+  constraint: Device_Constraint;
+  update_columns: Array<Device_Update_Column>;
+  where?: Maybe<Device_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "devices" */
-export type Devices_Order_By = {
+/** ordering options when selecting data from "device" */
+export type Device_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   token?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
-  user?: Maybe<Users_Order_By>;
+  user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "devices" */
-export type Devices_Pk_Columns_Input = {
+/** primary key columns input for table: "device" */
+export type Device_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
-/** select columns of table "devices" */
-export enum Devices_Select_Column {
+/** select columns of table "device" */
+export enum Device_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -235,8 +235,8 @@ export enum Devices_Select_Column {
   UserId = 'userId'
 }
 
-/** input type for updating data in table "devices" */
-export type Devices_Set_Input = {
+/** input type for updating data in table "device" */
+export type Device_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -246,8 +246,8 @@ export type Devices_Set_Input = {
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** update columns of table "devices" */
-export enum Devices_Update_Column {
+/** update columns of table "device" */
+export enum Device_Update_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -260,6 +260,368 @@ export enum Devices_Update_Column {
   Type = 'type',
   /** column name */
   UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** columns and relationships of "file" */
+export type File = {
+  __typename?: 'file';
+  assetType: FileType_Enum;
+  created_at: Scalars['timestamptz'];
+  groupId?: Maybe<Scalars['uuid']>;
+  id: Scalars['uuid'];
+  postId?: Maybe<Scalars['uuid']>;
+  updated_at: Scalars['timestamptz'];
+  url: Scalars['String'];
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** columns and relationships of "fileType" */
+export type FileType = {
+  __typename?: 'fileType';
+  type: Scalars['String'];
+};
+
+/** aggregated selection of "fileType" */
+export type FileType_Aggregate = {
+  __typename?: 'fileType_aggregate';
+  aggregate?: Maybe<FileType_Aggregate_Fields>;
+  nodes: Array<FileType>;
+};
+
+/** aggregate fields of "fileType" */
+export type FileType_Aggregate_Fields = {
+  __typename?: 'fileType_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<FileType_Max_Fields>;
+  min?: Maybe<FileType_Min_Fields>;
+};
+
+
+/** aggregate fields of "fileType" */
+export type FileType_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<FileType_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "fileType" */
+export type FileType_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<FileType_Max_Order_By>;
+  min?: Maybe<FileType_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "fileType" */
+export type FileType_Arr_Rel_Insert_Input = {
+  data: Array<FileType_Insert_Input>;
+  on_conflict?: Maybe<FileType_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "fileType". All fields are combined with a logical 'AND'. */
+export type FileType_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<FileType_Bool_Exp>>>;
+  _not?: Maybe<FileType_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<FileType_Bool_Exp>>>;
+  type?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "fileType" */
+export enum FileType_Constraint {
+  /** unique or primary key constraint */
+  AssetTypesPkey = 'assetTypes_pkey'
+}
+
+export enum FileType_Enum {
+  Image = 'IMAGE'
+}
+
+/** expression to compare columns of type fileType_enum. All fields are combined with logical 'AND'. */
+export type FileType_Enum_Comparison_Exp = {
+  _eq?: Maybe<FileType_Enum>;
+  _in?: Maybe<Array<FileType_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<FileType_Enum>;
+  _nin?: Maybe<Array<FileType_Enum>>;
+};
+
+/** input type for inserting data into table "fileType" */
+export type FileType_Insert_Input = {
+  type?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type FileType_Max_Fields = {
+  __typename?: 'fileType_max_fields';
+  type?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "fileType" */
+export type FileType_Max_Order_By = {
+  type?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type FileType_Min_Fields = {
+  __typename?: 'fileType_min_fields';
+  type?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "fileType" */
+export type FileType_Min_Order_By = {
+  type?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "fileType" */
+export type FileType_Mutation_Response = {
+  __typename?: 'fileType_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<FileType>;
+};
+
+/** input type for inserting object relation for remote table "fileType" */
+export type FileType_Obj_Rel_Insert_Input = {
+  data: FileType_Insert_Input;
+  on_conflict?: Maybe<FileType_On_Conflict>;
+};
+
+/** on conflict condition type for table "fileType" */
+export type FileType_On_Conflict = {
+  constraint: FileType_Constraint;
+  update_columns: Array<FileType_Update_Column>;
+  where?: Maybe<FileType_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "fileType" */
+export type FileType_Order_By = {
+  type?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "fileType" */
+export type FileType_Pk_Columns_Input = {
+  type: Scalars['String'];
+};
+
+/** select columns of table "fileType" */
+export enum FileType_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "fileType" */
+export type FileType_Set_Input = {
+  type?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "fileType" */
+export enum FileType_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** aggregated selection of "file" */
+export type File_Aggregate = {
+  __typename?: 'file_aggregate';
+  aggregate?: Maybe<File_Aggregate_Fields>;
+  nodes: Array<File>;
+};
+
+/** aggregate fields of "file" */
+export type File_Aggregate_Fields = {
+  __typename?: 'file_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<File_Max_Fields>;
+  min?: Maybe<File_Min_Fields>;
+};
+
+
+/** aggregate fields of "file" */
+export type File_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<File_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "file" */
+export type File_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<File_Max_Order_By>;
+  min?: Maybe<File_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "file" */
+export type File_Arr_Rel_Insert_Input = {
+  data: Array<File_Insert_Input>;
+  on_conflict?: Maybe<File_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "file". All fields are combined with a logical 'AND'. */
+export type File_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<File_Bool_Exp>>>;
+  _not?: Maybe<File_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<File_Bool_Exp>>>;
+  assetType?: Maybe<FileType_Enum_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  groupId?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  postId?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "file" */
+export enum File_Constraint {
+  /** unique or primary key constraint */
+  AssetsPkey = 'assets_pkey'
+}
+
+/** input type for inserting data into table "file" */
+export type File_Insert_Input = {
+  assetType?: Maybe<FileType_Enum>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  groupId?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type File_Max_Fields = {
+  __typename?: 'file_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  groupId?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "file" */
+export type File_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  groupId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type File_Min_Fields = {
+  __typename?: 'file_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  groupId?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "file" */
+export type File_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  groupId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "file" */
+export type File_Mutation_Response = {
+  __typename?: 'file_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<File>;
+};
+
+/** input type for inserting object relation for remote table "file" */
+export type File_Obj_Rel_Insert_Input = {
+  data: File_Insert_Input;
+  on_conflict?: Maybe<File_On_Conflict>;
+};
+
+/** on conflict condition type for table "file" */
+export type File_On_Conflict = {
+  constraint: File_Constraint;
+  update_columns: Array<File_Update_Column>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "file" */
+export type File_Order_By = {
+  assetType?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  groupId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "file" */
+export type File_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "file" */
+export enum File_Select_Column {
+  /** column name */
+  AssetType = 'assetType',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'groupId',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "file" */
+export type File_Set_Input = {
+  assetType?: Maybe<FileType_Enum>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  groupId?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "file" */
+export enum File_Update_Column {
+  /** column name */
+  AssetType = 'assetType',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'groupId',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url',
   /** column name */
   UserId = 'userId'
 }
@@ -278,243 +640,254 @@ export type Float8_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['float8']>>;
 };
 
-/** columns and relationships of "groups" */
-export type Groups = {
-  __typename?: 'groups';
+/** columns and relationships of "group" */
+export type Group = {
+  __typename?: 'group';
   createdAt: Scalars['timestamptz'];
   description: Scalars['String'];
+  /** An array relationship */
+  files: Array<File>;
+  /** An aggregated array relationship */
+  files_aggregate: File_Aggregate;
   id: Scalars['uuid'];
   isPrivate: Scalars['Boolean'];
   /** An object relationship */
-  location?: Maybe<Locations>;
+  location?: Maybe<Location>;
   locationId?: Maybe<Scalars['uuid']>;
   name: Scalars['String'];
-  photo?: Maybe<Scalars['String']>;
-  photoUrl?: Maybe<Scalars['String']>;
   /** An array relationship */
-  posts: Array<Posts>;
+  posts: Array<Post>;
   /** An aggregated array relationship */
-  posts_aggregate: Posts_Aggregate;
+  posts_aggregate: Post_Aggregate;
   updatedAt: Scalars['timestamptz'];
   /** An array relationship */
-  userGroups: Array<UserGroups>;
+  userGroups: Array<UserGroup>;
   /** An aggregated array relationship */
-  userGroups_aggregate: UserGroups_Aggregate;
+  userGroups_aggregate: UserGroup_Aggregate;
 };
 
 
-/** columns and relationships of "groups" */
-export type GroupsPostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+/** columns and relationships of "group" */
+export type GroupFilesArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
 };
 
 
-/** columns and relationships of "groups" */
-export type GroupsPosts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+/** columns and relationships of "group" */
+export type GroupFiles_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
 };
 
 
-/** columns and relationships of "groups" */
-export type GroupsUserGroupsArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+/** columns and relationships of "group" */
+export type GroupPostsArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
 
-/** columns and relationships of "groups" */
-export type GroupsUserGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+/** columns and relationships of "group" */
+export type GroupPosts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
-/** aggregated selection of "groups" */
-export type Groups_Aggregate = {
-  __typename?: 'groups_aggregate';
-  aggregate?: Maybe<Groups_Aggregate_Fields>;
-  nodes: Array<Groups>;
+
+/** columns and relationships of "group" */
+export type GroupUserGroupsArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
 };
 
-/** aggregate fields of "groups" */
-export type Groups_Aggregate_Fields = {
-  __typename?: 'groups_aggregate_fields';
+
+/** columns and relationships of "group" */
+export type GroupUserGroups_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+/** aggregated selection of "group" */
+export type Group_Aggregate = {
+  __typename?: 'group_aggregate';
+  aggregate?: Maybe<Group_Aggregate_Fields>;
+  nodes: Array<Group>;
+};
+
+/** aggregate fields of "group" */
+export type Group_Aggregate_Fields = {
+  __typename?: 'group_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Groups_Max_Fields>;
-  min?: Maybe<Groups_Min_Fields>;
+  max?: Maybe<Group_Max_Fields>;
+  min?: Maybe<Group_Min_Fields>;
 };
 
 
-/** aggregate fields of "groups" */
-export type Groups_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Groups_Select_Column>>;
+/** aggregate fields of "group" */
+export type Group_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "groups" */
-export type Groups_Aggregate_Order_By = {
+/** order by aggregate values of table "group" */
+export type Group_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Groups_Max_Order_By>;
-  min?: Maybe<Groups_Min_Order_By>;
+  max?: Maybe<Group_Max_Order_By>;
+  min?: Maybe<Group_Min_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "groups" */
-export type Groups_Arr_Rel_Insert_Input = {
-  data: Array<Groups_Insert_Input>;
-  on_conflict?: Maybe<Groups_On_Conflict>;
+/** input type for inserting array relation for remote table "group" */
+export type Group_Arr_Rel_Insert_Input = {
+  data: Array<Group_Insert_Input>;
+  on_conflict?: Maybe<Group_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "groups". All fields are combined with a logical 'AND'. */
-export type Groups_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Groups_Bool_Exp>>>;
-  _not?: Maybe<Groups_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Groups_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "group". All fields are combined with a logical 'AND'. */
+export type Group_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Bool_Exp>>>;
+  _not?: Maybe<Group_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
+  files?: Maybe<File_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   isPrivate?: Maybe<Boolean_Comparison_Exp>;
-  location?: Maybe<Locations_Bool_Exp>;
+  location?: Maybe<Location_Bool_Exp>;
   locationId?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
-  photo?: Maybe<String_Comparison_Exp>;
-  photoUrl?: Maybe<String_Comparison_Exp>;
-  posts?: Maybe<Posts_Bool_Exp>;
+  posts?: Maybe<Post_Bool_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  userGroups?: Maybe<UserGroups_Bool_Exp>;
+  userGroups?: Maybe<UserGroup_Bool_Exp>;
 };
 
-/** unique or primary key constraints on table "groups" */
-export enum Groups_Constraint {
+/** unique or primary key constraints on table "group" */
+export enum Group_Constraint {
   /** unique or primary key constraint */
   GroupsNameKey = 'groups_name_key',
   /** unique or primary key constraint */
   GroupsPkey = 'groups_pkey'
 }
 
-/** input type for inserting data into table "groups" */
-export type Groups_Insert_Input = {
+/** input type for inserting data into table "group" */
+export type Group_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
+  files?: Maybe<File_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   isPrivate?: Maybe<Scalars['Boolean']>;
-  location?: Maybe<Locations_Obj_Rel_Insert_Input>;
+  location?: Maybe<Location_Obj_Rel_Insert_Input>;
   locationId?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  photo?: Maybe<Scalars['String']>;
-  photoUrl?: Maybe<Scalars['String']>;
-  posts?: Maybe<Posts_Arr_Rel_Insert_Input>;
+  posts?: Maybe<Post_Arr_Rel_Insert_Input>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  userGroups?: Maybe<UserGroups_Arr_Rel_Insert_Input>;
+  userGroups?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
-export type Groups_Max_Fields = {
-  __typename?: 'groups_max_fields';
+export type Group_Max_Fields = {
+  __typename?: 'group_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   locationId?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  photo?: Maybe<Scalars['String']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "groups" */
-export type Groups_Max_Order_By = {
+/** order by max() on columns of table "group" */
+export type Group_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   locationId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  photo?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type Groups_Min_Fields = {
-  __typename?: 'groups_min_fields';
+export type Group_Min_Fields = {
+  __typename?: 'group_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   locationId?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  photo?: Maybe<Scalars['String']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "groups" */
-export type Groups_Min_Order_By = {
+/** order by min() on columns of table "group" */
+export type Group_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   locationId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  photo?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "groups" */
-export type Groups_Mutation_Response = {
-  __typename?: 'groups_mutation_response';
+/** response of any mutation on the table "group" */
+export type Group_Mutation_Response = {
+  __typename?: 'group_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<Groups>;
+  returning: Array<Group>;
 };
 
-/** input type for inserting object relation for remote table "groups" */
-export type Groups_Obj_Rel_Insert_Input = {
-  data: Groups_Insert_Input;
-  on_conflict?: Maybe<Groups_On_Conflict>;
+/** input type for inserting object relation for remote table "group" */
+export type Group_Obj_Rel_Insert_Input = {
+  data: Group_Insert_Input;
+  on_conflict?: Maybe<Group_On_Conflict>;
 };
 
-/** on conflict condition type for table "groups" */
-export type Groups_On_Conflict = {
-  constraint: Groups_Constraint;
-  update_columns: Array<Groups_Update_Column>;
-  where?: Maybe<Groups_Bool_Exp>;
+/** on conflict condition type for table "group" */
+export type Group_On_Conflict = {
+  constraint: Group_Constraint;
+  update_columns: Array<Group_Update_Column>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "groups" */
-export type Groups_Order_By = {
+/** ordering options when selecting data from "group" */
+export type Group_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
+  files_aggregate?: Maybe<File_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   isPrivate?: Maybe<Order_By>;
-  location?: Maybe<Locations_Order_By>;
+  location?: Maybe<Location_Order_By>;
   locationId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  photo?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
-  posts_aggregate?: Maybe<Posts_Aggregate_Order_By>;
+  posts_aggregate?: Maybe<Post_Aggregate_Order_By>;
   updatedAt?: Maybe<Order_By>;
-  userGroups_aggregate?: Maybe<UserGroups_Aggregate_Order_By>;
+  userGroups_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: "groups" */
-export type Groups_Pk_Columns_Input = {
+/** primary key columns input for table: "group" */
+export type Group_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
-/** select columns of table "groups" */
-export enum Groups_Select_Column {
+/** select columns of table "group" */
+export enum Group_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -528,28 +901,22 @@ export enum Groups_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  Photo = 'photo',
-  /** column name */
-  PhotoUrl = 'photoUrl',
-  /** column name */
   UpdatedAt = 'updatedAt'
 }
 
-/** input type for updating data in table "groups" */
-export type Groups_Set_Input = {
+/** input type for updating data in table "group" */
+export type Group_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   isPrivate?: Maybe<Scalars['Boolean']>;
   locationId?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  photo?: Maybe<Scalars['String']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** update columns of table "groups" */
-export enum Groups_Update_Column {
+/** update columns of table "group" */
+export enum Group_Update_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -562,10 +929,6 @@ export enum Groups_Update_Column {
   LocationId = 'locationId',
   /** column name */
   Name = 'name',
-  /** column name */
-  Photo = 'photo',
-  /** column name */
-  PhotoUrl = 'photoUrl',
   /** column name */
   UpdatedAt = 'updatedAt'
 }
@@ -594,9 +957,9 @@ export type Jsonb_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['jsonb']>>;
 };
 
-/** columns and relationships of "locations" */
-export type Locations = {
-  __typename?: 'locations';
+/** columns and relationships of "location" */
+export type Location = {
+  __typename?: 'location';
   addressForLanguage: Scalars['jsonb'];
   city?: Maybe<Scalars['String']>;
   country: Scalars['String'];
@@ -612,85 +975,85 @@ export type Locations = {
 };
 
 
-/** columns and relationships of "locations" */
-export type LocationsAddressForLanguageArgs = {
+/** columns and relationships of "location" */
+export type LocationAddressForLanguageArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
-/** aggregated selection of "locations" */
-export type Locations_Aggregate = {
-  __typename?: 'locations_aggregate';
-  aggregate?: Maybe<Locations_Aggregate_Fields>;
-  nodes: Array<Locations>;
+/** aggregated selection of "location" */
+export type Location_Aggregate = {
+  __typename?: 'location_aggregate';
+  aggregate?: Maybe<Location_Aggregate_Fields>;
+  nodes: Array<Location>;
 };
 
-/** aggregate fields of "locations" */
-export type Locations_Aggregate_Fields = {
-  __typename?: 'locations_aggregate_fields';
-  avg?: Maybe<Locations_Avg_Fields>;
+/** aggregate fields of "location" */
+export type Location_Aggregate_Fields = {
+  __typename?: 'location_aggregate_fields';
+  avg?: Maybe<Location_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Locations_Max_Fields>;
-  min?: Maybe<Locations_Min_Fields>;
-  stddev?: Maybe<Locations_Stddev_Fields>;
-  stddev_pop?: Maybe<Locations_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Locations_Stddev_Samp_Fields>;
-  sum?: Maybe<Locations_Sum_Fields>;
-  var_pop?: Maybe<Locations_Var_Pop_Fields>;
-  var_samp?: Maybe<Locations_Var_Samp_Fields>;
-  variance?: Maybe<Locations_Variance_Fields>;
+  max?: Maybe<Location_Max_Fields>;
+  min?: Maybe<Location_Min_Fields>;
+  stddev?: Maybe<Location_Stddev_Fields>;
+  stddev_pop?: Maybe<Location_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Location_Stddev_Samp_Fields>;
+  sum?: Maybe<Location_Sum_Fields>;
+  var_pop?: Maybe<Location_Var_Pop_Fields>;
+  var_samp?: Maybe<Location_Var_Samp_Fields>;
+  variance?: Maybe<Location_Variance_Fields>;
 };
 
 
-/** aggregate fields of "locations" */
-export type Locations_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Locations_Select_Column>>;
+/** aggregate fields of "location" */
+export type Location_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Location_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "locations" */
-export type Locations_Aggregate_Order_By = {
-  avg?: Maybe<Locations_Avg_Order_By>;
+/** order by aggregate values of table "location" */
+export type Location_Aggregate_Order_By = {
+  avg?: Maybe<Location_Avg_Order_By>;
   count?: Maybe<Order_By>;
-  max?: Maybe<Locations_Max_Order_By>;
-  min?: Maybe<Locations_Min_Order_By>;
-  stddev?: Maybe<Locations_Stddev_Order_By>;
-  stddev_pop?: Maybe<Locations_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Locations_Stddev_Samp_Order_By>;
-  sum?: Maybe<Locations_Sum_Order_By>;
-  var_pop?: Maybe<Locations_Var_Pop_Order_By>;
-  var_samp?: Maybe<Locations_Var_Samp_Order_By>;
-  variance?: Maybe<Locations_Variance_Order_By>;
+  max?: Maybe<Location_Max_Order_By>;
+  min?: Maybe<Location_Min_Order_By>;
+  stddev?: Maybe<Location_Stddev_Order_By>;
+  stddev_pop?: Maybe<Location_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Location_Stddev_Samp_Order_By>;
+  sum?: Maybe<Location_Sum_Order_By>;
+  var_pop?: Maybe<Location_Var_Pop_Order_By>;
+  var_samp?: Maybe<Location_Var_Samp_Order_By>;
+  variance?: Maybe<Location_Variance_Order_By>;
 };
 
 /** append existing jsonb value of filtered columns with new jsonb value */
-export type Locations_Append_Input = {
+export type Location_Append_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
 };
 
-/** input type for inserting array relation for remote table "locations" */
-export type Locations_Arr_Rel_Insert_Input = {
-  data: Array<Locations_Insert_Input>;
-  on_conflict?: Maybe<Locations_On_Conflict>;
+/** input type for inserting array relation for remote table "location" */
+export type Location_Arr_Rel_Insert_Input = {
+  data: Array<Location_Insert_Input>;
+  on_conflict?: Maybe<Location_On_Conflict>;
 };
 
 /** aggregate avg on columns */
-export type Locations_Avg_Fields = {
-  __typename?: 'locations_avg_fields';
+export type Location_Avg_Fields = {
+  __typename?: 'location_avg_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by avg() on columns of table "locations" */
-export type Locations_Avg_Order_By = {
+/** order by avg() on columns of table "location" */
+export type Location_Avg_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
-/** Boolean expression to filter rows from the table "locations". All fields are combined with a logical 'AND'. */
-export type Locations_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Locations_Bool_Exp>>>;
-  _not?: Maybe<Locations_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Locations_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "location". All fields are combined with a logical 'AND'. */
+export type Location_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Location_Bool_Exp>>>;
+  _not?: Maybe<Location_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Location_Bool_Exp>>>;
   addressForLanguage?: Maybe<Jsonb_Comparison_Exp>;
   city?: Maybe<String_Comparison_Exp>;
   country?: Maybe<String_Comparison_Exp>;
@@ -705,35 +1068,35 @@ export type Locations_Bool_Exp = {
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "locations" */
-export enum Locations_Constraint {
+/** unique or primary key constraints on table "location" */
+export enum Location_Constraint {
   /** unique or primary key constraint */
   LocationsPkey = 'locations_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Locations_Delete_At_Path_Input = {
+export type Location_Delete_At_Path_Input = {
   addressForLanguage?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Locations_Delete_Elem_Input = {
+export type Location_Delete_Elem_Input = {
   addressForLanguage?: Maybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Locations_Delete_Key_Input = {
+export type Location_Delete_Key_Input = {
   addressForLanguage?: Maybe<Scalars['String']>;
 };
 
-/** input type for incrementing integer column in table "locations" */
-export type Locations_Inc_Input = {
+/** input type for incrementing integer column in table "location" */
+export type Location_Inc_Input = {
   latitude?: Maybe<Scalars['float8']>;
   longitude?: Maybe<Scalars['float8']>;
 };
 
-/** input type for inserting data into table "locations" */
-export type Locations_Insert_Input = {
+/** input type for inserting data into table "location" */
+export type Location_Insert_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
@@ -749,8 +1112,8 @@ export type Locations_Insert_Input = {
 };
 
 /** aggregate max on columns */
-export type Locations_Max_Fields = {
-  __typename?: 'locations_max_fields';
+export type Location_Max_Fields = {
+  __typename?: 'location_max_fields';
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
@@ -764,8 +1127,8 @@ export type Locations_Max_Fields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "locations" */
-export type Locations_Max_Order_By = {
+/** order by max() on columns of table "location" */
+export type Location_Max_Order_By = {
   city?: Maybe<Order_By>;
   country?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
@@ -780,8 +1143,8 @@ export type Locations_Max_Order_By = {
 };
 
 /** aggregate min on columns */
-export type Locations_Min_Fields = {
-  __typename?: 'locations_min_fields';
+export type Location_Min_Fields = {
+  __typename?: 'location_min_fields';
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
@@ -795,8 +1158,8 @@ export type Locations_Min_Fields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "locations" */
-export type Locations_Min_Order_By = {
+/** order by min() on columns of table "location" */
+export type Location_Min_Order_By = {
   city?: Maybe<Order_By>;
   country?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
@@ -810,30 +1173,30 @@ export type Locations_Min_Order_By = {
   updatedAt?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "locations" */
-export type Locations_Mutation_Response = {
-  __typename?: 'locations_mutation_response';
+/** response of any mutation on the table "location" */
+export type Location_Mutation_Response = {
+  __typename?: 'location_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<Locations>;
+  returning: Array<Location>;
 };
 
-/** input type for inserting object relation for remote table "locations" */
-export type Locations_Obj_Rel_Insert_Input = {
-  data: Locations_Insert_Input;
-  on_conflict?: Maybe<Locations_On_Conflict>;
+/** input type for inserting object relation for remote table "location" */
+export type Location_Obj_Rel_Insert_Input = {
+  data: Location_Insert_Input;
+  on_conflict?: Maybe<Location_On_Conflict>;
 };
 
-/** on conflict condition type for table "locations" */
-export type Locations_On_Conflict = {
-  constraint: Locations_Constraint;
-  update_columns: Array<Locations_Update_Column>;
-  where?: Maybe<Locations_Bool_Exp>;
+/** on conflict condition type for table "location" */
+export type Location_On_Conflict = {
+  constraint: Location_Constraint;
+  update_columns: Array<Location_Update_Column>;
+  where?: Maybe<Location_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "locations" */
-export type Locations_Order_By = {
+/** ordering options when selecting data from "location" */
+export type Location_Order_By = {
   addressForLanguage?: Maybe<Order_By>;
   city?: Maybe<Order_By>;
   country?: Maybe<Order_By>;
@@ -848,18 +1211,18 @@ export type Locations_Order_By = {
   updatedAt?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "locations" */
-export type Locations_Pk_Columns_Input = {
+/** primary key columns input for table: "location" */
+export type Location_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Locations_Prepend_Input = {
+export type Location_Prepend_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
 };
 
-/** select columns of table "locations" */
-export enum Locations_Select_Column {
+/** select columns of table "location" */
+export enum Location_Select_Column {
   /** column name */
   AddressForLanguage = 'addressForLanguage',
   /** column name */
@@ -886,8 +1249,8 @@ export enum Locations_Select_Column {
   UpdatedAt = 'updatedAt'
 }
 
-/** input type for updating data in table "locations" */
-export type Locations_Set_Input = {
+/** input type for updating data in table "location" */
+export type Location_Set_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
   city?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
@@ -903,59 +1266,59 @@ export type Locations_Set_Input = {
 };
 
 /** aggregate stddev on columns */
-export type Locations_Stddev_Fields = {
-  __typename?: 'locations_stddev_fields';
+export type Location_Stddev_Fields = {
+  __typename?: 'location_stddev_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev() on columns of table "locations" */
-export type Locations_Stddev_Order_By = {
+/** order by stddev() on columns of table "location" */
+export type Location_Stddev_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
-export type Locations_Stddev_Pop_Fields = {
-  __typename?: 'locations_stddev_pop_fields';
+export type Location_Stddev_Pop_Fields = {
+  __typename?: 'location_stddev_pop_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_pop() on columns of table "locations" */
-export type Locations_Stddev_Pop_Order_By = {
+/** order by stddev_pop() on columns of table "location" */
+export type Location_Stddev_Pop_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
-export type Locations_Stddev_Samp_Fields = {
-  __typename?: 'locations_stddev_samp_fields';
+export type Location_Stddev_Samp_Fields = {
+  __typename?: 'location_stddev_samp_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_samp() on columns of table "locations" */
-export type Locations_Stddev_Samp_Order_By = {
+/** order by stddev_samp() on columns of table "location" */
+export type Location_Stddev_Samp_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
-export type Locations_Sum_Fields = {
-  __typename?: 'locations_sum_fields';
+export type Location_Sum_Fields = {
+  __typename?: 'location_sum_fields';
   latitude?: Maybe<Scalars['float8']>;
   longitude?: Maybe<Scalars['float8']>;
 };
 
-/** order by sum() on columns of table "locations" */
-export type Locations_Sum_Order_By = {
+/** order by sum() on columns of table "location" */
+export type Location_Sum_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
-/** update columns of table "locations" */
-export enum Locations_Update_Column {
+/** update columns of table "location" */
+export enum Location_Update_Column {
   /** column name */
   AddressForLanguage = 'addressForLanguage',
   /** column name */
@@ -983,40 +1346,40 @@ export enum Locations_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-export type Locations_Var_Pop_Fields = {
-  __typename?: 'locations_var_pop_fields';
+export type Location_Var_Pop_Fields = {
+  __typename?: 'location_var_pop_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_pop() on columns of table "locations" */
-export type Locations_Var_Pop_Order_By = {
+/** order by var_pop() on columns of table "location" */
+export type Location_Var_Pop_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
-export type Locations_Var_Samp_Fields = {
-  __typename?: 'locations_var_samp_fields';
+export type Location_Var_Samp_Fields = {
+  __typename?: 'location_var_samp_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_samp() on columns of table "locations" */
-export type Locations_Var_Samp_Order_By = {
+/** order by var_samp() on columns of table "location" */
+export type Location_Var_Samp_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
-export type Locations_Variance_Fields = {
-  __typename?: 'locations_variance_fields';
+export type Location_Variance_Fields = {
+  __typename?: 'location_variance_fields';
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
 };
 
-/** order by variance() on columns of table "locations" */
-export type Locations_Variance_Order_By = {
+/** order by variance() on columns of table "location" */
+export type Location_Variance_Order_By = {
   latitude?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
 };
@@ -1024,330 +1387,540 @@ export type Locations_Variance_Order_By = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
-  /** delete data from the table: "devices" */
-  delete_devices?: Maybe<Devices_Mutation_Response>;
-  /** delete single row from the table: "devices" */
-  delete_devices_by_pk?: Maybe<Devices>;
-  /** delete data from the table: "groups" */
-  delete_groups?: Maybe<Groups_Mutation_Response>;
-  /** delete single row from the table: "groups" */
-  delete_groups_by_pk?: Maybe<Groups>;
-  /** delete data from the table: "locations" */
-  delete_locations?: Maybe<Locations_Mutation_Response>;
-  /** delete single row from the table: "locations" */
-  delete_locations_by_pk?: Maybe<Locations>;
-  /** delete data from the table: "posts" */
-  delete_posts?: Maybe<Posts_Mutation_Response>;
-  /** delete single row from the table: "posts" */
-  delete_posts_by_pk?: Maybe<Posts>;
-  /** delete data from the table: "userGroups" */
-  delete_userGroups?: Maybe<UserGroups_Mutation_Response>;
-  /** delete single row from the table: "userGroups" */
-  delete_userGroups_by_pk?: Maybe<UserGroups>;
-  /** delete data from the table: "users" */
-  delete_users?: Maybe<Users_Mutation_Response>;
-  /** delete single row from the table: "users" */
-  delete_users_by_pk?: Maybe<Users>;
-  /** insert data into the table: "devices" */
-  insert_devices?: Maybe<Devices_Mutation_Response>;
-  /** insert a single row into the table: "devices" */
-  insert_devices_one?: Maybe<Devices>;
-  /** insert data into the table: "groups" */
-  insert_groups?: Maybe<Groups_Mutation_Response>;
-  /** insert a single row into the table: "groups" */
-  insert_groups_one?: Maybe<Groups>;
-  /** insert data into the table: "locations" */
-  insert_locations?: Maybe<Locations_Mutation_Response>;
-  /** insert a single row into the table: "locations" */
-  insert_locations_one?: Maybe<Locations>;
-  /** insert data into the table: "posts" */
-  insert_posts?: Maybe<Posts_Mutation_Response>;
-  /** insert a single row into the table: "posts" */
-  insert_posts_one?: Maybe<Posts>;
-  /** insert data into the table: "userGroups" */
-  insert_userGroups?: Maybe<UserGroups_Mutation_Response>;
-  /** insert a single row into the table: "userGroups" */
-  insert_userGroups_one?: Maybe<UserGroups>;
-  /** insert data into the table: "users" */
-  insert_users?: Maybe<Users_Mutation_Response>;
-  /** insert a single row into the table: "users" */
-  insert_users_one?: Maybe<Users>;
-  /** update data of the table: "devices" */
-  update_devices?: Maybe<Devices_Mutation_Response>;
-  /** update single row of the table: "devices" */
-  update_devices_by_pk?: Maybe<Devices>;
-  /** update data of the table: "groups" */
-  update_groups?: Maybe<Groups_Mutation_Response>;
-  /** update single row of the table: "groups" */
-  update_groups_by_pk?: Maybe<Groups>;
-  /** update data of the table: "locations" */
-  update_locations?: Maybe<Locations_Mutation_Response>;
-  /** update single row of the table: "locations" */
-  update_locations_by_pk?: Maybe<Locations>;
-  /** update data of the table: "posts" */
-  update_posts?: Maybe<Posts_Mutation_Response>;
-  /** update single row of the table: "posts" */
-  update_posts_by_pk?: Maybe<Posts>;
-  /** update data of the table: "userGroups" */
-  update_userGroups?: Maybe<UserGroups_Mutation_Response>;
-  /** update single row of the table: "userGroups" */
-  update_userGroups_by_pk?: Maybe<UserGroups>;
-  /** update data of the table: "users" */
-  update_users?: Maybe<Users_Mutation_Response>;
-  /** update single row of the table: "users" */
-  update_users_by_pk?: Maybe<Users>;
+  /** delete data from the table: "device" */
+  delete_device?: Maybe<Device_Mutation_Response>;
+  /** delete single row from the table: "device" */
+  delete_device_by_pk?: Maybe<Device>;
+  /** delete data from the table: "file" */
+  delete_file?: Maybe<File_Mutation_Response>;
+  /** delete data from the table: "fileType" */
+  delete_fileType?: Maybe<FileType_Mutation_Response>;
+  /** delete single row from the table: "fileType" */
+  delete_fileType_by_pk?: Maybe<FileType>;
+  /** delete single row from the table: "file" */
+  delete_file_by_pk?: Maybe<File>;
+  /** delete data from the table: "group" */
+  delete_group?: Maybe<Group_Mutation_Response>;
+  /** delete single row from the table: "group" */
+  delete_group_by_pk?: Maybe<Group>;
+  /** delete data from the table: "location" */
+  delete_location?: Maybe<Location_Mutation_Response>;
+  /** delete single row from the table: "location" */
+  delete_location_by_pk?: Maybe<Location>;
+  /** delete data from the table: "post" */
+  delete_post?: Maybe<Post_Mutation_Response>;
+  /** delete single row from the table: "post" */
+  delete_post_by_pk?: Maybe<Post>;
+  /** delete data from the table: "reaction" */
+  delete_reaction?: Maybe<Reaction_Mutation_Response>;
+  /** delete single row from the table: "reaction" */
+  delete_reaction_by_pk?: Maybe<Reaction>;
+  /** delete data from the table: "user" */
+  delete_user?: Maybe<User_Mutation_Response>;
+  /** delete data from the table: "userGroup" */
+  delete_userGroup?: Maybe<UserGroup_Mutation_Response>;
+  /** delete single row from the table: "userGroup" */
+  delete_userGroup_by_pk?: Maybe<UserGroup>;
+  /** delete data from the table: "userPostReaction" */
+  delete_userPostReaction?: Maybe<UserPostReaction_Mutation_Response>;
+  /** delete single row from the table: "userPostReaction" */
+  delete_userPostReaction_by_pk?: Maybe<UserPostReaction>;
+  /** delete single row from the table: "user" */
+  delete_user_by_pk?: Maybe<User>;
+  /** insert data into the table: "device" */
+  insert_device?: Maybe<Device_Mutation_Response>;
+  /** insert a single row into the table: "device" */
+  insert_device_one?: Maybe<Device>;
+  /** insert data into the table: "file" */
+  insert_file?: Maybe<File_Mutation_Response>;
+  /** insert data into the table: "fileType" */
+  insert_fileType?: Maybe<FileType_Mutation_Response>;
+  /** insert a single row into the table: "fileType" */
+  insert_fileType_one?: Maybe<FileType>;
+  /** insert a single row into the table: "file" */
+  insert_file_one?: Maybe<File>;
+  /** insert data into the table: "group" */
+  insert_group?: Maybe<Group_Mutation_Response>;
+  /** insert a single row into the table: "group" */
+  insert_group_one?: Maybe<Group>;
+  /** insert data into the table: "location" */
+  insert_location?: Maybe<Location_Mutation_Response>;
+  /** insert a single row into the table: "location" */
+  insert_location_one?: Maybe<Location>;
+  /** insert data into the table: "post" */
+  insert_post?: Maybe<Post_Mutation_Response>;
+  /** insert a single row into the table: "post" */
+  insert_post_one?: Maybe<Post>;
+  /** insert data into the table: "reaction" */
+  insert_reaction?: Maybe<Reaction_Mutation_Response>;
+  /** insert a single row into the table: "reaction" */
+  insert_reaction_one?: Maybe<Reaction>;
+  /** insert data into the table: "user" */
+  insert_user?: Maybe<User_Mutation_Response>;
+  /** insert data into the table: "userGroup" */
+  insert_userGroup?: Maybe<UserGroup_Mutation_Response>;
+  /** insert a single row into the table: "userGroup" */
+  insert_userGroup_one?: Maybe<UserGroup>;
+  /** insert data into the table: "userPostReaction" */
+  insert_userPostReaction?: Maybe<UserPostReaction_Mutation_Response>;
+  /** insert a single row into the table: "userPostReaction" */
+  insert_userPostReaction_one?: Maybe<UserPostReaction>;
+  /** insert a single row into the table: "user" */
+  insert_user_one?: Maybe<User>;
+  /** update data of the table: "device" */
+  update_device?: Maybe<Device_Mutation_Response>;
+  /** update single row of the table: "device" */
+  update_device_by_pk?: Maybe<Device>;
+  /** update data of the table: "file" */
+  update_file?: Maybe<File_Mutation_Response>;
+  /** update data of the table: "fileType" */
+  update_fileType?: Maybe<FileType_Mutation_Response>;
+  /** update single row of the table: "fileType" */
+  update_fileType_by_pk?: Maybe<FileType>;
+  /** update single row of the table: "file" */
+  update_file_by_pk?: Maybe<File>;
+  /** update data of the table: "group" */
+  update_group?: Maybe<Group_Mutation_Response>;
+  /** update single row of the table: "group" */
+  update_group_by_pk?: Maybe<Group>;
+  /** update data of the table: "location" */
+  update_location?: Maybe<Location_Mutation_Response>;
+  /** update single row of the table: "location" */
+  update_location_by_pk?: Maybe<Location>;
+  /** update data of the table: "post" */
+  update_post?: Maybe<Post_Mutation_Response>;
+  /** update single row of the table: "post" */
+  update_post_by_pk?: Maybe<Post>;
+  /** update data of the table: "reaction" */
+  update_reaction?: Maybe<Reaction_Mutation_Response>;
+  /** update single row of the table: "reaction" */
+  update_reaction_by_pk?: Maybe<Reaction>;
+  /** update data of the table: "user" */
+  update_user?: Maybe<User_Mutation_Response>;
+  /** update data of the table: "userGroup" */
+  update_userGroup?: Maybe<UserGroup_Mutation_Response>;
+  /** update single row of the table: "userGroup" */
+  update_userGroup_by_pk?: Maybe<UserGroup>;
+  /** update data of the table: "userPostReaction" */
+  update_userPostReaction?: Maybe<UserPostReaction_Mutation_Response>;
+  /** update single row of the table: "userPostReaction" */
+  update_userPostReaction_by_pk?: Maybe<UserPostReaction>;
+  /** update single row of the table: "user" */
+  update_user_by_pk?: Maybe<User>;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_DevicesArgs = {
-  where: Devices_Bool_Exp;
+export type Mutation_RootDelete_DeviceArgs = {
+  where: Device_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Devices_By_PkArgs = {
+export type Mutation_RootDelete_Device_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_GroupsArgs = {
-  where: Groups_Bool_Exp;
+export type Mutation_RootDelete_FileArgs = {
+  where: File_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Groups_By_PkArgs = {
+export type Mutation_RootDelete_FileTypeArgs = {
+  where: FileType_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_FileType_By_PkArgs = {
+  type: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_LocationsArgs = {
-  where: Locations_Bool_Exp;
+export type Mutation_RootDelete_GroupArgs = {
+  where: Group_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Locations_By_PkArgs = {
+export type Mutation_RootDelete_Group_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_PostsArgs = {
-  where: Posts_Bool_Exp;
+export type Mutation_RootDelete_LocationArgs = {
+  where: Location_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Posts_By_PkArgs = {
+export type Mutation_RootDelete_Location_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_UserGroupsArgs = {
-  where: UserGroups_Bool_Exp;
+export type Mutation_RootDelete_PostArgs = {
+  where: Post_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_UserGroups_By_PkArgs = {
+export type Mutation_RootDelete_Post_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_UsersArgs = {
-  where: Users_Bool_Exp;
+export type Mutation_RootDelete_ReactionArgs = {
+  where: Reaction_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Users_By_PkArgs = {
+export type Mutation_RootDelete_Reaction_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UserArgs = {
+  where: User_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UserGroupArgs = {
+  where: UserGroup_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UserGroup_By_PkArgs = {
+  groupId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UserPostReactionArgs = {
+  where: UserPostReaction_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UserPostReaction_By_PkArgs = {
+  postId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_DevicesArgs = {
-  objects: Array<Devices_Insert_Input>;
-  on_conflict?: Maybe<Devices_On_Conflict>;
+export type Mutation_RootInsert_DeviceArgs = {
+  objects: Array<Device_Insert_Input>;
+  on_conflict?: Maybe<Device_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Devices_OneArgs = {
-  object: Devices_Insert_Input;
-  on_conflict?: Maybe<Devices_On_Conflict>;
+export type Mutation_RootInsert_Device_OneArgs = {
+  object: Device_Insert_Input;
+  on_conflict?: Maybe<Device_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_GroupsArgs = {
-  objects: Array<Groups_Insert_Input>;
-  on_conflict?: Maybe<Groups_On_Conflict>;
+export type Mutation_RootInsert_FileArgs = {
+  objects: Array<File_Insert_Input>;
+  on_conflict?: Maybe<File_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Groups_OneArgs = {
-  object: Groups_Insert_Input;
-  on_conflict?: Maybe<Groups_On_Conflict>;
+export type Mutation_RootInsert_FileTypeArgs = {
+  objects: Array<FileType_Insert_Input>;
+  on_conflict?: Maybe<FileType_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_LocationsArgs = {
-  objects: Array<Locations_Insert_Input>;
-  on_conflict?: Maybe<Locations_On_Conflict>;
+export type Mutation_RootInsert_FileType_OneArgs = {
+  object: FileType_Insert_Input;
+  on_conflict?: Maybe<FileType_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Locations_OneArgs = {
-  object: Locations_Insert_Input;
-  on_conflict?: Maybe<Locations_On_Conflict>;
+export type Mutation_RootInsert_File_OneArgs = {
+  object: File_Insert_Input;
+  on_conflict?: Maybe<File_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_PostsArgs = {
-  objects: Array<Posts_Insert_Input>;
-  on_conflict?: Maybe<Posts_On_Conflict>;
+export type Mutation_RootInsert_GroupArgs = {
+  objects: Array<Group_Insert_Input>;
+  on_conflict?: Maybe<Group_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Posts_OneArgs = {
-  object: Posts_Insert_Input;
-  on_conflict?: Maybe<Posts_On_Conflict>;
+export type Mutation_RootInsert_Group_OneArgs = {
+  object: Group_Insert_Input;
+  on_conflict?: Maybe<Group_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_UserGroupsArgs = {
-  objects: Array<UserGroups_Insert_Input>;
-  on_conflict?: Maybe<UserGroups_On_Conflict>;
+export type Mutation_RootInsert_LocationArgs = {
+  objects: Array<Location_Insert_Input>;
+  on_conflict?: Maybe<Location_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_UserGroups_OneArgs = {
-  object: UserGroups_Insert_Input;
-  on_conflict?: Maybe<UserGroups_On_Conflict>;
+export type Mutation_RootInsert_Location_OneArgs = {
+  object: Location_Insert_Input;
+  on_conflict?: Maybe<Location_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_UsersArgs = {
-  objects: Array<Users_Insert_Input>;
-  on_conflict?: Maybe<Users_On_Conflict>;
+export type Mutation_RootInsert_PostArgs = {
+  objects: Array<Post_Insert_Input>;
+  on_conflict?: Maybe<Post_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Users_OneArgs = {
-  object: Users_Insert_Input;
-  on_conflict?: Maybe<Users_On_Conflict>;
+export type Mutation_RootInsert_Post_OneArgs = {
+  object: Post_Insert_Input;
+  on_conflict?: Maybe<Post_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_DevicesArgs = {
-  _set?: Maybe<Devices_Set_Input>;
-  where: Devices_Bool_Exp;
+export type Mutation_RootInsert_ReactionArgs = {
+  objects: Array<Reaction_Insert_Input>;
+  on_conflict?: Maybe<Reaction_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Devices_By_PkArgs = {
-  _set?: Maybe<Devices_Set_Input>;
-  pk_columns: Devices_Pk_Columns_Input;
+export type Mutation_RootInsert_Reaction_OneArgs = {
+  object: Reaction_Insert_Input;
+  on_conflict?: Maybe<Reaction_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_GroupsArgs = {
-  _set?: Maybe<Groups_Set_Input>;
-  where: Groups_Bool_Exp;
+export type Mutation_RootInsert_UserArgs = {
+  objects: Array<User_Insert_Input>;
+  on_conflict?: Maybe<User_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Groups_By_PkArgs = {
-  _set?: Maybe<Groups_Set_Input>;
-  pk_columns: Groups_Pk_Columns_Input;
+export type Mutation_RootInsert_UserGroupArgs = {
+  objects: Array<UserGroup_Insert_Input>;
+  on_conflict?: Maybe<UserGroup_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_LocationsArgs = {
-  _append?: Maybe<Locations_Append_Input>;
-  _delete_at_path?: Maybe<Locations_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Locations_Delete_Elem_Input>;
-  _delete_key?: Maybe<Locations_Delete_Key_Input>;
-  _inc?: Maybe<Locations_Inc_Input>;
-  _prepend?: Maybe<Locations_Prepend_Input>;
-  _set?: Maybe<Locations_Set_Input>;
-  where: Locations_Bool_Exp;
+export type Mutation_RootInsert_UserGroup_OneArgs = {
+  object: UserGroup_Insert_Input;
+  on_conflict?: Maybe<UserGroup_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Locations_By_PkArgs = {
-  _append?: Maybe<Locations_Append_Input>;
-  _delete_at_path?: Maybe<Locations_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Locations_Delete_Elem_Input>;
-  _delete_key?: Maybe<Locations_Delete_Key_Input>;
-  _inc?: Maybe<Locations_Inc_Input>;
-  _prepend?: Maybe<Locations_Prepend_Input>;
-  _set?: Maybe<Locations_Set_Input>;
-  pk_columns: Locations_Pk_Columns_Input;
+export type Mutation_RootInsert_UserPostReactionArgs = {
+  objects: Array<UserPostReaction_Insert_Input>;
+  on_conflict?: Maybe<UserPostReaction_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_PostsArgs = {
-  _set?: Maybe<Posts_Set_Input>;
-  where: Posts_Bool_Exp;
+export type Mutation_RootInsert_UserPostReaction_OneArgs = {
+  object: UserPostReaction_Insert_Input;
+  on_conflict?: Maybe<UserPostReaction_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Posts_By_PkArgs = {
-  _set?: Maybe<Posts_Set_Input>;
-  pk_columns: Posts_Pk_Columns_Input;
+export type Mutation_RootInsert_User_OneArgs = {
+  object: User_Insert_Input;
+  on_conflict?: Maybe<User_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_UserGroupsArgs = {
-  _set?: Maybe<UserGroups_Set_Input>;
-  where: UserGroups_Bool_Exp;
+export type Mutation_RootUpdate_DeviceArgs = {
+  _set?: Maybe<Device_Set_Input>;
+  where: Device_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_UserGroups_By_PkArgs = {
-  _set?: Maybe<UserGroups_Set_Input>;
-  pk_columns: UserGroups_Pk_Columns_Input;
+export type Mutation_RootUpdate_Device_By_PkArgs = {
+  _set?: Maybe<Device_Set_Input>;
+  pk_columns: Device_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_UsersArgs = {
-  _set?: Maybe<Users_Set_Input>;
-  where: Users_Bool_Exp;
+export type Mutation_RootUpdate_FileArgs = {
+  _set?: Maybe<File_Set_Input>;
+  where: File_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _set?: Maybe<Users_Set_Input>;
-  pk_columns: Users_Pk_Columns_Input;
+export type Mutation_RootUpdate_FileTypeArgs = {
+  _set?: Maybe<FileType_Set_Input>;
+  where: FileType_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FileType_By_PkArgs = {
+  _set?: Maybe<FileType_Set_Input>;
+  pk_columns: FileType_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_By_PkArgs = {
+  _set?: Maybe<File_Set_Input>;
+  pk_columns: File_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_GroupArgs = {
+  _set?: Maybe<Group_Set_Input>;
+  where: Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_By_PkArgs = {
+  _set?: Maybe<Group_Set_Input>;
+  pk_columns: Group_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_LocationArgs = {
+  _append?: Maybe<Location_Append_Input>;
+  _delete_at_path?: Maybe<Location_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Location_Delete_Elem_Input>;
+  _delete_key?: Maybe<Location_Delete_Key_Input>;
+  _inc?: Maybe<Location_Inc_Input>;
+  _prepend?: Maybe<Location_Prepend_Input>;
+  _set?: Maybe<Location_Set_Input>;
+  where: Location_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Location_By_PkArgs = {
+  _append?: Maybe<Location_Append_Input>;
+  _delete_at_path?: Maybe<Location_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Location_Delete_Elem_Input>;
+  _delete_key?: Maybe<Location_Delete_Key_Input>;
+  _inc?: Maybe<Location_Inc_Input>;
+  _prepend?: Maybe<Location_Prepend_Input>;
+  _set?: Maybe<Location_Set_Input>;
+  pk_columns: Location_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PostArgs = {
+  _set?: Maybe<Post_Set_Input>;
+  where: Post_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Post_By_PkArgs = {
+  _set?: Maybe<Post_Set_Input>;
+  pk_columns: Post_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ReactionArgs = {
+  _set?: Maybe<Reaction_Set_Input>;
+  where: Reaction_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Reaction_By_PkArgs = {
+  _set?: Maybe<Reaction_Set_Input>;
+  pk_columns: Reaction_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserArgs = {
+  _set?: Maybe<User_Set_Input>;
+  where: User_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserGroupArgs = {
+  _set?: Maybe<UserGroup_Set_Input>;
+  where: UserGroup_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserGroup_By_PkArgs = {
+  _set?: Maybe<UserGroup_Set_Input>;
+  pk_columns: UserGroup_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserPostReactionArgs = {
+  _set?: Maybe<UserPostReaction_Set_Input>;
+  where: UserPostReaction_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserPostReaction_By_PkArgs = {
+  _set?: Maybe<UserPostReaction_Set_Input>;
+  pk_columns: UserPostReaction_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_By_PkArgs = {
+  _set?: Maybe<User_Set_Input>;
+  pk_columns: User_Pk_Columns_Input;
 };
 
 /** column ordering options */
@@ -1366,180 +1939,199 @@ export enum Order_By {
   DescNullsLast = 'desc_nulls_last'
 }
 
-/** columns and relationships of "posts" */
-export type Posts = {
-  __typename?: 'posts';
+/** columns and relationships of "post" */
+export type Post = {
+  __typename?: 'post';
   body: Scalars['String'];
   createdAt: Scalars['timestamptz'];
+  /** An array relationship */
+  files: Array<File>;
+  /** An aggregated array relationship */
+  files_aggregate: File_Aggregate;
   /** An object relationship */
-  group?: Maybe<Groups>;
+  group?: Maybe<Group>;
   groupId?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
   /** An object relationship */
-  user?: Maybe<Users>;
+  user?: Maybe<User>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** aggregated selection of "posts" */
-export type Posts_Aggregate = {
-  __typename?: 'posts_aggregate';
-  aggregate?: Maybe<Posts_Aggregate_Fields>;
-  nodes: Array<Posts>;
+
+/** columns and relationships of "post" */
+export type PostFilesArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
 };
 
-/** aggregate fields of "posts" */
-export type Posts_Aggregate_Fields = {
-  __typename?: 'posts_aggregate_fields';
+
+/** columns and relationships of "post" */
+export type PostFiles_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+/** aggregated selection of "post" */
+export type Post_Aggregate = {
+  __typename?: 'post_aggregate';
+  aggregate?: Maybe<Post_Aggregate_Fields>;
+  nodes: Array<Post>;
+};
+
+/** aggregate fields of "post" */
+export type Post_Aggregate_Fields = {
+  __typename?: 'post_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Posts_Max_Fields>;
-  min?: Maybe<Posts_Min_Fields>;
+  max?: Maybe<Post_Max_Fields>;
+  min?: Maybe<Post_Min_Fields>;
 };
 
 
-/** aggregate fields of "posts" */
-export type Posts_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Posts_Select_Column>>;
+/** aggregate fields of "post" */
+export type Post_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Post_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "posts" */
-export type Posts_Aggregate_Order_By = {
+/** order by aggregate values of table "post" */
+export type Post_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Posts_Max_Order_By>;
-  min?: Maybe<Posts_Min_Order_By>;
+  max?: Maybe<Post_Max_Order_By>;
+  min?: Maybe<Post_Min_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "posts" */
-export type Posts_Arr_Rel_Insert_Input = {
-  data: Array<Posts_Insert_Input>;
-  on_conflict?: Maybe<Posts_On_Conflict>;
+/** input type for inserting array relation for remote table "post" */
+export type Post_Arr_Rel_Insert_Input = {
+  data: Array<Post_Insert_Input>;
+  on_conflict?: Maybe<Post_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
-export type Posts_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Posts_Bool_Exp>>>;
-  _not?: Maybe<Posts_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Posts_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "post". All fields are combined with a logical 'AND'. */
+export type Post_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Post_Bool_Exp>>>;
+  _not?: Maybe<Post_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Post_Bool_Exp>>>;
   body?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  group?: Maybe<Groups_Bool_Exp>;
+  files?: Maybe<File_Bool_Exp>;
+  group?: Maybe<Group_Bool_Exp>;
   groupId?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
-  photoUrl?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  user?: Maybe<Users_Bool_Exp>;
+  user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "posts" */
-export enum Posts_Constraint {
+/** unique or primary key constraints on table "post" */
+export enum Post_Constraint {
   /** unique or primary key constraint */
   PostsPkey = 'posts_pkey'
 }
 
-/** input type for inserting data into table "posts" */
-export type Posts_Insert_Input = {
+/** input type for inserting data into table "post" */
+export type Post_Insert_Input = {
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
-  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  files?: Maybe<File_Arr_Rel_Insert_Input>;
+  group?: Maybe<Group_Obj_Rel_Insert_Input>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
-export type Posts_Max_Fields = {
-  __typename?: 'posts_max_fields';
+export type Post_Max_Fields = {
+  __typename?: 'post_max_fields';
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by max() on columns of table "posts" */
-export type Posts_Max_Order_By = {
+/** order by max() on columns of table "post" */
+export type Post_Max_Order_By = {
   body?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type Posts_Min_Fields = {
-  __typename?: 'posts_min_fields';
+export type Post_Min_Fields = {
+  __typename?: 'post_min_fields';
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by min() on columns of table "posts" */
-export type Posts_Min_Order_By = {
+/** order by min() on columns of table "post" */
+export type Post_Min_Order_By = {
   body?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "posts" */
-export type Posts_Mutation_Response = {
-  __typename?: 'posts_mutation_response';
+/** response of any mutation on the table "post" */
+export type Post_Mutation_Response = {
+  __typename?: 'post_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<Posts>;
+  returning: Array<Post>;
 };
 
-/** input type for inserting object relation for remote table "posts" */
-export type Posts_Obj_Rel_Insert_Input = {
-  data: Posts_Insert_Input;
-  on_conflict?: Maybe<Posts_On_Conflict>;
+/** input type for inserting object relation for remote table "post" */
+export type Post_Obj_Rel_Insert_Input = {
+  data: Post_Insert_Input;
+  on_conflict?: Maybe<Post_On_Conflict>;
 };
 
-/** on conflict condition type for table "posts" */
-export type Posts_On_Conflict = {
-  constraint: Posts_Constraint;
-  update_columns: Array<Posts_Update_Column>;
-  where?: Maybe<Posts_Bool_Exp>;
+/** on conflict condition type for table "post" */
+export type Post_On_Conflict = {
+  constraint: Post_Constraint;
+  update_columns: Array<Post_Update_Column>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "posts" */
-export type Posts_Order_By = {
+/** ordering options when selecting data from "post" */
+export type Post_Order_By = {
   body?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
-  group?: Maybe<Groups_Order_By>;
+  files_aggregate?: Maybe<File_Aggregate_Order_By>;
+  group?: Maybe<Group_Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  photoUrl?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
-  user?: Maybe<Users_Order_By>;
+  user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "posts" */
-export type Posts_Pk_Columns_Input = {
+/** primary key columns input for table: "post" */
+export type Post_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
-/** select columns of table "posts" */
-export enum Posts_Select_Column {
+/** select columns of table "post" */
+export enum Post_Select_Column {
   /** column name */
   Body = 'body',
   /** column name */
@@ -1548,27 +2140,24 @@ export enum Posts_Select_Column {
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
-  /** column name */
-  PhotoUrl = 'photoUrl',
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
   UserId = 'userId'
 }
 
-/** input type for updating data in table "posts" */
-export type Posts_Set_Input = {
+/** input type for updating data in table "post" */
+export type Post_Set_Input = {
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  photoUrl?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** update columns of table "posts" */
-export enum Posts_Update_Column {
+/** update columns of table "post" */
+export enum Post_Update_Column {
   /** column name */
   Body = 'body',
   /** column name */
@@ -1577,8 +2166,6 @@ export enum Posts_Update_Column {
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
-  /** column name */
-  PhotoUrl = 'photoUrl',
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
@@ -1588,394 +2175,798 @@ export enum Posts_Update_Column {
 /** query root */
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "devices" */
-  devices: Array<Devices>;
-  /** fetch aggregated fields from the table: "devices" */
-  devices_aggregate: Devices_Aggregate;
-  /** fetch data from the table: "devices" using primary key columns */
-  devices_by_pk?: Maybe<Devices>;
-  /** fetch data from the table: "groups" */
-  groups: Array<Groups>;
-  /** fetch aggregated fields from the table: "groups" */
-  groups_aggregate: Groups_Aggregate;
-  /** fetch data from the table: "groups" using primary key columns */
-  groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "locations" */
-  locations: Array<Locations>;
-  /** fetch aggregated fields from the table: "locations" */
-  locations_aggregate: Locations_Aggregate;
-  /** fetch data from the table: "locations" using primary key columns */
-  locations_by_pk?: Maybe<Locations>;
-  /** fetch data from the table: "posts" */
-  posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
-  posts_aggregate: Posts_Aggregate;
-  /** fetch data from the table: "posts" using primary key columns */
-  posts_by_pk?: Maybe<Posts>;
-  /** fetch data from the table: "userGroups" */
-  userGroups: Array<UserGroups>;
-  /** fetch aggregated fields from the table: "userGroups" */
-  userGroups_aggregate: UserGroups_Aggregate;
-  /** fetch data from the table: "userGroups" using primary key columns */
-  userGroups_by_pk?: Maybe<UserGroups>;
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "device" */
+  device: Array<Device>;
+  /** fetch aggregated fields from the table: "device" */
+  device_aggregate: Device_Aggregate;
+  /** fetch data from the table: "device" using primary key columns */
+  device_by_pk?: Maybe<Device>;
+  /** fetch data from the table: "file" */
+  file: Array<File>;
+  /** fetch data from the table: "fileType" */
+  fileType: Array<FileType>;
+  /** fetch aggregated fields from the table: "fileType" */
+  fileType_aggregate: FileType_Aggregate;
+  /** fetch data from the table: "fileType" using primary key columns */
+  fileType_by_pk?: Maybe<FileType>;
+  /** fetch aggregated fields from the table: "file" */
+  file_aggregate: File_Aggregate;
+  /** fetch data from the table: "file" using primary key columns */
+  file_by_pk?: Maybe<File>;
+  /** fetch data from the table: "group" */
+  group: Array<Group>;
+  /** fetch aggregated fields from the table: "group" */
+  group_aggregate: Group_Aggregate;
+  /** fetch data from the table: "group" using primary key columns */
+  group_by_pk?: Maybe<Group>;
+  /** fetch data from the table: "location" */
+  location: Array<Location>;
+  /** fetch aggregated fields from the table: "location" */
+  location_aggregate: Location_Aggregate;
+  /** fetch data from the table: "location" using primary key columns */
+  location_by_pk?: Maybe<Location>;
+  /** fetch data from the table: "post" */
+  post: Array<Post>;
+  /** fetch aggregated fields from the table: "post" */
+  post_aggregate: Post_Aggregate;
+  /** fetch data from the table: "post" using primary key columns */
+  post_by_pk?: Maybe<Post>;
+  /** fetch data from the table: "reaction" */
+  reaction: Array<Reaction>;
+  /** fetch aggregated fields from the table: "reaction" */
+  reaction_aggregate: Reaction_Aggregate;
+  /** fetch data from the table: "reaction" using primary key columns */
+  reaction_by_pk?: Maybe<Reaction>;
+  /** fetch data from the table: "user" */
+  user: Array<User>;
+  /** fetch data from the table: "userGroup" */
+  userGroup: Array<UserGroup>;
+  /** fetch aggregated fields from the table: "userGroup" */
+  userGroup_aggregate: UserGroup_Aggregate;
+  /** fetch data from the table: "userGroup" using primary key columns */
+  userGroup_by_pk?: Maybe<UserGroup>;
+  /** fetch data from the table: "userPostReaction" */
+  userPostReaction: Array<UserPostReaction>;
+  /** fetch aggregated fields from the table: "userPostReaction" */
+  userPostReaction_aggregate: UserPostReaction_Aggregate;
+  /** fetch data from the table: "userPostReaction" using primary key columns */
+  userPostReaction_by_pk?: Maybe<UserPostReaction>;
+  /** fetch aggregated fields from the table: "user" */
+  user_aggregate: User_Aggregate;
+  /** fetch data from the table: "user" using primary key columns */
+  user_by_pk?: Maybe<User>;
 };
 
 
 /** query root */
-export type Query_RootDevicesArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
+export type Query_RootDeviceArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootDevices_AggregateArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
+export type Query_RootDevice_AggregateArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootDevices_By_PkArgs = {
+export type Query_RootDevice_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** query root */
-export type Query_RootGroupsArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+export type Query_RootFileArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+export type Query_RootFileTypeArgs = {
+  distinct_on?: Maybe<Array<FileType_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
+  order_by?: Maybe<Array<FileType_Order_By>>;
+  where?: Maybe<FileType_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootGroups_By_PkArgs = {
+export type Query_RootFileType_AggregateArgs = {
+  distinct_on?: Maybe<Array<FileType_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FileType_Order_By>>;
+  where?: Maybe<FileType_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFileType_By_PkArgs = {
+  type: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootFile_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFile_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** query root */
-export type Query_RootLocationsArgs = {
-  distinct_on?: Maybe<Array<Locations_Select_Column>>;
+export type Query_RootGroupArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Locations_Order_By>>;
-  where?: Maybe<Locations_Bool_Exp>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootLocations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Locations_Select_Column>>;
+export type Query_RootGroup_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Locations_Order_By>>;
-  where?: Maybe<Locations_Bool_Exp>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootLocations_By_PkArgs = {
+export type Query_RootGroup_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** query root */
-export type Query_RootPostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+export type Query_RootLocationArgs = {
+  distinct_on?: Maybe<Array<Location_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<Location_Order_By>>;
+  where?: Maybe<Location_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootPosts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+export type Query_RootLocation_AggregateArgs = {
+  distinct_on?: Maybe<Array<Location_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<Location_Order_By>>;
+  where?: Maybe<Location_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootPosts_By_PkArgs = {
+export type Query_RootLocation_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** query root */
-export type Query_RootUserGroupsArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+export type Query_RootPostArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootUserGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+export type Query_RootPost_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootUserGroups_By_PkArgs = {
+export type Query_RootPost_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** query root */
-export type Query_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Query_RootReactionArgs = {
+  distinct_on?: Maybe<Array<Reaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Reaction_Order_By>>;
+  where?: Maybe<Reaction_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Query_RootReaction_AggregateArgs = {
+  distinct_on?: Maybe<Array<Reaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Reaction_Order_By>>;
+  where?: Maybe<Reaction_Bool_Exp>;
 };
 
 
 /** query root */
-export type Query_RootUsers_By_PkArgs = {
+export type Query_RootReaction_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootUserArgs = {
+  distinct_on?: Maybe<Array<User_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Order_By>>;
+  where?: Maybe<User_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUserGroupArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUserGroup_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUserGroup_By_PkArgs = {
+  groupId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootUserPostReactionArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUserPostReaction_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUserPostReaction_By_PkArgs = {
+  postId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootUser_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Order_By>>;
+  where?: Maybe<User_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUser_By_PkArgs = {
   id: Scalars['uuid'];
 };
+
+/** columns and relationships of "reaction" */
+export type Reaction = {
+  __typename?: 'reaction';
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "reaction" */
+export type Reaction_Aggregate = {
+  __typename?: 'reaction_aggregate';
+  aggregate?: Maybe<Reaction_Aggregate_Fields>;
+  nodes: Array<Reaction>;
+};
+
+/** aggregate fields of "reaction" */
+export type Reaction_Aggregate_Fields = {
+  __typename?: 'reaction_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Reaction_Max_Fields>;
+  min?: Maybe<Reaction_Min_Fields>;
+};
+
+
+/** aggregate fields of "reaction" */
+export type Reaction_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Reaction_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "reaction" */
+export type Reaction_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Reaction_Max_Order_By>;
+  min?: Maybe<Reaction_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "reaction" */
+export type Reaction_Arr_Rel_Insert_Input = {
+  data: Array<Reaction_Insert_Input>;
+  on_conflict?: Maybe<Reaction_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "reaction". All fields are combined with a logical 'AND'. */
+export type Reaction_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Reaction_Bool_Exp>>>;
+  _not?: Maybe<Reaction_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Reaction_Bool_Exp>>>;
+  name?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "reaction" */
+export enum Reaction_Constraint {
+  /** unique or primary key constraint */
+  ReactionsPkey = 'reactions_pkey'
+}
+
+export enum Reaction_Enum {
+  Like = 'LIKE'
+}
+
+/** expression to compare columns of type reaction_enum. All fields are combined with logical 'AND'. */
+export type Reaction_Enum_Comparison_Exp = {
+  _eq?: Maybe<Reaction_Enum>;
+  _in?: Maybe<Array<Reaction_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Reaction_Enum>;
+  _nin?: Maybe<Array<Reaction_Enum>>;
+};
+
+/** input type for inserting data into table "reaction" */
+export type Reaction_Insert_Input = {
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Reaction_Max_Fields = {
+  __typename?: 'reaction_max_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "reaction" */
+export type Reaction_Max_Order_By = {
+  name?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Reaction_Min_Fields = {
+  __typename?: 'reaction_min_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "reaction" */
+export type Reaction_Min_Order_By = {
+  name?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "reaction" */
+export type Reaction_Mutation_Response = {
+  __typename?: 'reaction_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Reaction>;
+};
+
+/** input type for inserting object relation for remote table "reaction" */
+export type Reaction_Obj_Rel_Insert_Input = {
+  data: Reaction_Insert_Input;
+  on_conflict?: Maybe<Reaction_On_Conflict>;
+};
+
+/** on conflict condition type for table "reaction" */
+export type Reaction_On_Conflict = {
+  constraint: Reaction_Constraint;
+  update_columns: Array<Reaction_Update_Column>;
+  where?: Maybe<Reaction_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "reaction" */
+export type Reaction_Order_By = {
+  name?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "reaction" */
+export type Reaction_Pk_Columns_Input = {
+  name: Scalars['String'];
+};
+
+/** select columns of table "reaction" */
+export enum Reaction_Select_Column {
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "reaction" */
+export type Reaction_Set_Input = {
+  name?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "reaction" */
+export enum Reaction_Update_Column {
+  /** column name */
+  Name = 'name'
+}
 
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "devices" */
-  devices: Array<Devices>;
-  /** fetch aggregated fields from the table: "devices" */
-  devices_aggregate: Devices_Aggregate;
-  /** fetch data from the table: "devices" using primary key columns */
-  devices_by_pk?: Maybe<Devices>;
-  /** fetch data from the table: "groups" */
-  groups: Array<Groups>;
-  /** fetch aggregated fields from the table: "groups" */
-  groups_aggregate: Groups_Aggregate;
-  /** fetch data from the table: "groups" using primary key columns */
-  groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "locations" */
-  locations: Array<Locations>;
-  /** fetch aggregated fields from the table: "locations" */
-  locations_aggregate: Locations_Aggregate;
-  /** fetch data from the table: "locations" using primary key columns */
-  locations_by_pk?: Maybe<Locations>;
-  /** fetch data from the table: "posts" */
-  posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
-  posts_aggregate: Posts_Aggregate;
-  /** fetch data from the table: "posts" using primary key columns */
-  posts_by_pk?: Maybe<Posts>;
-  /** fetch data from the table: "userGroups" */
-  userGroups: Array<UserGroups>;
-  /** fetch aggregated fields from the table: "userGroups" */
-  userGroups_aggregate: UserGroups_Aggregate;
-  /** fetch data from the table: "userGroups" using primary key columns */
-  userGroups_by_pk?: Maybe<UserGroups>;
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "device" */
+  device: Array<Device>;
+  /** fetch aggregated fields from the table: "device" */
+  device_aggregate: Device_Aggregate;
+  /** fetch data from the table: "device" using primary key columns */
+  device_by_pk?: Maybe<Device>;
+  /** fetch data from the table: "file" */
+  file: Array<File>;
+  /** fetch data from the table: "fileType" */
+  fileType: Array<FileType>;
+  /** fetch aggregated fields from the table: "fileType" */
+  fileType_aggregate: FileType_Aggregate;
+  /** fetch data from the table: "fileType" using primary key columns */
+  fileType_by_pk?: Maybe<FileType>;
+  /** fetch aggregated fields from the table: "file" */
+  file_aggregate: File_Aggregate;
+  /** fetch data from the table: "file" using primary key columns */
+  file_by_pk?: Maybe<File>;
+  /** fetch data from the table: "group" */
+  group: Array<Group>;
+  /** fetch aggregated fields from the table: "group" */
+  group_aggregate: Group_Aggregate;
+  /** fetch data from the table: "group" using primary key columns */
+  group_by_pk?: Maybe<Group>;
+  /** fetch data from the table: "location" */
+  location: Array<Location>;
+  /** fetch aggregated fields from the table: "location" */
+  location_aggregate: Location_Aggregate;
+  /** fetch data from the table: "location" using primary key columns */
+  location_by_pk?: Maybe<Location>;
+  /** fetch data from the table: "post" */
+  post: Array<Post>;
+  /** fetch aggregated fields from the table: "post" */
+  post_aggregate: Post_Aggregate;
+  /** fetch data from the table: "post" using primary key columns */
+  post_by_pk?: Maybe<Post>;
+  /** fetch data from the table: "reaction" */
+  reaction: Array<Reaction>;
+  /** fetch aggregated fields from the table: "reaction" */
+  reaction_aggregate: Reaction_Aggregate;
+  /** fetch data from the table: "reaction" using primary key columns */
+  reaction_by_pk?: Maybe<Reaction>;
+  /** fetch data from the table: "user" */
+  user: Array<User>;
+  /** fetch data from the table: "userGroup" */
+  userGroup: Array<UserGroup>;
+  /** fetch aggregated fields from the table: "userGroup" */
+  userGroup_aggregate: UserGroup_Aggregate;
+  /** fetch data from the table: "userGroup" using primary key columns */
+  userGroup_by_pk?: Maybe<UserGroup>;
+  /** fetch data from the table: "userPostReaction" */
+  userPostReaction: Array<UserPostReaction>;
+  /** fetch aggregated fields from the table: "userPostReaction" */
+  userPostReaction_aggregate: UserPostReaction_Aggregate;
+  /** fetch data from the table: "userPostReaction" using primary key columns */
+  userPostReaction_by_pk?: Maybe<UserPostReaction>;
+  /** fetch aggregated fields from the table: "user" */
+  user_aggregate: User_Aggregate;
+  /** fetch data from the table: "user" using primary key columns */
+  user_by_pk?: Maybe<User>;
 };
 
 
 /** subscription root */
-export type Subscription_RootDevicesArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
+export type Subscription_RootDeviceArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootDevices_AggregateArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
+export type Subscription_RootDevice_AggregateArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootDevices_By_PkArgs = {
+export type Subscription_RootDevice_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** subscription root */
-export type Subscription_RootGroupsArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+export type Subscription_RootFileArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+export type Subscription_RootFileTypeArgs = {
+  distinct_on?: Maybe<Array<FileType_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
+  order_by?: Maybe<Array<FileType_Order_By>>;
+  where?: Maybe<FileType_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootGroups_By_PkArgs = {
+export type Subscription_RootFileType_AggregateArgs = {
+  distinct_on?: Maybe<Array<FileType_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FileType_Order_By>>;
+  where?: Maybe<FileType_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFileType_By_PkArgs = {
+  type: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** subscription root */
-export type Subscription_RootLocationsArgs = {
-  distinct_on?: Maybe<Array<Locations_Select_Column>>;
+export type Subscription_RootGroupArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Locations_Order_By>>;
-  where?: Maybe<Locations_Bool_Exp>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootLocations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Locations_Select_Column>>;
+export type Subscription_RootGroup_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Locations_Order_By>>;
-  where?: Maybe<Locations_Bool_Exp>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootLocations_By_PkArgs = {
+export type Subscription_RootGroup_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** subscription root */
-export type Subscription_RootPostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+export type Subscription_RootLocationArgs = {
+  distinct_on?: Maybe<Array<Location_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<Location_Order_By>>;
+  where?: Maybe<Location_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootPosts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
+export type Subscription_RootLocation_AggregateArgs = {
+  distinct_on?: Maybe<Array<Location_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
+  order_by?: Maybe<Array<Location_Order_By>>;
+  where?: Maybe<Location_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootPosts_By_PkArgs = {
+export type Subscription_RootLocation_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** subscription root */
-export type Subscription_RootUserGroupsArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+export type Subscription_RootPostArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootUserGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
+export type Subscription_RootPost_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootUserGroups_By_PkArgs = {
+export type Subscription_RootPost_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** subscription root */
-export type Subscription_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Subscription_RootReactionArgs = {
+  distinct_on?: Maybe<Array<Reaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Reaction_Order_By>>;
+  where?: Maybe<Reaction_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
+export type Subscription_RootReaction_AggregateArgs = {
+  distinct_on?: Maybe<Array<Reaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  order_by?: Maybe<Array<Reaction_Order_By>>;
+  where?: Maybe<Reaction_Bool_Exp>;
 };
 
 
 /** subscription root */
-export type Subscription_RootUsers_By_PkArgs = {
+export type Subscription_RootReaction_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootUserArgs = {
+  distinct_on?: Maybe<Array<User_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Order_By>>;
+  where?: Maybe<User_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUserGroupArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUserGroup_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUserGroup_By_PkArgs = {
+  groupId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootUserPostReactionArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUserPostReaction_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUserPostReaction_By_PkArgs = {
+  postId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Order_By>>;
+  where?: Maybe<User_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1993,178 +2984,276 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
-/** columns and relationships of "userGroups" */
-export type UserGroups = {
-  __typename?: 'userGroups';
+/** columns and relationships of "user" */
+export type User = {
+  __typename?: 'user';
+  createdAt: Scalars['timestamptz'];
+  /** An array relationship */
+  devices: Array<Device>;
+  /** An aggregated array relationship */
+  devices_aggregate: Device_Aggregate;
+  email: Scalars['String'];
+  /** An array relationship */
+  files: Array<File>;
+  /** An aggregated array relationship */
+  files_aggregate: File_Aggregate;
+  id: Scalars['uuid'];
+  name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  posts: Array<Post>;
+  /** An aggregated array relationship */
+  posts_aggregate: Post_Aggregate;
+  role: Scalars['String'];
+  updatedAt: Scalars['timestamptz'];
+  /** An array relationship */
+  userGroups: Array<UserGroup>;
+  /** An aggregated array relationship */
+  userGroups_aggregate: UserGroup_Aggregate;
+};
+
+
+/** columns and relationships of "user" */
+export type UserDevicesArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserDevices_AggregateArgs = {
+  distinct_on?: Maybe<Array<Device_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Device_Order_By>>;
+  where?: Maybe<Device_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserFilesArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserFiles_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserPostsArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserPosts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Post_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Post_Order_By>>;
+  where?: Maybe<Post_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUserGroupsArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUserGroups_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserGroup_Order_By>>;
+  where?: Maybe<UserGroup_Bool_Exp>;
+};
+
+/** columns and relationships of "userGroup" */
+export type UserGroup = {
+  __typename?: 'userGroup';
   createdAt: Scalars['timestamptz'];
   /** An object relationship */
-  group: Groups;
+  group: Group;
   groupId: Scalars['uuid'];
-  id: Scalars['uuid'];
   isAdmin: Scalars['Boolean'];
   isFounder: Scalars['Boolean'];
   updatedAt: Scalars['timestamptz'];
   /** An object relationship */
-  user: Users;
+  user: User;
   userId: Scalars['uuid'];
 };
 
-/** aggregated selection of "userGroups" */
-export type UserGroups_Aggregate = {
-  __typename?: 'userGroups_aggregate';
-  aggregate?: Maybe<UserGroups_Aggregate_Fields>;
-  nodes: Array<UserGroups>;
+/** aggregated selection of "userGroup" */
+export type UserGroup_Aggregate = {
+  __typename?: 'userGroup_aggregate';
+  aggregate?: Maybe<UserGroup_Aggregate_Fields>;
+  nodes: Array<UserGroup>;
 };
 
-/** aggregate fields of "userGroups" */
-export type UserGroups_Aggregate_Fields = {
-  __typename?: 'userGroups_aggregate_fields';
+/** aggregate fields of "userGroup" */
+export type UserGroup_Aggregate_Fields = {
+  __typename?: 'userGroup_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<UserGroups_Max_Fields>;
-  min?: Maybe<UserGroups_Min_Fields>;
+  max?: Maybe<UserGroup_Max_Fields>;
+  min?: Maybe<UserGroup_Min_Fields>;
 };
 
 
-/** aggregate fields of "userGroups" */
-export type UserGroups_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<UserGroups_Select_Column>>;
+/** aggregate fields of "userGroup" */
+export type UserGroup_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<UserGroup_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "userGroups" */
-export type UserGroups_Aggregate_Order_By = {
+/** order by aggregate values of table "userGroup" */
+export type UserGroup_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<UserGroups_Max_Order_By>;
-  min?: Maybe<UserGroups_Min_Order_By>;
+  max?: Maybe<UserGroup_Max_Order_By>;
+  min?: Maybe<UserGroup_Min_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "userGroups" */
-export type UserGroups_Arr_Rel_Insert_Input = {
-  data: Array<UserGroups_Insert_Input>;
-  on_conflict?: Maybe<UserGroups_On_Conflict>;
+/** input type for inserting array relation for remote table "userGroup" */
+export type UserGroup_Arr_Rel_Insert_Input = {
+  data: Array<UserGroup_Insert_Input>;
+  on_conflict?: Maybe<UserGroup_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "userGroups". All fields are combined with a logical 'AND'. */
-export type UserGroups_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<UserGroups_Bool_Exp>>>;
-  _not?: Maybe<UserGroups_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<UserGroups_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "userGroup". All fields are combined with a logical 'AND'. */
+export type UserGroup_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<UserGroup_Bool_Exp>>>;
+  _not?: Maybe<UserGroup_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<UserGroup_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  group?: Maybe<Groups_Bool_Exp>;
+  group?: Maybe<Group_Bool_Exp>;
   groupId?: Maybe<Uuid_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   isAdmin?: Maybe<Boolean_Comparison_Exp>;
   isFounder?: Maybe<Boolean_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  user?: Maybe<Users_Bool_Exp>;
+  user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "userGroups" */
-export enum UserGroups_Constraint {
+/** unique or primary key constraints on table "userGroup" */
+export enum UserGroup_Constraint {
   /** unique or primary key constraint */
-  UserGroupsPkey = 'userGroups_pkey'
+  UserGroupPkey = 'userGroup_pkey'
 }
 
-/** input type for inserting data into table "userGroups" */
-export type UserGroups_Insert_Input = {
+/** input type for inserting data into table "userGroup" */
+export type UserGroup_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
-  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group?: Maybe<Group_Obj_Rel_Insert_Input>;
   groupId?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   isAdmin?: Maybe<Scalars['Boolean']>;
   isFounder?: Maybe<Scalars['Boolean']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
-export type UserGroups_Max_Fields = {
-  __typename?: 'userGroups_max_fields';
+export type UserGroup_Max_Fields = {
+  __typename?: 'userGroup_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by max() on columns of table "userGroups" */
-export type UserGroups_Max_Order_By = {
+/** order by max() on columns of table "userGroup" */
+export type UserGroup_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type UserGroups_Min_Fields = {
-  __typename?: 'userGroups_min_fields';
+export type UserGroup_Min_Fields = {
+  __typename?: 'userGroup_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** order by min() on columns of table "userGroups" */
-export type UserGroups_Min_Order_By = {
+/** order by min() on columns of table "userGroup" */
+export type UserGroup_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "userGroups" */
-export type UserGroups_Mutation_Response = {
-  __typename?: 'userGroups_mutation_response';
+/** response of any mutation on the table "userGroup" */
+export type UserGroup_Mutation_Response = {
+  __typename?: 'userGroup_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<UserGroups>;
+  returning: Array<UserGroup>;
 };
 
-/** input type for inserting object relation for remote table "userGroups" */
-export type UserGroups_Obj_Rel_Insert_Input = {
-  data: UserGroups_Insert_Input;
-  on_conflict?: Maybe<UserGroups_On_Conflict>;
+/** input type for inserting object relation for remote table "userGroup" */
+export type UserGroup_Obj_Rel_Insert_Input = {
+  data: UserGroup_Insert_Input;
+  on_conflict?: Maybe<UserGroup_On_Conflict>;
 };
 
-/** on conflict condition type for table "userGroups" */
-export type UserGroups_On_Conflict = {
-  constraint: UserGroups_Constraint;
-  update_columns: Array<UserGroups_Update_Column>;
-  where?: Maybe<UserGroups_Bool_Exp>;
+/** on conflict condition type for table "userGroup" */
+export type UserGroup_On_Conflict = {
+  constraint: UserGroup_Constraint;
+  update_columns: Array<UserGroup_Update_Column>;
+  where?: Maybe<UserGroup_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "userGroups" */
-export type UserGroups_Order_By = {
+/** ordering options when selecting data from "userGroup" */
+export type UserGroup_Order_By = {
   createdAt?: Maybe<Order_By>;
-  group?: Maybe<Groups_Order_By>;
+  group?: Maybe<Group_Order_By>;
   groupId?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   isAdmin?: Maybe<Order_By>;
   isFounder?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
-  user?: Maybe<Users_Order_By>;
+  user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: "userGroups" */
-export type UserGroups_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+/** primary key columns input for table: "userGroup" */
+export type UserGroup_Pk_Columns_Input = {
+  groupId: Scalars['uuid'];
+  userId: Scalars['uuid'];
 };
 
-/** select columns of table "userGroups" */
-export enum UserGroups_Select_Column {
+/** select columns of table "userGroup" */
+export enum UserGroup_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
   GroupId = 'groupId',
-  /** column name */
-  Id = 'id',
   /** column name */
   IsAdmin = 'isAdmin',
   /** column name */
@@ -2175,25 +3264,22 @@ export enum UserGroups_Select_Column {
   UserId = 'userId'
 }
 
-/** input type for updating data in table "userGroups" */
-export type UserGroups_Set_Input = {
+/** input type for updating data in table "userGroup" */
+export type UserGroup_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   groupId?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   isAdmin?: Maybe<Scalars['Boolean']>;
   isFounder?: Maybe<Scalars['Boolean']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
-/** update columns of table "userGroups" */
-export enum UserGroups_Update_Column {
+/** update columns of table "userGroup" */
+export enum UserGroup_Update_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
   GroupId = 'groupId',
-  /** column name */
-  Id = 'id',
   /** column name */
   IsAdmin = 'isAdmin',
   /** column name */
@@ -2204,164 +3290,237 @@ export enum UserGroups_Update_Column {
   UserId = 'userId'
 }
 
-/** columns and relationships of "users" */
-export type Users = {
-  __typename?: 'users';
-  createdAt: Scalars['timestamptz'];
-  /** An array relationship */
-  devices: Array<Devices>;
-  /** An aggregated array relationship */
-  devices_aggregate: Devices_Aggregate;
-  email: Scalars['String'];
-  id: Scalars['uuid'];
-  name?: Maybe<Scalars['String']>;
-  /** An array relationship */
-  posts: Array<Posts>;
-  /** An aggregated array relationship */
-  posts_aggregate: Posts_Aggregate;
-  role: Scalars['String'];
-  updatedAt: Scalars['timestamptz'];
-  /** An array relationship */
-  userGroups: Array<UserGroups>;
-  /** An aggregated array relationship */
-  userGroups_aggregate: UserGroups_Aggregate;
+/** columns and relationships of "userPostReaction" */
+export type UserPostReaction = {
+  __typename?: 'userPostReaction';
+  postId: Scalars['uuid'];
+  reaction: Reaction_Enum;
+  userId: Scalars['uuid'];
 };
 
-
-/** columns and relationships of "users" */
-export type UsersDevicesArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
+/** aggregated selection of "userPostReaction" */
+export type UserPostReaction_Aggregate = {
+  __typename?: 'userPostReaction_aggregate';
+  aggregate?: Maybe<UserPostReaction_Aggregate_Fields>;
+  nodes: Array<UserPostReaction>;
 };
 
-
-/** columns and relationships of "users" */
-export type UsersDevices_AggregateArgs = {
-  distinct_on?: Maybe<Array<Devices_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Devices_Order_By>>;
-  where?: Maybe<Devices_Bool_Exp>;
-};
-
-
-/** columns and relationships of "users" */
-export type UsersPostsArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
-};
-
-
-/** columns and relationships of "users" */
-export type UsersPosts_AggregateArgs = {
-  distinct_on?: Maybe<Array<Posts_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Posts_Order_By>>;
-  where?: Maybe<Posts_Bool_Exp>;
-};
-
-
-/** columns and relationships of "users" */
-export type UsersUserGroupsArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
-};
-
-
-/** columns and relationships of "users" */
-export type UsersUserGroups_AggregateArgs = {
-  distinct_on?: Maybe<Array<UserGroups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<UserGroups_Order_By>>;
-  where?: Maybe<UserGroups_Bool_Exp>;
-};
-
-/** aggregated selection of "users" */
-export type Users_Aggregate = {
-  __typename?: 'users_aggregate';
-  aggregate?: Maybe<Users_Aggregate_Fields>;
-  nodes: Array<Users>;
-};
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_Fields = {
-  __typename?: 'users_aggregate_fields';
+/** aggregate fields of "userPostReaction" */
+export type UserPostReaction_Aggregate_Fields = {
+  __typename?: 'userPostReaction_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Users_Max_Fields>;
-  min?: Maybe<Users_Min_Fields>;
+  max?: Maybe<UserPostReaction_Max_Fields>;
+  min?: Maybe<UserPostReaction_Min_Fields>;
 };
 
 
-/** aggregate fields of "users" */
-export type Users_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Users_Select_Column>>;
+/** aggregate fields of "userPostReaction" */
+export type UserPostReaction_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<UserPostReaction_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "users" */
-export type Users_Aggregate_Order_By = {
+/** order by aggregate values of table "userPostReaction" */
+export type UserPostReaction_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Users_Max_Order_By>;
-  min?: Maybe<Users_Min_Order_By>;
+  max?: Maybe<UserPostReaction_Max_Order_By>;
+  min?: Maybe<UserPostReaction_Min_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "users" */
-export type Users_Arr_Rel_Insert_Input = {
-  data: Array<Users_Insert_Input>;
-  on_conflict?: Maybe<Users_On_Conflict>;
+/** input type for inserting array relation for remote table "userPostReaction" */
+export type UserPostReaction_Arr_Rel_Insert_Input = {
+  data: Array<UserPostReaction_Insert_Input>;
+  on_conflict?: Maybe<UserPostReaction_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
-export type Users_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
-  _not?: Maybe<Users_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+/** Boolean expression to filter rows from the table "userPostReaction". All fields are combined with a logical 'AND'. */
+export type UserPostReaction_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<UserPostReaction_Bool_Exp>>>;
+  _not?: Maybe<UserPostReaction_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<UserPostReaction_Bool_Exp>>>;
+  postId?: Maybe<Uuid_Comparison_Exp>;
+  reaction?: Maybe<Reaction_Enum_Comparison_Exp>;
+  userId?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "userPostReaction" */
+export enum UserPostReaction_Constraint {
+  /** unique or primary key constraint */
+  UserPostReactionsPkey = 'userPostReactions_pkey'
+}
+
+/** input type for inserting data into table "userPostReaction" */
+export type UserPostReaction_Insert_Input = {
+  postId?: Maybe<Scalars['uuid']>;
+  reaction?: Maybe<Reaction_Enum>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type UserPostReaction_Max_Fields = {
+  __typename?: 'userPostReaction_max_fields';
+  postId?: Maybe<Scalars['uuid']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "userPostReaction" */
+export type UserPostReaction_Max_Order_By = {
+  postId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type UserPostReaction_Min_Fields = {
+  __typename?: 'userPostReaction_min_fields';
+  postId?: Maybe<Scalars['uuid']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "userPostReaction" */
+export type UserPostReaction_Min_Order_By = {
+  postId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "userPostReaction" */
+export type UserPostReaction_Mutation_Response = {
+  __typename?: 'userPostReaction_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<UserPostReaction>;
+};
+
+/** input type for inserting object relation for remote table "userPostReaction" */
+export type UserPostReaction_Obj_Rel_Insert_Input = {
+  data: UserPostReaction_Insert_Input;
+  on_conflict?: Maybe<UserPostReaction_On_Conflict>;
+};
+
+/** on conflict condition type for table "userPostReaction" */
+export type UserPostReaction_On_Conflict = {
+  constraint: UserPostReaction_Constraint;
+  update_columns: Array<UserPostReaction_Update_Column>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "userPostReaction" */
+export type UserPostReaction_Order_By = {
+  postId?: Maybe<Order_By>;
+  reaction?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "userPostReaction" */
+export type UserPostReaction_Pk_Columns_Input = {
+  postId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+};
+
+/** select columns of table "userPostReaction" */
+export enum UserPostReaction_Select_Column {
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  Reaction = 'reaction',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "userPostReaction" */
+export type UserPostReaction_Set_Input = {
+  postId?: Maybe<Scalars['uuid']>;
+  reaction?: Maybe<Reaction_Enum>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "userPostReaction" */
+export enum UserPostReaction_Update_Column {
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  Reaction = 'reaction',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** aggregated selection of "user" */
+export type User_Aggregate = {
+  __typename?: 'user_aggregate';
+  aggregate?: Maybe<User_Aggregate_Fields>;
+  nodes: Array<User>;
+};
+
+/** aggregate fields of "user" */
+export type User_Aggregate_Fields = {
+  __typename?: 'user_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<User_Max_Fields>;
+  min?: Maybe<User_Min_Fields>;
+};
+
+
+/** aggregate fields of "user" */
+export type User_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user" */
+export type User_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<User_Max_Order_By>;
+  min?: Maybe<User_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user" */
+export type User_Arr_Rel_Insert_Input = {
+  data: Array<User_Insert_Input>;
+  on_conflict?: Maybe<User_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'. */
+export type User_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<User_Bool_Exp>>>;
+  _not?: Maybe<User_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<User_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  devices?: Maybe<Devices_Bool_Exp>;
+  devices?: Maybe<Device_Bool_Exp>;
   email?: Maybe<String_Comparison_Exp>;
+  files?: Maybe<File_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
-  posts?: Maybe<Posts_Bool_Exp>;
+  posts?: Maybe<Post_Bool_Exp>;
   role?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  userGroups?: Maybe<UserGroups_Bool_Exp>;
+  userGroups?: Maybe<UserGroup_Bool_Exp>;
 };
 
-/** unique or primary key constraints on table "users" */
-export enum Users_Constraint {
+/** unique or primary key constraints on table "user" */
+export enum User_Constraint {
   /** unique or primary key constraint */
   UsersEmailKey = 'users_email_key',
   /** unique or primary key constraint */
   UsersPkey = 'users_pkey'
 }
 
-/** input type for inserting data into table "users" */
-export type Users_Insert_Input = {
+/** input type for inserting data into table "user" */
+export type User_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
-  devices?: Maybe<Devices_Arr_Rel_Insert_Input>;
+  devices?: Maybe<Device_Arr_Rel_Insert_Input>;
   email?: Maybe<Scalars['String']>;
+  files?: Maybe<File_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  posts?: Maybe<Posts_Arr_Rel_Insert_Input>;
+  posts?: Maybe<Post_Arr_Rel_Insert_Input>;
   role?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  userGroups?: Maybe<UserGroups_Arr_Rel_Insert_Input>;
+  userGroups?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
-export type Users_Max_Fields = {
-  __typename?: 'users_max_fields';
+export type User_Max_Fields = {
+  __typename?: 'user_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
@@ -2370,8 +3529,8 @@ export type Users_Max_Fields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by max() on columns of table "users" */
-export type Users_Max_Order_By = {
+/** order by max() on columns of table "user" */
+export type User_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -2381,8 +3540,8 @@ export type Users_Max_Order_By = {
 };
 
 /** aggregate min on columns */
-export type Users_Min_Fields = {
-  __typename?: 'users_min_fields';
+export type User_Min_Fields = {
+  __typename?: 'user_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
@@ -2391,8 +3550,8 @@ export type Users_Min_Fields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** order by min() on columns of table "users" */
-export type Users_Min_Order_By = {
+/** order by min() on columns of table "user" */
+export type User_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -2401,48 +3560,49 @@ export type Users_Min_Order_By = {
   updatedAt?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "users" */
-export type Users_Mutation_Response = {
-  __typename?: 'users_mutation_response';
+/** response of any mutation on the table "user" */
+export type User_Mutation_Response = {
+  __typename?: 'user_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
-  returning: Array<Users>;
+  returning: Array<User>;
 };
 
-/** input type for inserting object relation for remote table "users" */
-export type Users_Obj_Rel_Insert_Input = {
-  data: Users_Insert_Input;
-  on_conflict?: Maybe<Users_On_Conflict>;
+/** input type for inserting object relation for remote table "user" */
+export type User_Obj_Rel_Insert_Input = {
+  data: User_Insert_Input;
+  on_conflict?: Maybe<User_On_Conflict>;
 };
 
-/** on conflict condition type for table "users" */
-export type Users_On_Conflict = {
-  constraint: Users_Constraint;
-  update_columns: Array<Users_Update_Column>;
-  where?: Maybe<Users_Bool_Exp>;
+/** on conflict condition type for table "user" */
+export type User_On_Conflict = {
+  constraint: User_Constraint;
+  update_columns: Array<User_Update_Column>;
+  where?: Maybe<User_Bool_Exp>;
 };
 
-/** ordering options when selecting data from "users" */
-export type Users_Order_By = {
+/** ordering options when selecting data from "user" */
+export type User_Order_By = {
   createdAt?: Maybe<Order_By>;
-  devices_aggregate?: Maybe<Devices_Aggregate_Order_By>;
+  devices_aggregate?: Maybe<Device_Aggregate_Order_By>;
   email?: Maybe<Order_By>;
+  files_aggregate?: Maybe<File_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  posts_aggregate?: Maybe<Posts_Aggregate_Order_By>;
+  posts_aggregate?: Maybe<Post_Aggregate_Order_By>;
   role?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
-  userGroups_aggregate?: Maybe<UserGroups_Aggregate_Order_By>;
+  userGroups_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: "users" */
-export type Users_Pk_Columns_Input = {
+/** primary key columns input for table: "user" */
+export type User_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
-/** select columns of table "users" */
-export enum Users_Select_Column {
+/** select columns of table "user" */
+export enum User_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -2457,8 +3617,8 @@ export enum Users_Select_Column {
   UpdatedAt = 'updatedAt'
 }
 
-/** input type for updating data in table "users" */
-export type Users_Set_Input = {
+/** input type for updating data in table "user" */
+export type User_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
@@ -2467,8 +3627,8 @@ export type Users_Set_Input = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
-/** update columns of table "users" */
-export enum Users_Update_Column {
+/** update columns of table "user" */
+export enum User_Update_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
@@ -2498,29 +3658,29 @@ export type Uuid_Comparison_Exp = {
 };
 
 export type GroupFieldsFragment = (
-  { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'name' | 'description' | 'createdAt' | 'updatedAt' | 'photoUrl'>
+  { __typename?: 'group' }
+  & Pick<Group, 'id' | 'name' | 'description' | 'createdAt' | 'updatedAt'>
   & { location?: Maybe<(
-    { __typename?: 'locations' }
-    & Pick<Locations, 'id' | 'name' | 'city' | 'country' | 'countryCode' | 'formattedAddress' | 'latitude' | 'longitude' | 'state'>
+    { __typename?: 'location' }
+    & Pick<Location, 'id' | 'name' | 'city' | 'country' | 'countryCode' | 'formattedAddress' | 'latitude' | 'longitude' | 'state'>
   )> }
 );
 
 export type PostFieldsFragment = (
-  { __typename?: 'posts' }
-  & Pick<Posts, 'id' | 'body' | 'createdAt' | 'updatedAt' | 'photoUrl'>
+  { __typename?: 'post' }
+  & Pick<Post, 'id' | 'body' | 'createdAt' | 'updatedAt'>
   & { user?: Maybe<(
-    { __typename?: 'users' }
-    & Pick<Users, 'name' | 'id'>
+    { __typename?: 'user' }
+    & Pick<User, 'name' | 'id'>
   )> }
 );
 
 export type UserGroupFieldsFragment = (
-  { __typename?: 'userGroups' }
-  & Pick<UserGroups, 'id' | 'userId' | 'groupId'>
+  { __typename?: 'userGroup' }
+  & Pick<UserGroup, 'userId' | 'groupId'>
   & { user: (
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'name'>
+    { __typename?: 'user' }
+    & Pick<User, 'id' | 'name'>
   ) }
 );
 
@@ -2539,7 +3699,7 @@ export default {
     "types": [
       {
         "kind": "OBJECT",
-        "name": "devices",
+        "name": "device",
         "fields": [
           {
             "name": "createdAt",
@@ -2604,7 +3764,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "users"
+                "name": "user"
               }
             },
             "args": []
@@ -2625,13 +3785,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "devices_aggregate",
+        "name": "device_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_aggregate_fields"
+              "name": "device_aggregate_fields"
             },
             "args": []
           },
@@ -2645,7 +3805,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "devices"
+                    "name": "device"
                   }
                 }
               }
@@ -2657,7 +3817,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "devices_aggregate_fields",
+        "name": "device_aggregate_fields",
         "fields": [
           {
             "name": "count",
@@ -2692,7 +3852,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_max_fields"
+              "name": "device_max_fields"
             },
             "args": []
           },
@@ -2700,7 +3860,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_min_fields"
+              "name": "device_min_fields"
             },
             "args": []
           }
@@ -2709,7 +3869,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "devices_max_fields",
+        "name": "device_max_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -2772,7 +3932,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "devices_min_fields",
+        "name": "device_min_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -2835,7 +3995,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "devices_mutation_response",
+        "name": "device_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -2858,7 +4018,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "devices"
+                    "name": "device"
                   }
                 }
               }
@@ -2870,7 +4030,505 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups",
+        "name": "file",
+        "fields": [
+          {
+            "name": "assetType",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "created_at",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "groupId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updated_at",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "url",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType",
+        "fields": [
+          {
+            "name": "type",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "fileType_aggregate_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "fileType"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "fileType_max_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "fileType_min_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType_max_fields",
+        "fields": [
+          {
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType_min_fields",
+        "fields": [
+          {
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "fileType_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "fileType"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_aggregate_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "file"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_max_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_min_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_max_fields",
+        "fields": [
+          {
+            "name": "created_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "groupId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updated_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "url",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_min_fields",
+        "fields": [
+          {
+            "name": "created_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "groupId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updated_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "url",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "file"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "group",
         "fields": [
           {
             "name": "createdAt",
@@ -2893,6 +4551,130 @@ export default {
               }
             },
             "args": []
+          },
+          {
+            "name": "files",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "file"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "files_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "file_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
           },
           {
             "name": "id",
@@ -2920,7 +4702,7 @@ export default {
             "name": "location",
             "type": {
               "kind": "OBJECT",
-              "name": "locations"
+              "name": "location"
             },
             "args": []
           },
@@ -2944,22 +4726,6 @@ export default {
             "args": []
           },
           {
-            "name": "photo",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "posts",
             "type": {
               "kind": "NON_NULL",
@@ -2969,7 +4735,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "posts"
+                    "name": "post"
                   }
                 }
               }
@@ -3030,7 +4796,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "posts_aggregate"
+                "name": "post_aggregate"
               }
             },
             "args": [
@@ -3104,7 +4870,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "userGroups"
+                    "name": "userGroup"
                   }
                 }
               }
@@ -3165,7 +4931,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "userGroups_aggregate"
+                "name": "userGroup_aggregate"
               }
             },
             "args": [
@@ -3223,13 +4989,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups_aggregate",
+        "name": "group_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_aggregate_fields"
+              "name": "group_aggregate_fields"
             },
             "args": []
           },
@@ -3243,7 +5009,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "groups"
+                    "name": "group"
                   }
                 }
               }
@@ -3255,7 +5021,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups_aggregate_fields",
+        "name": "group_aggregate_fields",
         "fields": [
           {
             "name": "count",
@@ -3290,7 +5056,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_max_fields"
+              "name": "group_max_fields"
             },
             "args": []
           },
@@ -3298,7 +5064,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_min_fields"
+              "name": "group_min_fields"
             },
             "args": []
           }
@@ -3307,7 +5073,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups_max_fields",
+        "name": "group_max_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -3350,22 +5116,6 @@ export default {
             "args": []
           },
           {
-            "name": "photo",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "updatedAt",
             "type": {
               "kind": "SCALAR",
@@ -3378,7 +5128,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups_min_fields",
+        "name": "group_min_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -3421,22 +5171,6 @@ export default {
             "args": []
           },
           {
-            "name": "photo",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "updatedAt",
             "type": {
               "kind": "SCALAR",
@@ -3449,7 +5183,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "groups_mutation_response",
+        "name": "group_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -3472,7 +5206,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "groups"
+                    "name": "group"
                   }
                 }
               }
@@ -3484,7 +5218,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations",
+        "name": "location",
         "fields": [
           {
             "name": "addressForLanguage",
@@ -3625,13 +5359,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_aggregate",
+        "name": "location_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_aggregate_fields"
+              "name": "location_aggregate_fields"
             },
             "args": []
           },
@@ -3645,7 +5379,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "locations"
+                    "name": "location"
                   }
                 }
               }
@@ -3657,13 +5391,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_aggregate_fields",
+        "name": "location_aggregate_fields",
         "fields": [
           {
             "name": "avg",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_avg_fields"
+              "name": "location_avg_fields"
             },
             "args": []
           },
@@ -3700,7 +5434,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_max_fields"
+              "name": "location_max_fields"
             },
             "args": []
           },
@@ -3708,7 +5442,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_min_fields"
+              "name": "location_min_fields"
             },
             "args": []
           },
@@ -3716,7 +5450,7 @@ export default {
             "name": "stddev",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_stddev_fields"
+              "name": "location_stddev_fields"
             },
             "args": []
           },
@@ -3724,7 +5458,7 @@ export default {
             "name": "stddev_pop",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_stddev_pop_fields"
+              "name": "location_stddev_pop_fields"
             },
             "args": []
           },
@@ -3732,7 +5466,7 @@ export default {
             "name": "stddev_samp",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_stddev_samp_fields"
+              "name": "location_stddev_samp_fields"
             },
             "args": []
           },
@@ -3740,7 +5474,7 @@ export default {
             "name": "sum",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_sum_fields"
+              "name": "location_sum_fields"
             },
             "args": []
           },
@@ -3748,7 +5482,7 @@ export default {
             "name": "var_pop",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_var_pop_fields"
+              "name": "location_var_pop_fields"
             },
             "args": []
           },
@@ -3756,7 +5490,7 @@ export default {
             "name": "var_samp",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_var_samp_fields"
+              "name": "location_var_samp_fields"
             },
             "args": []
           },
@@ -3764,7 +5498,7 @@ export default {
             "name": "variance",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_variance_fields"
+              "name": "location_variance_fields"
             },
             "args": []
           }
@@ -3773,7 +5507,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_avg_fields",
+        "name": "location_avg_fields",
         "fields": [
           {
             "name": "latitude",
@@ -3796,102 +5530,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_max_fields",
-        "fields": [
-          {
-            "name": "city",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "country",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "countryCode",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "createdAt",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "formattedAddress",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "latitude",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "longitude",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "state",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updatedAt",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "locations_min_fields",
+        "name": "location_max_fields",
         "fields": [
           {
             "name": "city",
@@ -3986,7 +5625,102 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_mutation_response",
+        "name": "location_min_fields",
+        "fields": [
+          {
+            "name": "city",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "country",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "countryCode",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "formattedAddress",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "latitude",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "longitude",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "state",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "location_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -4009,7 +5743,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "locations"
+                    "name": "location"
                   }
                 }
               }
@@ -4021,7 +5755,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_stddev_fields",
+        "name": "location_stddev_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4044,7 +5778,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_stddev_pop_fields",
+        "name": "location_stddev_pop_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4067,7 +5801,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_stddev_samp_fields",
+        "name": "location_stddev_samp_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4090,7 +5824,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_sum_fields",
+        "name": "location_sum_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4113,7 +5847,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_var_pop_fields",
+        "name": "location_var_pop_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4136,7 +5870,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_var_samp_fields",
+        "name": "location_var_samp_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4159,7 +5893,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "locations_variance_fields",
+        "name": "location_variance_fields",
         "fields": [
           {
             "name": "latitude",
@@ -4185,10 +5919,10 @@ export default {
         "name": "mutation_root",
         "fields": [
           {
-            "name": "delete_devices",
+            "name": "delete_device",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_mutation_response"
+              "name": "device_mutation_response"
             },
             "args": [
               {
@@ -4204,10 +5938,10 @@ export default {
             ]
           },
           {
-            "name": "delete_devices_by_pk",
+            "name": "delete_device_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "devices"
+              "name": "device"
             },
             "args": [
               {
@@ -4223,10 +5957,10 @@ export default {
             ]
           },
           {
-            "name": "delete_groups",
+            "name": "delete_file",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_mutation_response"
+              "name": "file_mutation_response"
             },
             "args": [
               {
@@ -4242,29 +5976,10 @@ export default {
             ]
           },
           {
-            "name": "delete_groups_by_pk",
+            "name": "delete_fileType",
             "type": {
               "kind": "OBJECT",
-              "name": "groups"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "name": "delete_locations",
-            "type": {
-              "kind": "OBJECT",
-              "name": "locations_mutation_response"
+              "name": "fileType_mutation_response"
             },
             "args": [
               {
@@ -4280,10 +5995,29 @@ export default {
             ]
           },
           {
-            "name": "delete_locations_by_pk",
+            "name": "delete_fileType_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "locations"
+              "name": "fileType"
+            },
+            "args": [
+              {
+                "name": "type",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_file_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file"
             },
             "args": [
               {
@@ -4299,10 +6033,10 @@ export default {
             ]
           },
           {
-            "name": "delete_posts",
+            "name": "delete_group",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_mutation_response"
+              "name": "group_mutation_response"
             },
             "args": [
               {
@@ -4318,10 +6052,10 @@ export default {
             ]
           },
           {
-            "name": "delete_posts_by_pk",
+            "name": "delete_group_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "posts"
+              "name": "group"
             },
             "args": [
               {
@@ -4337,10 +6071,10 @@ export default {
             ]
           },
           {
-            "name": "delete_userGroups",
+            "name": "delete_location",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_mutation_response"
+              "name": "location_mutation_response"
             },
             "args": [
               {
@@ -4356,10 +6090,10 @@ export default {
             ]
           },
           {
-            "name": "delete_userGroups_by_pk",
+            "name": "delete_location_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups"
+              "name": "location"
             },
             "args": [
               {
@@ -4375,10 +6109,10 @@ export default {
             ]
           },
           {
-            "name": "delete_users",
+            "name": "delete_post",
             "type": {
               "kind": "OBJECT",
-              "name": "users_mutation_response"
+              "name": "post_mutation_response"
             },
             "args": [
               {
@@ -4394,10 +6128,10 @@ export default {
             ]
           },
           {
-            "name": "delete_users_by_pk",
+            "name": "delete_post_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "users"
+              "name": "post"
             },
             "args": [
               {
@@ -4413,10 +6147,182 @@ export default {
             ]
           },
           {
-            "name": "insert_devices",
+            "name": "delete_reaction",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_mutation_response"
+              "name": "reaction_mutation_response"
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_reaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction"
+            },
+            "args": [
+              {
+                "name": "name",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_user",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user_mutation_response"
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_userGroup",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup_mutation_response"
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_userGroup_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup"
+            },
+            "args": [
+              {
+                "name": "groupId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_userPostReaction",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction_mutation_response"
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_userPostReaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction"
+            },
+            "args": [
+              {
+                "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_user_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_device",
+            "type": {
+              "kind": "OBJECT",
+              "name": "device_mutation_response"
             },
             "args": [
               {
@@ -4445,10 +6351,10 @@ export default {
             ]
           },
           {
-            "name": "insert_devices_one",
+            "name": "insert_device_one",
             "type": {
               "kind": "OBJECT",
-              "name": "devices"
+              "name": "device"
             },
             "args": [
               {
@@ -4471,10 +6377,10 @@ export default {
             ]
           },
           {
-            "name": "insert_groups",
+            "name": "insert_file",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_mutation_response"
+              "name": "file_mutation_response"
             },
             "args": [
               {
@@ -4503,36 +6409,10 @@ export default {
             ]
           },
           {
-            "name": "insert_groups_one",
+            "name": "insert_fileType",
             "type": {
               "kind": "OBJECT",
-              "name": "groups"
-            },
-            "args": [
-              {
-                "name": "object",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              },
-              {
-                "name": "on_conflict",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "insert_locations",
-            "type": {
-              "kind": "OBJECT",
-              "name": "locations_mutation_response"
+              "name": "fileType_mutation_response"
             },
             "args": [
               {
@@ -4561,10 +6441,10 @@ export default {
             ]
           },
           {
-            "name": "insert_locations_one",
+            "name": "insert_fileType_one",
             "type": {
               "kind": "OBJECT",
-              "name": "locations"
+              "name": "fileType"
             },
             "args": [
               {
@@ -4587,10 +6467,36 @@ export default {
             ]
           },
           {
-            "name": "insert_posts",
+            "name": "insert_file_one",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_mutation_response"
+              "name": "file"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_group",
+            "type": {
+              "kind": "OBJECT",
+              "name": "group_mutation_response"
             },
             "args": [
               {
@@ -4619,10 +6525,10 @@ export default {
             ]
           },
           {
-            "name": "insert_posts_one",
+            "name": "insert_group_one",
             "type": {
               "kind": "OBJECT",
-              "name": "posts"
+              "name": "group"
             },
             "args": [
               {
@@ -4645,10 +6551,10 @@ export default {
             ]
           },
           {
-            "name": "insert_userGroups",
+            "name": "insert_location",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_mutation_response"
+              "name": "location_mutation_response"
             },
             "args": [
               {
@@ -4677,10 +6583,10 @@ export default {
             ]
           },
           {
-            "name": "insert_userGroups_one",
+            "name": "insert_location_one",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups"
+              "name": "location"
             },
             "args": [
               {
@@ -4703,10 +6609,10 @@ export default {
             ]
           },
           {
-            "name": "insert_users",
+            "name": "insert_post",
             "type": {
               "kind": "OBJECT",
-              "name": "users_mutation_response"
+              "name": "post_mutation_response"
             },
             "args": [
               {
@@ -4735,10 +6641,10 @@ export default {
             ]
           },
           {
-            "name": "insert_users_one",
+            "name": "insert_post_one",
             "type": {
               "kind": "OBJECT",
-              "name": "users"
+              "name": "post"
             },
             "args": [
               {
@@ -4761,10 +6667,242 @@ export default {
             ]
           },
           {
-            "name": "update_devices",
+            "name": "insert_reaction",
             "type": {
               "kind": "OBJECT",
-              "name": "devices_mutation_response"
+              "name": "reaction_mutation_response"
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_reaction_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_user",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user_mutation_response"
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_userGroup",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup_mutation_response"
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_userGroup_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_userPostReaction",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction_mutation_response"
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_userPostReaction_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_user_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_device",
+            "type": {
+              "kind": "OBJECT",
+              "name": "device_mutation_response"
             },
             "args": [
               {
@@ -4787,10 +6925,10 @@ export default {
             ]
           },
           {
-            "name": "update_devices_by_pk",
+            "name": "update_device_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "devices"
+              "name": "device"
             },
             "args": [
               {
@@ -4813,10 +6951,10 @@ export default {
             ]
           },
           {
-            "name": "update_groups",
+            "name": "update_file",
             "type": {
               "kind": "OBJECT",
-              "name": "groups_mutation_response"
+              "name": "file_mutation_response"
             },
             "args": [
               {
@@ -4839,10 +6977,36 @@ export default {
             ]
           },
           {
-            "name": "update_groups_by_pk",
+            "name": "update_fileType",
             "type": {
               "kind": "OBJECT",
-              "name": "groups"
+              "name": "fileType_mutation_response"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_fileType_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "fileType"
             },
             "args": [
               {
@@ -4865,10 +7029,88 @@ export default {
             ]
           },
           {
-            "name": "update_locations",
+            "name": "update_file_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "locations_mutation_response"
+              "name": "file"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_group",
+            "type": {
+              "kind": "OBJECT",
+              "name": "group_mutation_response"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_group_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "group"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_location",
+            "type": {
+              "kind": "OBJECT",
+              "name": "location_mutation_response"
             },
             "args": [
               {
@@ -4933,10 +7175,10 @@ export default {
             ]
           },
           {
-            "name": "update_locations_by_pk",
+            "name": "update_location_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "locations"
+              "name": "location"
             },
             "args": [
               {
@@ -5001,10 +7243,10 @@ export default {
             ]
           },
           {
-            "name": "update_posts",
+            "name": "update_post",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_mutation_response"
+              "name": "post_mutation_response"
             },
             "args": [
               {
@@ -5027,10 +7269,10 @@ export default {
             ]
           },
           {
-            "name": "update_posts_by_pk",
+            "name": "update_post_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "posts"
+              "name": "post"
             },
             "args": [
               {
@@ -5053,10 +7295,10 @@ export default {
             ]
           },
           {
-            "name": "update_userGroups",
+            "name": "update_reaction",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_mutation_response"
+              "name": "reaction_mutation_response"
             },
             "args": [
               {
@@ -5079,10 +7321,10 @@ export default {
             ]
           },
           {
-            "name": "update_userGroups_by_pk",
+            "name": "update_reaction_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups"
+              "name": "reaction"
             },
             "args": [
               {
@@ -5105,10 +7347,10 @@ export default {
             ]
           },
           {
-            "name": "update_users",
+            "name": "update_user",
             "type": {
               "kind": "OBJECT",
-              "name": "users_mutation_response"
+              "name": "user_mutation_response"
             },
             "args": [
               {
@@ -5131,10 +7373,114 @@ export default {
             ]
           },
           {
-            "name": "update_users_by_pk",
+            "name": "update_userGroup",
             "type": {
               "kind": "OBJECT",
-              "name": "users"
+              "name": "userGroup_mutation_response"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_userGroup_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_userPostReaction",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction_mutation_response"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_userPostReaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_user_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user"
             },
             "args": [
               {
@@ -5161,7 +7507,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts",
+        "name": "post",
         "fields": [
           {
             "name": "body",
@@ -5186,10 +7532,134 @@ export default {
             "args": []
           },
           {
+            "name": "files",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "file"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "files_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "file_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
             "name": "group",
             "type": {
               "kind": "OBJECT",
-              "name": "groups"
+              "name": "group"
             },
             "args": []
           },
@@ -5213,14 +7683,6 @@ export default {
             "args": []
           },
           {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "updatedAt",
             "type": {
               "kind": "NON_NULL",
@@ -5235,7 +7697,7 @@ export default {
             "name": "user",
             "type": {
               "kind": "OBJECT",
-              "name": "users"
+              "name": "user"
             },
             "args": []
           },
@@ -5252,13 +7714,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts_aggregate",
+        "name": "post_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_aggregate_fields"
+              "name": "post_aggregate_fields"
             },
             "args": []
           },
@@ -5272,7 +7734,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "posts"
+                    "name": "post"
                   }
                 }
               }
@@ -5284,7 +7746,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts_aggregate_fields",
+        "name": "post_aggregate_fields",
         "fields": [
           {
             "name": "count",
@@ -5319,7 +7781,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_max_fields"
+              "name": "post_max_fields"
             },
             "args": []
           },
@@ -5327,7 +7789,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "posts_min_fields"
+              "name": "post_min_fields"
             },
             "args": []
           }
@@ -5336,7 +7798,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts_max_fields",
+        "name": "post_max_fields",
         "fields": [
           {
             "name": "body",
@@ -5371,14 +7833,6 @@ export default {
             "args": []
           },
           {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "updatedAt",
             "type": {
               "kind": "SCALAR",
@@ -5399,7 +7853,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts_min_fields",
+        "name": "post_min_fields",
         "fields": [
           {
             "name": "body",
@@ -5434,14 +7888,6 @@ export default {
             "args": []
           },
           {
-            "name": "photoUrl",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "updatedAt",
             "type": {
               "kind": "SCALAR",
@@ -5462,7 +7908,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "posts_mutation_response",
+        "name": "post_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -5485,7 +7931,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "posts"
+                    "name": "post"
                   }
                 }
               }
@@ -5500,7 +7946,7 @@ export default {
         "name": "query_root",
         "fields": [
           {
-            "name": "devices",
+            "name": "device",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -5509,7 +7955,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "devices"
+                    "name": "device"
                   }
                 }
               }
@@ -5565,12 +8011,12 @@ export default {
             ]
           },
           {
-            "name": "devices_aggregate",
+            "name": "device_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "devices_aggregate"
+                "name": "device_aggregate"
               }
             },
             "args": [
@@ -5624,10 +8070,10 @@ export default {
             ]
           },
           {
-            "name": "devices_by_pk",
+            "name": "device_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "devices"
+              "name": "device"
             },
             "args": [
               {
@@ -5643,7 +8089,7 @@ export default {
             ]
           },
           {
-            "name": "groups",
+            "name": "file",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -5652,7 +8098,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "groups"
+                    "name": "file"
                   }
                 }
               }
@@ -5708,12 +8154,77 @@ export default {
             ]
           },
           {
-            "name": "groups_aggregate",
+            "name": "fileType",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "fileType"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "fileType_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "groups_aggregate"
+                "name": "fileType_aggregate"
               }
             },
             "args": [
@@ -5767,10 +8278,88 @@ export default {
             ]
           },
           {
-            "name": "groups_by_pk",
+            "name": "fileType_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "groups"
+              "name": "fileType"
+            },
+            "args": [
+              {
+                "name": "type",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "file_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "file_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "file_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file"
             },
             "args": [
               {
@@ -5786,7 +8375,7 @@ export default {
             ]
           },
           {
-            "name": "locations",
+            "name": "group",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -5795,7 +8384,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "locations"
+                    "name": "group"
                   }
                 }
               }
@@ -5851,12 +8440,12 @@ export default {
             ]
           },
           {
-            "name": "locations_aggregate",
+            "name": "group_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "locations_aggregate"
+                "name": "group_aggregate"
               }
             },
             "args": [
@@ -5910,10 +8499,10 @@ export default {
             ]
           },
           {
-            "name": "locations_by_pk",
+            "name": "group_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "locations"
+              "name": "group"
             },
             "args": [
               {
@@ -5929,7 +8518,7 @@ export default {
             ]
           },
           {
-            "name": "posts",
+            "name": "location",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -5938,7 +8527,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "posts"
+                    "name": "location"
                   }
                 }
               }
@@ -5994,12 +8583,12 @@ export default {
             ]
           },
           {
-            "name": "posts_aggregate",
+            "name": "location_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "posts_aggregate"
+                "name": "location_aggregate"
               }
             },
             "args": [
@@ -6053,10 +8642,10 @@ export default {
             ]
           },
           {
-            "name": "posts_by_pk",
+            "name": "location_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "posts"
+              "name": "location"
             },
             "args": [
               {
@@ -6072,7 +8661,7 @@ export default {
             ]
           },
           {
-            "name": "userGroups",
+            "name": "post",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -6081,7 +8670,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "userGroups"
+                    "name": "post"
                   }
                 }
               }
@@ -6137,12 +8726,12 @@ export default {
             ]
           },
           {
-            "name": "userGroups_aggregate",
+            "name": "post_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "userGroups_aggregate"
+                "name": "post_aggregate"
               }
             },
             "args": [
@@ -6196,10 +8785,10 @@ export default {
             ]
           },
           {
-            "name": "userGroups_by_pk",
+            "name": "post_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups"
+              "name": "post"
             },
             "args": [
               {
@@ -6215,7 +8804,7 @@ export default {
             ]
           },
           {
-            "name": "users",
+            "name": "reaction",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -6224,7 +8813,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "users"
+                    "name": "reaction"
                   }
                 }
               }
@@ -6280,12 +8869,12 @@ export default {
             ]
           },
           {
-            "name": "users_aggregate",
+            "name": "reaction_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "users_aggregate"
+                "name": "reaction_aggregate"
               }
             },
             "args": [
@@ -6339,10 +8928,459 @@ export default {
             ]
           },
           {
-            "name": "users_by_pk",
+            "name": "reaction_by_pk",
             "type": {
               "kind": "OBJECT",
-              "name": "users"
+              "name": "reaction"
+            },
+            "args": [
+              {
+                "name": "name",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "user"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "userGroup"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userGroup_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup"
+            },
+            "args": [
+              {
+                "name": "groupId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "userPostReaction"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userPostReaction_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction"
+            },
+            "args": [
+              {
+                "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "user_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "user_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "user_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user"
             },
             "args": [
               {
@@ -6356,6 +9394,173 @@ export default {
                 }
               }
             ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction",
+        "fields": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction_aggregate_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "reaction"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction_max_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction_min_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction_max_fields",
+        "fields": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction_min_fields",
+        "fields": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "reaction_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "reaction"
+                  }
+                }
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -6365,6 +9570,1474 @@ export default {
         "name": "subscription_root",
         "fields": [
           {
+            "name": "device",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "device"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "device_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "device_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "device_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "device"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "file",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "file"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "fileType",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "fileType"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "fileType_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "fileType_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "fileType_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "fileType"
+            },
+            "args": [
+              {
+                "name": "type",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "file_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "file_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "file_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "group",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "group"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "group_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "group_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "group_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "group"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "location",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "location"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "location_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "location_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "location_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "location"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "post",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "post"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "post_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "post_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "post_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "post"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "reaction",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "reaction"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "reaction_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "reaction_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "reaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "reaction"
+            },
+            "args": [
+              {
+                "name": "name",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "user"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "userGroup"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userGroup_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userGroup_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userGroup"
+            },
+            "args": [
+              {
+                "name": "groupId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "userPostReaction"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userPostReaction_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReaction_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "userPostReaction"
+            },
+            "args": [
+              {
+                "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "userId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "user_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "user_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "user_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user",
+        "fields": [
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
             "name": "devices",
             "type": {
               "kind": "NON_NULL",
@@ -6374,7 +11047,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "devices"
+                    "name": "device"
                   }
                 }
               }
@@ -6435,7 +11108,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "devices_aggregate"
+                "name": "device_aggregate"
               }
             },
             "args": [
@@ -6489,26 +11162,18 @@ export default {
             ]
           },
           {
-            "name": "devices_by_pk",
+            "name": "email",
             "type": {
-              "kind": "OBJECT",
-              "name": "devices"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
-            ]
+            },
+            "args": []
           },
           {
-            "name": "groups",
+            "name": "files",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -6517,7 +11182,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "groups"
+                    "name": "file"
                   }
                 }
               }
@@ -6573,12 +11238,12 @@ export default {
             ]
           },
           {
-            "name": "groups_aggregate",
+            "name": "files_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "groups_aggregate"
+                "name": "file_aggregate"
               }
             },
             "args": [
@@ -6632,166 +11297,23 @@ export default {
             ]
           },
           {
-            "name": "groups_by_pk",
-            "type": {
-              "kind": "OBJECT",
-              "name": "groups"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "name": "locations",
+            "name": "id",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "locations"
-                  }
-                }
+                "kind": "SCALAR",
+                "name": "Any"
               }
             },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
+            "args": []
           },
           {
-            "name": "locations_aggregate",
+            "name": "name",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "locations_aggregate"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "locations_by_pk",
-            "type": {
-              "kind": "OBJECT",
-              "name": "locations"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
+            "args": []
           },
           {
             "name": "posts",
@@ -6803,7 +11325,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "posts"
+                    "name": "post"
                   }
                 }
               }
@@ -6864,7 +11386,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "posts_aggregate"
+                "name": "post_aggregate"
               }
             },
             "args": [
@@ -6918,23 +11440,26 @@ export default {
             ]
           },
           {
-            "name": "posts_by_pk",
+            "name": "role",
             "type": {
-              "kind": "OBJECT",
-              "name": "posts"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
-            ]
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
           },
           {
             "name": "userGroups",
@@ -6946,7 +11471,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "userGroups"
+                    "name": "userGroup"
                   }
                 }
               }
@@ -7007,7 +11532,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "userGroups_aggregate"
+                "name": "userGroup_aggregate"
               }
             },
             "args": [
@@ -7056,168 +11581,6 @@ export default {
                 "type": {
                   "kind": "SCALAR",
                   "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "userGroups_by_pk",
-            "type": {
-              "kind": "OBJECT",
-              "name": "userGroups"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "name": "users",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "users"
-                  }
-                }
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "users_aggregate",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "users_aggregate"
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "users_by_pk",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users"
-            },
-            "args": [
-              {
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
                 }
               }
             ]
@@ -7227,7 +11590,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups",
+        "name": "userGroup",
         "fields": [
           {
             "name": "createdAt",
@@ -7246,24 +11609,13 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "groups"
+                "name": "group"
               }
             },
             "args": []
           },
           {
             "name": "groupId",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "id",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -7312,7 +11664,7 @@ export default {
               "kind": "NON_NULL",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "users"
+                "name": "user"
               }
             },
             "args": []
@@ -7333,13 +11685,13 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups_aggregate",
+        "name": "userGroup_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_aggregate_fields"
+              "name": "userGroup_aggregate_fields"
             },
             "args": []
           },
@@ -7353,7 +11705,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "userGroups"
+                    "name": "userGroup"
                   }
                 }
               }
@@ -7365,7 +11717,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups_aggregate_fields",
+        "name": "userGroup_aggregate_fields",
         "fields": [
           {
             "name": "count",
@@ -7400,7 +11752,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_max_fields"
+              "name": "userGroup_max_fields"
             },
             "args": []
           },
@@ -7408,7 +11760,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "userGroups_min_fields"
+              "name": "userGroup_min_fields"
             },
             "args": []
           }
@@ -7417,7 +11769,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups_max_fields",
+        "name": "userGroup_max_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -7429,14 +11781,6 @@ export default {
           },
           {
             "name": "groupId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "id",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7464,7 +11808,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups_min_fields",
+        "name": "userGroup_min_fields",
         "fields": [
           {
             "name": "createdAt",
@@ -7476,14 +11820,6 @@ export default {
           },
           {
             "name": "groupId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "id",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7511,7 +11847,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "userGroups_mutation_response",
+        "name": "userGroup_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -7534,7 +11870,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "userGroups"
+                    "name": "userGroup"
                   }
                 }
               }
@@ -7546,10 +11882,10 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users",
+        "name": "userPostReaction",
         "fields": [
           {
-            "name": "createdAt",
+            "name": "postId",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -7560,131 +11896,7 @@ export default {
             "args": []
           },
           {
-            "name": "devices",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "devices"
-                  }
-                }
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "devices_aggregate",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "devices_aggregate"
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "email",
+            "name": "reaction",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -7695,7 +11907,7 @@ export default {
             "args": []
           },
           {
-            "name": "id",
+            "name": "userId",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -7704,297 +11916,19 @@ export default {
               }
             },
             "args": []
-          },
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "posts",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "posts"
-                  }
-                }
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "posts_aggregate",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "posts_aggregate"
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "role",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "updatedAt",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "userGroups",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "userGroups"
-                  }
-                }
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
-            "name": "userGroups_aggregate",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "userGroups_aggregate"
-              }
-            },
-            "args": [
-              {
-                "name": "distinct_on",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "offset",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
-                "name": "order_by",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Any"
-                    }
-                  }
-                }
-              },
-              {
-                "name": "where",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
           }
         ],
         "interfaces": []
       },
       {
         "kind": "OBJECT",
-        "name": "users_aggregate",
+        "name": "userPostReaction_aggregate",
         "fields": [
           {
             "name": "aggregate",
             "type": {
               "kind": "OBJECT",
-              "name": "users_aggregate_fields"
+              "name": "userPostReaction_aggregate_fields"
             },
             "args": []
           },
@@ -8008,7 +11942,7 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "users"
+                    "name": "userPostReaction"
                   }
                 }
               }
@@ -8020,7 +11954,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_aggregate_fields",
+        "name": "userPostReaction_aggregate_fields",
         "fields": [
           {
             "name": "count",
@@ -8055,7 +11989,7 @@ export default {
             "name": "max",
             "type": {
               "kind": "OBJECT",
-              "name": "users_max_fields"
+              "name": "userPostReaction_max_fields"
             },
             "args": []
           },
@@ -8063,7 +11997,7 @@ export default {
             "name": "min",
             "type": {
               "kind": "OBJECT",
-              "name": "users_min_fields"
+              "name": "userPostReaction_min_fields"
             },
             "args": []
           }
@@ -8072,10 +12006,10 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_max_fields",
+        "name": "userPostReaction_max_fields",
         "fields": [
           {
-            "name": "createdAt",
+            "name": "postId",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -8083,39 +12017,7 @@ export default {
             "args": []
           },
           {
-            "name": "email",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "role",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updatedAt",
+            "name": "userId",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -8127,10 +12029,10 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_min_fields",
+        "name": "userPostReaction_min_fields",
         "fields": [
           {
-            "name": "createdAt",
+            "name": "postId",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -8138,39 +12040,7 @@ export default {
             "args": []
           },
           {
-            "name": "email",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "role",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updatedAt",
+            "name": "userId",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -8182,7 +12052,7 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_mutation_response",
+        "name": "userPostReaction_mutation_response",
         "fields": [
           {
             "name": "affected_rows",
@@ -8205,7 +12075,236 @@ export default {
                   "kind": "NON_NULL",
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "users"
+                    "name": "userPostReaction"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user_aggregate_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "user"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user_max_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user_min_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user_max_fields",
+        "fields": [
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "email",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "role",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user_min_fields",
+        "fields": [
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "email",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "role",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "user_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "user"
                   }
                 }
               }
@@ -8705,13 +12804,12 @@ export default {
   }
 } as unknown as IntrospectionQuery;
 export const GroupFieldsFragmentDoc = gql`
-    fragment groupFields on groups {
+    fragment groupFields on group {
   id
   name
   description
   createdAt
   updatedAt
-  photoUrl
   location {
     id
     name
@@ -8726,12 +12824,11 @@ export const GroupFieldsFragmentDoc = gql`
 }
     `;
 export const PostFieldsFragmentDoc = gql`
-    fragment postFields on posts {
+    fragment postFields on post {
   id
   body
   createdAt
   updatedAt
-  photoUrl
   user {
     name
     id
@@ -8739,8 +12836,7 @@ export const PostFieldsFragmentDoc = gql`
 }
     `;
 export const UserGroupFieldsFragmentDoc = gql`
-    fragment userGroupFields on userGroups {
-  id
+    fragment userGroupFields on userGroup {
   userId
   groupId
   user {
