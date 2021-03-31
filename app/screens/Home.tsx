@@ -86,7 +86,7 @@ export default function () {
   }, [navigation, userId]);
 
   const whereMyGroups: Group_Bool_Exp = {
-    userGroups: {userId: {_eq: userId}},
+    userGroup: {userId: {_eq: userId}},
   };
   const orderByGroups: Group_Order_By = {name: Order_By.Asc};
   const renderGroup = ({item}: {item: Group}) => {
@@ -96,7 +96,7 @@ export default function () {
   const whereMyPosts: Post_Bool_Exp = {
     _or: [
       {userId: {_eq: userId}},
-      {group: {userGroups: {userId: {_eq: userId}}}},
+      {group: {userGroup: {userId: {_eq: userId}}}},
       {userId: {_is_null: true}},
     ],
   };

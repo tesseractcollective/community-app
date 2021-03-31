@@ -29,6 +29,19 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+/** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
+export type Int_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Int']>;
+  _gt?: Maybe<Scalars['Int']>;
+  _gte?: Maybe<Scalars['Int']>;
+  _in?: Maybe<Array<Scalars['Int']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Int']>;
+  _lte?: Maybe<Scalars['Int']>;
+  _neq?: Maybe<Scalars['Int']>;
+  _nin?: Maybe<Array<Scalars['Int']>>;
+};
+
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>;
@@ -267,14 +280,24 @@ export enum Device_Update_Column {
 /** columns and relationships of "file" */
 export type File = {
   __typename?: 'file';
-  assetType: FileType_Enum;
+  cloudFrontData?: Maybe<Scalars['jsonb']>;
+  contentLength: Scalars['Int'];
   created_at: Scalars['timestamptz'];
+  domain: Scalars['String'];
+  fileType: FileType_Enum;
   groupId?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
+  mimeType: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at: Scalars['timestamptz'];
-  url: Scalars['String'];
   userId?: Maybe<Scalars['uuid']>;
+};
+
+
+/** columns and relationships of "file" */
+export type FileCloudFrontDataArgs = {
+  path?: Maybe<Scalars['String']>;
 };
 
 /** columns and relationships of "fileType" */
@@ -431,9 +454,17 @@ export type File_Aggregate = {
 /** aggregate fields of "file" */
 export type File_Aggregate_Fields = {
   __typename?: 'file_aggregate_fields';
+  avg?: Maybe<File_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<File_Max_Fields>;
   min?: Maybe<File_Min_Fields>;
+  stddev?: Maybe<File_Stddev_Fields>;
+  stddev_pop?: Maybe<File_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<File_Stddev_Samp_Fields>;
+  sum?: Maybe<File_Sum_Fields>;
+  var_pop?: Maybe<File_Var_Pop_Fields>;
+  var_samp?: Maybe<File_Var_Samp_Fields>;
+  variance?: Maybe<File_Variance_Fields>;
 };
 
 
@@ -445,9 +476,22 @@ export type File_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "file" */
 export type File_Aggregate_Order_By = {
+  avg?: Maybe<File_Avg_Order_By>;
   count?: Maybe<Order_By>;
   max?: Maybe<File_Max_Order_By>;
   min?: Maybe<File_Min_Order_By>;
+  stddev?: Maybe<File_Stddev_Order_By>;
+  stddev_pop?: Maybe<File_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<File_Stddev_Samp_Order_By>;
+  sum?: Maybe<File_Sum_Order_By>;
+  var_pop?: Maybe<File_Var_Pop_Order_By>;
+  var_samp?: Maybe<File_Var_Samp_Order_By>;
+  variance?: Maybe<File_Variance_Order_By>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type File_Append_Input = {
+  cloudFrontData?: Maybe<Scalars['jsonb']>;
 };
 
 /** input type for inserting array relation for remote table "file" */
@@ -456,18 +500,33 @@ export type File_Arr_Rel_Insert_Input = {
   on_conflict?: Maybe<File_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type File_Avg_Fields = {
+  __typename?: 'file_avg_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "file" */
+export type File_Avg_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "file". All fields are combined with a logical 'AND'. */
 export type File_Bool_Exp = {
   _and?: Maybe<Array<Maybe<File_Bool_Exp>>>;
   _not?: Maybe<File_Bool_Exp>;
   _or?: Maybe<Array<Maybe<File_Bool_Exp>>>;
-  assetType?: Maybe<FileType_Enum_Comparison_Exp>;
+  cloudFrontData?: Maybe<Jsonb_Comparison_Exp>;
+  contentLength?: Maybe<Int_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  domain?: Maybe<String_Comparison_Exp>;
+  fileType?: Maybe<FileType_Enum_Comparison_Exp>;
   groupId?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  mimeType?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
   postId?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
-  url?: Maybe<String_Comparison_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
@@ -477,61 +536,97 @@ export enum File_Constraint {
   AssetsPkey = 'assets_pkey'
 }
 
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type File_Delete_At_Path_Input = {
+  cloudFrontData?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type File_Delete_Elem_Input = {
+  cloudFrontData?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type File_Delete_Key_Input = {
+  cloudFrontData?: Maybe<Scalars['String']>;
+};
+
+/** input type for incrementing integer column in table "file" */
+export type File_Inc_Input = {
+  contentLength?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "file" */
 export type File_Insert_Input = {
-  assetType?: Maybe<FileType_Enum>;
+  cloudFrontData?: Maybe<Scalars['jsonb']>;
+  contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  domain?: Maybe<Scalars['String']>;
+  fileType?: Maybe<FileType_Enum>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
-  url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
 export type File_Max_Fields = {
   __typename?: 'file_max_fields';
+  contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  domain?: Maybe<Scalars['String']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
-  url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** order by max() on columns of table "file" */
 export type File_Max_Order_By = {
+  contentLength?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  domain?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   postId?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
-  url?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type File_Min_Fields = {
   __typename?: 'file_min_fields';
+  contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  domain?: Maybe<Scalars['String']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
-  url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "file" */
 export type File_Min_Order_By = {
+  contentLength?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  domain?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   postId?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
-  url?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -559,13 +654,17 @@ export type File_On_Conflict = {
 
 /** ordering options when selecting data from "file" */
 export type File_Order_By = {
-  assetType?: Maybe<Order_By>;
+  cloudFrontData?: Maybe<Order_By>;
+  contentLength?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  domain?: Maybe<Order_By>;
+  fileType?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   postId?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
-  url?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -574,57 +673,159 @@ export type File_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type File_Prepend_Input = {
+  cloudFrontData?: Maybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "file" */
 export enum File_Select_Column {
   /** column name */
-  AssetType = 'assetType',
+  CloudFrontData = 'cloudFrontData',
+  /** column name */
+  ContentLength = 'contentLength',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Domain = 'domain',
+  /** column name */
+  FileType = 'fileType',
   /** column name */
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
   /** column name */
+  MimeType = 'mimeType',
+  /** column name */
+  Name = 'name',
+  /** column name */
   PostId = 'postId',
   /** column name */
   UpdatedAt = 'updated_at',
-  /** column name */
-  Url = 'url',
   /** column name */
   UserId = 'userId'
 }
 
 /** input type for updating data in table "file" */
 export type File_Set_Input = {
-  assetType?: Maybe<FileType_Enum>;
+  cloudFrontData?: Maybe<Scalars['jsonb']>;
+  contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  domain?: Maybe<Scalars['String']>;
+  fileType?: Maybe<FileType_Enum>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
-  url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type File_Stddev_Fields = {
+  __typename?: 'file_stddev_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "file" */
+export type File_Stddev_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type File_Stddev_Pop_Fields = {
+  __typename?: 'file_stddev_pop_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "file" */
+export type File_Stddev_Pop_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type File_Stddev_Samp_Fields = {
+  __typename?: 'file_stddev_samp_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "file" */
+export type File_Stddev_Samp_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type File_Sum_Fields = {
+  __typename?: 'file_sum_fields';
+  contentLength?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "file" */
+export type File_Sum_Order_By = {
+  contentLength?: Maybe<Order_By>;
 };
 
 /** update columns of table "file" */
 export enum File_Update_Column {
   /** column name */
-  AssetType = 'assetType',
+  CloudFrontData = 'cloudFrontData',
+  /** column name */
+  ContentLength = 'contentLength',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Domain = 'domain',
+  /** column name */
+  FileType = 'fileType',
   /** column name */
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
   /** column name */
+  MimeType = 'mimeType',
+  /** column name */
+  Name = 'name',
+  /** column name */
   PostId = 'postId',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  Url = 'url',
-  /** column name */
   UserId = 'userId'
 }
+
+/** aggregate var_pop on columns */
+export type File_Var_Pop_Fields = {
+  __typename?: 'file_var_pop_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "file" */
+export type File_Var_Pop_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type File_Var_Samp_Fields = {
+  __typename?: 'file_var_samp_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "file" */
+export type File_Var_Samp_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type File_Variance_Fields = {
+  __typename?: 'file_variance_fields';
+  contentLength?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "file" */
+export type File_Variance_Order_By = {
+  contentLength?: Maybe<Order_By>;
+};
 
 
 /** expression to compare columns of type float8. All fields are combined with logical 'AND'. */
@@ -661,9 +862,9 @@ export type Group = {
   posts_aggregate: Post_Aggregate;
   updatedAt: Scalars['timestamptz'];
   /** An array relationship */
-  userGroups: Array<UserGroup>;
+  userGroup: Array<UserGroup>;
   /** An aggregated array relationship */
-  userGroups_aggregate: UserGroup_Aggregate;
+  userGroup_aggregate: UserGroup_Aggregate;
 };
 
 
@@ -708,7 +909,7 @@ export type GroupPosts_AggregateArgs = {
 
 
 /** columns and relationships of "group" */
-export type GroupUserGroupsArgs = {
+export type GroupUserGroupArgs = {
   distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -718,7 +919,7 @@ export type GroupUserGroupsArgs = {
 
 
 /** columns and relationships of "group" */
-export type GroupUserGroups_AggregateArgs = {
+export type GroupUserGroup_AggregateArgs = {
   distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -776,7 +977,7 @@ export type Group_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   posts?: Maybe<Post_Bool_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  userGroups?: Maybe<UserGroup_Bool_Exp>;
+  userGroup?: Maybe<UserGroup_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "group" */
@@ -799,7 +1000,7 @@ export type Group_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   posts?: Maybe<Post_Arr_Rel_Insert_Input>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  userGroups?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
+  userGroup?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -878,7 +1079,7 @@ export type Group_Order_By = {
   name?: Maybe<Order_By>;
   posts_aggregate?: Maybe<Post_Aggregate_Order_By>;
   updatedAt?: Maybe<Order_By>;
-  userGroups_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
+  userGroup_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "group" */
@@ -1788,6 +1989,12 @@ export type Mutation_RootUpdate_Device_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_FileArgs = {
+  _append?: Maybe<File_Append_Input>;
+  _delete_at_path?: Maybe<File_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<File_Delete_Elem_Input>;
+  _delete_key?: Maybe<File_Delete_Key_Input>;
+  _inc?: Maybe<File_Inc_Input>;
+  _prepend?: Maybe<File_Prepend_Input>;
   _set?: Maybe<File_Set_Input>;
   where: File_Bool_Exp;
 };
@@ -1809,6 +2016,12 @@ export type Mutation_RootUpdate_FileType_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_File_By_PkArgs = {
+  _append?: Maybe<File_Append_Input>;
+  _delete_at_path?: Maybe<File_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<File_Delete_Elem_Input>;
+  _delete_key?: Maybe<File_Delete_Key_Input>;
+  _inc?: Maybe<File_Inc_Input>;
+  _prepend?: Maybe<File_Prepend_Input>;
   _set?: Maybe<File_Set_Input>;
   pk_columns: File_Pk_Columns_Input;
 };
@@ -3006,9 +3219,9 @@ export type User = {
   role: Scalars['String'];
   updatedAt: Scalars['timestamptz'];
   /** An array relationship */
-  userGroups: Array<UserGroup>;
+  userGroup: Array<UserGroup>;
   /** An aggregated array relationship */
-  userGroups_aggregate: UserGroup_Aggregate;
+  userGroup_aggregate: UserGroup_Aggregate;
 };
 
 
@@ -3073,7 +3286,7 @@ export type UserPosts_AggregateArgs = {
 
 
 /** columns and relationships of "user" */
-export type UserUserGroupsArgs = {
+export type UserUserGroupArgs = {
   distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -3083,7 +3296,7 @@ export type UserUserGroupsArgs = {
 
 
 /** columns and relationships of "user" */
-export type UserUserGroups_AggregateArgs = {
+export type UserUserGroup_AggregateArgs = {
   distinct_on?: Maybe<Array<UserGroup_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -3493,7 +3706,7 @@ export type User_Bool_Exp = {
   posts?: Maybe<Post_Bool_Exp>;
   role?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-  userGroups?: Maybe<UserGroup_Bool_Exp>;
+  userGroup?: Maybe<UserGroup_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "user" */
@@ -3515,7 +3728,7 @@ export type User_Insert_Input = {
   posts?: Maybe<Post_Arr_Rel_Insert_Input>;
   role?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
-  userGroups?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
+  userGroup?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -3593,7 +3806,7 @@ export type User_Order_By = {
   posts_aggregate?: Maybe<Post_Aggregate_Order_By>;
   role?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
-  userGroups_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
+  userGroup_aggregate?: Maybe<UserGroup_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "user" */
@@ -4033,7 +4246,23 @@ export default {
         "name": "file",
         "fields": [
           {
-            "name": "assetType",
+            "name": "cloudFrontData",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "contentLength",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -4045,6 +4274,28 @@ export default {
           },
           {
             "name": "created_at",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "domain",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "fileType",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -4074,15 +4325,7 @@ export default {
             "args": []
           },
           {
-            "name": "postId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
+            "name": "mimeType",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -4093,7 +4336,23 @@ export default {
             "args": []
           },
           {
-            "name": "url",
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updated_at",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -4318,6 +4577,14 @@ export default {
         "name": "file_aggregate_fields",
         "fields": [
           {
+            "name": "avg",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_avg_fields"
+            },
+            "args": []
+          },
+          {
             "name": "count",
             "type": {
               "kind": "SCALAR",
@@ -4361,6 +4628,77 @@ export default {
               "name": "file_min_fields"
             },
             "args": []
+          },
+          {
+            "name": "stddev",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_stddev_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_stddev_pop_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_stddev_samp_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "sum",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_sum_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "var_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_var_pop_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "var_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_var_samp_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "variance",
+            "type": {
+              "kind": "OBJECT",
+              "name": "file_variance_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_avg_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -4370,7 +4708,23 @@ export default {
         "name": "file_max_fields",
         "fields": [
           {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "created_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "domain",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -4394,6 +4748,22 @@ export default {
             "args": []
           },
           {
+            "name": "mimeType",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "postId",
             "type": {
               "kind": "SCALAR",
@@ -4403,14 +4773,6 @@ export default {
           },
           {
             "name": "updated_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "url",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -4433,7 +4795,23 @@ export default {
         "name": "file_min_fields",
         "fields": [
           {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "created_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "domain",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -4457,6 +4835,22 @@ export default {
             "args": []
           },
           {
+            "name": "mimeType",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "postId",
             "type": {
               "kind": "SCALAR",
@@ -4466,14 +4860,6 @@ export default {
           },
           {
             "name": "updated_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "url",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -4520,6 +4906,111 @@ export default {
                   }
                 }
               }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_stddev_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_stddev_pop_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_stddev_samp_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_sum_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_var_pop_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_var_samp_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "file_variance_fields",
+        "fields": [
+          {
+            "name": "contentLength",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }
@@ -4861,7 +5352,7 @@ export default {
             "args": []
           },
           {
-            "name": "userGroups",
+            "name": "userGroup",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -4926,7 +5417,7 @@ export default {
             ]
           },
           {
-            "name": "userGroups_aggregate",
+            "name": "userGroup_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -6958,6 +7449,48 @@ export default {
             },
             "args": [
               {
+                "name": "_append",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_at_path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_elem",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_key",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_prepend",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -7035,6 +7568,48 @@ export default {
               "name": "file"
             },
             "args": [
+              {
+                "name": "_append",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_at_path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_elem",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_delete_key",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_prepend",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
               {
                 "name": "_set",
                 "type": {
@@ -11462,7 +12037,7 @@ export default {
             "args": []
           },
           {
-            "name": "userGroups",
+            "name": "userGroup",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
@@ -11527,7 +12102,7 @@ export default {
             ]
           },
           {
-            "name": "userGroups_aggregate",
+            "name": "userGroup_aggregate",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
