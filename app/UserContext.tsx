@@ -23,6 +23,8 @@ export const UserProvider = ({children}: any) => {
   const [userId, setUserId] = useState<string>("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
+  console.log(`token`, token);
+
   const client = createClient({
     url: constants.graphqlUrl,
     fetchOptions: () => {
