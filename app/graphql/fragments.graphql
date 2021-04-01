@@ -26,6 +26,10 @@ fragment postFields on post {
     name
     id
   }
+  files {
+    id
+    domain
+  }
 }
 
 fragment userGroupFields on userGroup {

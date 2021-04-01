@@ -7,16 +7,22 @@ import constants from './config';
 
 export interface UserContextType {
   userId: string;
+  token: string;
   setToken: (token: string | undefined) => void;
 }
 
 export const UserContext = createContext<UserContextType>({ 
   userId: "",
+  token: "",
   setToken: () => {},
 });
 
 export const useUserId = () => {
   return useContext(UserContext).userId;
+}
+
+export const useAuthToken = () => {
+  return useContext(UserContext).token;
 }
 
 export const UserProvider = ({children}: any) => {
@@ -45,9 +51,9 @@ export const UserProvider = ({children}: any) => {
     }
   }, [token]);
 
-  const userContextValue = { userId, setToken };
+  const userContextValue = { userId, token: token || "", setToken };
 
-  if (userId) {
+  if (userId && token) {
     return (
       <UrqlProvider value={client}>
         <UserContext.Provider value={userContextValue}>
