@@ -13,7 +13,7 @@ import {
   Groups,
   Groups_Bool_Exp,
   Groups_Order_By,
-  Order_By,
+  Order_By, 
   Posts,
   Posts_Bool_Exp,
   Posts_Order_By,
@@ -22,51 +22,6 @@ import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 const seeAllButtonGradient = ['#F44336', '#FF9800'];
-
-const styles = StyleSheet.create({
-  list: {
-    backgroundColor: '#F2F2F2',
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 16,
-    marginBottom: 16,
-    marginStart: 16,
-    marginEnd: 16,
-  },
-  sectionTitle: {
-    fontFamily: "Montserrat-Medium",
-    color: '#222222',
-    fontSize: 24,
-    textShadowColor: '#FFFFFF',
-    textShadowOffset: {width: 0, height: 4},
-    textShadowRadius: 12,
-  },
-  posts: {
-    height: '100%',
-  },
-  groups: {
-    paddingTop: 10,
-    paddingBottom: 20,
-  },
-  listButton: {    
-    borderRadius: 22,
-  },
-  listButtonTitle: {    
-    textTransform: 'uppercase',
-    paddingStart: 8,
-    fontFamily: "Montserrat-Bold",
-    fontSize: 11,
-    
-  },
-  listButtonContainer: {
-    textShadowColor: '#FFFFFF',
-    textShadowOffset: {width: 0, height: 4},
-    textShadowRadius: 12,
-  },
-});
 
 export default function () {
   const translations = useTranslations();
@@ -110,17 +65,12 @@ export default function () {
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
+          type='clear'
           buttonStyle={styles.listButton}
           titleStyle={styles.listButtonTitle}
           title={translations.seeAll.toUpperCase()}
           iconRight
-          icon={<Icon name="chevron-right" size={18} color="white" />}
-          linearGradientProps={{
-            colors: seeAllButtonGradient,
-            start: {x: 0, y: 0},
-            end: {x: 0, y: 0.8},
-          }}
-          ViewComponent={LinearGradient} 
+          icon={<Icon name='chevron-right' size={18} color='black' />}
           onPress={() => {
             navigation.navigate('GroupsAll');
           }}
@@ -152,3 +102,49 @@ export default function () {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  list: {
+    backgroundColor: '#F2F2F2',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 16,
+    marginStart: 16,
+    marginEnd: 16,
+  },
+  sectionTitle: {
+    fontFamily: "Montserrat-Medium",
+    color: '#444444',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
+  posts: {
+    height: '100%',
+  },
+  groups: {
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  listButton: {    
+    borderRadius: 22
+  },
+  listButtonTitle: {    
+    textTransform: 'uppercase',
+    paddingStart: 8,
+    color: "#000000",
+    fontFamily: "Montserrat-Bold",
+    fontSize: 11,
+  },
+  listButtonContainer: {
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
+});

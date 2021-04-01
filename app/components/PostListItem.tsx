@@ -26,8 +26,8 @@ export default function (props: PostListItemProps) {
             rounded
             icon={{name: 'user', type: 'font-awesome'}}
             title="JD"
-            titleStyle={{fontFamily: "Montserrat-Bold", fontSize: 11}}
-            size="small"
+            titleStyle={{fontFamily: "Montserrat-Bold", fontSize: 14}}
+            size="medium"
             overlayContainerStyle={{backgroundColor: 'gray'}}
             />
             <View style={styles.textContainer}>
@@ -39,17 +39,18 @@ export default function (props: PostListItemProps) {
               </Text>
             </View>
         </View> 
+        <View style={styles.authorRow}>
+          <Text style = {styles.bodyText} >
+            {post.body ?? "John Doe"} 
+          </Text>
+        </View>
         <View style={styles.image}>
           <Image
             style={StyleSheet.absoluteFill}
             source={{ uri: "https://images.unsplash.com/photo-1588627541420-fce3f661b779?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80" }}
           />
         </View> 
-        <View style={styles.authorRow}>
-          <Text style = {styles.bodyText} >
-            {post.body ?? "John Doe"} 
-          </Text>
-        </View>
+
 
       </ListItem.Content>
     </ListItem>
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     marginStart: 16,
     marginEnd: 16,
   },    
-  image: {
+    image: {
     aspectRatio: 1,
     height: 400,
     backgroundColor: 'rgba(0,0,0,0.02)',

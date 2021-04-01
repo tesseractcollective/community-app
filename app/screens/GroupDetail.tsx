@@ -10,7 +10,7 @@ import {
 import PaginatedList, {usePagination} from '../components/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
-import {Groups, Posts, Posts_Order_By, UserGroups, Order_By, UserGroups_Bool_Exp} from '../graphql';
+import {Groups, Posts, Posts_Order_By, UserGroups, Order_By, Posts_Bool_Exp} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
 import {useUserId} from '../UserContext';
 
@@ -24,8 +24,10 @@ export default function (props: any) {
   const {group} = props.route.params;
 
   const translations = useTranslations();
-  const where: UserGroups_Bool_Exp = {groupId: {_eq: group.id}};
-  const pagination = usePagination<UserGroups>(HasuraConfig.userGroups, where);
+  const whereGroupPosts: Posts_Bool_Exp = {
+    groupId: {_eq: group.id}
+  };
+  const pagination = usePagination<UserGroups>(HasuraConfig.groupPosts, whereGroupPosts);
   const userId = useUserId();
   
   const myUserGroup = pagination.items?.find((item) => item.userId === userId);
@@ -74,7 +76,7 @@ export default function (props: any) {
         style={styles.posts}
         config={HasuraConfig.posts}
         renderItem={renderPost}
-        // where={where}
+        where={whereGroupPosts}
         orderBy={orderByPosts}
         reloadOnFocus
       />

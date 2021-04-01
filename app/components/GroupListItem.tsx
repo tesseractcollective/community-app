@@ -64,7 +64,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title style={{ color: whiteColor, fontFamily: "Montserrat-Semibold", fontSize: 14, textTransform: 'uppercase' }}>
+        <ListItem.Title style={{ color: 'black', fontFamily: "Montserrat-Semibold", fontSize: 14, textTransform: 'uppercase' }}>
           {group.name}
         </ListItem.Title>
       </ListItem.Content>
