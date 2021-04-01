@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
 import FeatherIcons from 'react-native-vector-icons/Feather';
-import LinearGradient from 'react-native-linear-gradient';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import { GroupListItemHome } from '../components/GroupListItem';
 import PaginatedList from '../components/PaginatedList';
@@ -23,55 +23,13 @@ import {useUserId} from '../UserContext';
 
 const seeAllButtonGradient = ['#F44336', '#FF9800'];
 
-const styles = StyleSheet.create({
-  list: {
-    backgroundColor: '#F2F2F2',
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 16,
-    marginBottom: 16,
-    marginStart: 16,
-    marginEnd: 16,
-  },
-  sectionTitle: {
-    fontFamily: "Montserrat-Medium",
-    color: '#222222',
-    fontSize: 24,
-    textShadowColor: '#FFFFFF',
-    textShadowOffset: {width: 0, height: 4},
-    textShadowRadius: 12,
-  },
-  posts: {
-    height: '100%',
-  },
-  groups: {
-    paddingTop: 10,
-    paddingBottom: 20,
-  },
-  listButton: {    
-    borderRadius: 22,
-  },
-  listButtonTitle: {    
-    textTransform: 'uppercase',
-    paddingStart: 8,
-    fontFamily: "Montserrat-Bold",
-    fontSize: 11,
-    
-  },
-  listButtonContainer: {
-    textShadowColor: '#FFFFFF',
-    textShadowOffset: {width: 0, height: 4},
-    textShadowRadius: 12,
-  },
-});
-
 export default function () {
   const translations = useTranslations();
   const navigation = useNavigation();
   const userId = useUserId();
+  const bottomTabBarHeight = useBottomTabBarHeight();
+
+  console.log('bottomTabBarHeight', bottomTabBarHeight);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -110,17 +68,12 @@ export default function () {
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
+          type='clear'
           buttonStyle={styles.listButton}
           titleStyle={styles.listButtonTitle}
           title={translations.seeAll.toUpperCase()}
           iconRight
-          icon={<Icon name="chevron-right" size={18} color="white" />}
-          linearGradientProps={{
-            colors: seeAllButtonGradient,
-            start: {x: 0, y: 0},
-            end: {x: 0, y: 0.8},
-          }}
-          ViewComponent={LinearGradient} 
+          icon={<Icon name='chevron-right' size={18} color='black' />}
           onPress={() => {
             navigation.navigate('GroupsAll');
           }}
@@ -138,9 +91,6 @@ export default function () {
         reloadOnFocus
       />
 
-      {/* <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>{translations.activityFeed}</Text>
-      </View> */}
       <PaginatedList
         style={styles.posts}
         config={HasuraConfig.posts}
@@ -148,7 +98,56 @@ export default function () {
         where={whereMyPosts}
         orderBy={orderByPosts}
         reloadOnFocus
+        contentInset={{
+          top: -40, left: 0, bottom: bottomTabBarHeight * 2, right: 0
+        }}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  list: {
+    backgroundColor: '#F2F2F2',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 16,
+    marginStart: 16,
+    marginEnd: 16,
+  },
+  sectionTitle: {
+    fontFamily: "Montserrat-Medium",
+    color: '#444444',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
+  posts: {
+    height: '100%',
+  },
+  groups: {
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  listButton: {    
+    borderRadius: 22
+  },
+  listButtonTitle: {    
+    textTransform: 'uppercase',
+    paddingStart: 8,
+    color: "#000000",
+    fontFamily: "Montserrat-Bold",
+    fontSize: 11,
+  },
+  listButtonContainer: {
+    textShadowColor: '#FFFFFF',
+    textShadowOffset: {width: 0, height: 4},
+    textShadowRadius: 12,
+  },
+});

@@ -450,13 +450,13 @@ export enum Device_Update_Column {
 /** columns and relationships of "file" */
 export type File = {
   __typename?: 'file';
-  cloudFrontData?: Maybe<Scalars['jsonb']>;
   contentLength: Scalars['Int'];
   created_at: Scalars['timestamptz'];
   domain: Scalars['String'];
   fileType: Scalars['String'];
   groupId?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
+  meta: Scalars['jsonb'];
   mimeType: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
@@ -466,7 +466,7 @@ export type File = {
 
 
 /** columns and relationships of "file" */
-export type FileCloudFrontDataArgs = {
+export type FileMetaArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
@@ -517,7 +517,7 @@ export type File_Aggregate_Order_By = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type File_Append_Input = {
-  cloudFrontData?: Maybe<Scalars['jsonb']>;
+  meta?: Maybe<Scalars['jsonb']>;
 };
 
 /** input type for inserting array relation for remote table "file" */
@@ -542,13 +542,13 @@ export type File_Bool_Exp = {
   _and?: Maybe<Array<Maybe<File_Bool_Exp>>>;
   _not?: Maybe<File_Bool_Exp>;
   _or?: Maybe<Array<Maybe<File_Bool_Exp>>>;
-  cloudFrontData?: Maybe<Jsonb_Comparison_Exp>;
   contentLength?: Maybe<Int_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   domain?: Maybe<String_Comparison_Exp>;
   fileType?: Maybe<String_Comparison_Exp>;
   groupId?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  meta?: Maybe<Jsonb_Comparison_Exp>;
   mimeType?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   postId?: Maybe<Uuid_Comparison_Exp>;
@@ -564,17 +564,17 @@ export enum File_Constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type File_Delete_At_Path_Input = {
-  cloudFrontData?: Maybe<Array<Maybe<Scalars['String']>>>;
+  meta?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
 export type File_Delete_Elem_Input = {
-  cloudFrontData?: Maybe<Scalars['Int']>;
+  meta?: Maybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type File_Delete_Key_Input = {
-  cloudFrontData?: Maybe<Scalars['String']>;
+  meta?: Maybe<Scalars['String']>;
 };
 
 /** input type for incrementing integer column in table "file" */
@@ -584,13 +584,13 @@ export type File_Inc_Input = {
 
 /** input type for inserting data into table "file" */
 export type File_Insert_Input = {
-  cloudFrontData?: Maybe<Scalars['jsonb']>;
   contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   domain?: Maybe<Scalars['String']>;
   fileType?: Maybe<Scalars['String']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  meta?: Maybe<Scalars['jsonb']>;
   mimeType?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
@@ -684,13 +684,13 @@ export type File_On_Conflict = {
 
 /** ordering options when selecting data from "file" */
 export type File_Order_By = {
-  cloudFrontData?: Maybe<Order_By>;
   contentLength?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   domain?: Maybe<Order_By>;
   fileType?: Maybe<Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  meta?: Maybe<Order_By>;
   mimeType?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   postId?: Maybe<Order_By>;
@@ -705,13 +705,11 @@ export type File_Pk_Columns_Input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type File_Prepend_Input = {
-  cloudFrontData?: Maybe<Scalars['jsonb']>;
+  meta?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "file" */
 export enum File_Select_Column {
-  /** column name */
-  CloudFrontData = 'cloudFrontData',
   /** column name */
   ContentLength = 'contentLength',
   /** column name */
@@ -724,6 +722,8 @@ export enum File_Select_Column {
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
+  /** column name */
+  Meta = 'meta',
   /** column name */
   MimeType = 'mimeType',
   /** column name */
@@ -738,13 +738,13 @@ export enum File_Select_Column {
 
 /** input type for updating data in table "file" */
 export type File_Set_Input = {
-  cloudFrontData?: Maybe<Scalars['jsonb']>;
   contentLength?: Maybe<Scalars['Int']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   domain?: Maybe<Scalars['String']>;
   fileType?: Maybe<Scalars['String']>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  meta?: Maybe<Scalars['jsonb']>;
   mimeType?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
@@ -799,8 +799,6 @@ export type File_Sum_Order_By = {
 /** update columns of table "file" */
 export enum File_Update_Column {
   /** column name */
-  CloudFrontData = 'cloudFrontData',
-  /** column name */
   ContentLength = 'contentLength',
   /** column name */
   CreatedAt = 'created_at',
@@ -812,6 +810,8 @@ export enum File_Update_Column {
   GroupId = 'groupId',
   /** column name */
   Id = 'id',
+  /** column name */
+  Meta = 'meta',
   /** column name */
   MimeType = 'mimeType',
   /** column name */
@@ -4266,7 +4266,7 @@ export type PostFieldsFragment = (
     & Pick<User, 'name' | 'id'>
   )>, files: Array<(
     { __typename?: 'file' }
-    & Pick<File, 'id' | 'domain'>
+    & Pick<File, 'id' | 'domain' | 'meta'>
   )> }
 );
 
@@ -4876,22 +4876,6 @@ export default {
         "name": "file",
         "fields": [
           {
-            "name": "cloudFrontData",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": [
-              {
-                "name": "path",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              }
-            ]
-          },
-          {
             "name": "contentLength",
             "type": {
               "kind": "NON_NULL",
@@ -4953,6 +4937,25 @@ export default {
               }
             },
             "args": []
+          },
+          {
+            "name": "meta",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": [
+              {
+                "name": "path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
           },
           {
             "name": "mimeType",
@@ -14688,6 +14691,7 @@ export const PostFieldsFragmentDoc = gql`
   files {
     id
     domain
+    meta
   }
 }
     `;

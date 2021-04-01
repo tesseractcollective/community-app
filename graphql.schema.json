@@ -3099,31 +3099,6 @@
         "description": "columns and relationships of \"file\"",
         "fields": [
           {
-            "name": "cloudFrontData",
-            "description": null,
-            "args": [
-              {
-                "name": "path",
-                "description": "JSON select path",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "contentLength",
             "description": null,
             "args": [],
@@ -3209,6 +3184,35 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "args": [
+              {
+                "name": "path",
+                "description": "JSON select path",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -3662,7 +3666,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3832,18 +3836,6 @@
             "deprecationReason": null
           },
           {
-            "name": "cloudFrontData",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "jsonb_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "contentLength",
             "description": null,
             "type": {
@@ -3909,6 +3901,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "uuid_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "jsonb_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -4004,7 +4008,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -4031,7 +4035,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -4054,7 +4058,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -4099,18 +4103,6 @@
         "description": "input type for inserting data into table \"file\"",
         "fields": null,
         "inputFields": [
-          {
-            "name": "cloudFrontData",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "contentLength",
             "description": null,
@@ -4177,6 +4169,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "jsonb",
               "ofType": null
             },
             "defaultValue": null,
@@ -4980,18 +4984,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "contentLength",
             "description": null,
             "type": {
@@ -5053,6 +5045,18 @@
           },
           {
             "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -5162,7 +5166,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudFrontData",
+            "name": "meta",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -5186,12 +5190,6 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          {
-            "name": "cloudFrontData",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "contentLength",
             "description": "column name",
@@ -5224,6 +5222,12 @@
           },
           {
             "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -5267,18 +5271,6 @@
         "description": "input type for updating data in table \"file\"",
         "fields": null,
         "inputFields": [
-          {
-            "name": "cloudFrontData",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "contentLength",
             "description": null,
@@ -5345,6 +5337,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "jsonb",
               "ofType": null
             },
             "defaultValue": null,
@@ -5609,12 +5613,6 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "cloudFrontData",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "contentLength",
             "description": "column name",
             "isDeprecated": false,
@@ -5646,6 +5644,12 @@
           },
           {
             "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null

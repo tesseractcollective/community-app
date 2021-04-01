@@ -3,62 +3,63 @@ import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
 import {Post} from '../graphql';
 import {StyleSheet, Text, View} from 'react-native';
+import {useAuthToken} from '../UserContext';
+import {urlForFile} from '../fileApi/fileApi';
 
 interface PostListItemProps {
   post: Post;
 }
 
 export default function (props: PostListItemProps) {
-  const navigation = useNavigation();
   const {post} = props;
+
+  const navigation = useNavigation();
+  const authToken = useAuthToken();
 
   const onPress = () => {
     navigation.navigate('PostDetail', {post});
   };
 
-  const fileUrls = post.files?.map((file) => {
-    return `https://${file.domain}/?id=${file.id}`;
-  }) || [];
-  console.log(fileUrls);
-
   return (
-    <ListItem onPress={onPress}>
-      {/* {<Avatar source={{uri: post.user.}} />} */}
+    <ListItem onPress={onPress} containerStyle={{paddingHorizontal: 0}}>
       <ListItem.Content>
-        <View style={styles.authorRow}>
-          <Avatar
-            rounded
-            icon={{name: 'user', type: 'font-awesome'}}
-            title="JD"
-            titleStyle={{fontFamily: 'Montserrat-Bold', fontSize: 11}}
-            size="small"
-            overlayContainerStyle={{backgroundColor: 'gray'}}
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.authorNameText}>
-              {post.user?.name ?? 'John Doe'}
-            </Text>
-            <Text style={styles.groupNameText}>
-              {post.group?.name ?? 'The Litas'}
-            </Text>
+        <View style={{ paddingHorizontal: 14 }}>
+          <View style={styles.authorRow}>
+            <Avatar
+              rounded
+              icon={{name: 'user', type: 'font-awesome'}}
+              title="JD"
+              titleStyle={{fontFamily: 'Montserrat-Bold', fontSize: 14}}
+              size="medium"
+              overlayContainerStyle={{backgroundColor: 'gray'}}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.authorNameText}>
+                {post.user?.name ?? 'John Doe'}
+              </Text>
+              <Text style={styles.groupNameText}>
+                {post.group?.name ?? 'The Litas'}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.authorRow}>
+            <Text style={styles.bodyText}>{post.body ?? 'John Doe'}</Text>
           </View>
         </View>
 
-        <View style={styles.authorRow}>
-          <Text style={styles.bodyText}>{post.body ?? 'John Doe'}</Text>
-        </View>
-
-        {fileUrls.length > 0 ? (
+        {post.files.map((file) => (
           <Image
-            resizeMode='contain'
-            style={styles.image}
+            key={file.id}
+            style={{
+              ...styles.image,
+              aspectRatio: file.meta?.image?.aspectRatio || 1,
+            }}
             source={{
-              uri: fileUrls[0],
+              uri: urlForFile(file, authToken),
             }}
           />
-        ) : null}
-
-        
+        ))}
       </ListItem.Content>
     </ListItem>
   );
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   textContainer: {
-    flex: 1,
+    width: '100%',
     marginHorizontal: 10,
   },
   authorNameText: {
@@ -88,19 +89,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     fontSize: 12,
   },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 16,
-    marginBottom: 16,
-    marginStart: 16,
-    marginEnd: 16,
-  },
   image: {
-    flex: 1,
-    height: 400,
-    width: 400,
-    // backgroundColor: 'rgba(0,0,0,0.02)',
+    width: '100%',
+    aspectRatio: 1,
+    resizeMode: 'contain',
   },
 });

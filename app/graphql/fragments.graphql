@@ -29,6 +29,7 @@ fragment postFields on post {
   files {
     id
     domain
+    meta
   }
 }
 

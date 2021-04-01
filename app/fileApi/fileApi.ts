@@ -1,6 +1,7 @@
 const baseUrl = 'https://d15aepxy5dvdf2.cloudfront.net';
 
 import {ImageOrVideo} from 'react-native-image-crop-picker';
+import { File } from '../graphql';
 
 export async function uploadImage(
   image: ImageOrVideo,
@@ -10,7 +11,14 @@ export async function uploadImage(
   const data = await fetch(image.path).then((response) => {
     return response.blob();
   });
-  return uploadData(data, image.mime, token, queryParams);
+  const meta = {
+    image: { aspectRatio: image.width/image.height }
+  };
+  const params = {
+    ...queryParams,
+    meta: JSON.stringify(meta)
+  };
+  return uploadData(data, image.mime, token, params);
 }
 
 export async function uploadData(
@@ -47,4 +55,8 @@ export async function uploadData(
       return response.json();
     }
   });
+}
+
+export function urlForFile(file: File, authToken: string) {
+  return `https://${file.domain}/?id=${file.id}&token=${authToken}`;
 }

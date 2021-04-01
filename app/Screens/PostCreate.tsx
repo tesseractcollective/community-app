@@ -17,7 +17,7 @@ import {
 } from '../components/Mutator';
 import {Post} from '../graphql';
 import HasuraConfig from '../graphql/HasuraConfig';
-import { uploadImage } from '../fileApi/fileUploader';
+import { uploadImage } from '../fileApi/fileApi';
 import { useAuthToken } from '../UserContext';
 
 
@@ -41,9 +41,7 @@ export default function (props: any) {
 
   const pickImage = useCallback(() => {
     ImageCropPicker.openPicker({
-      mediaType: 'photo',
-      width:600,
-      height:600,
+      // compressImageMaxWidth: 1200,
     }).then(result => {
       setImage(result);
     }).catch(error => {
@@ -54,7 +52,7 @@ export default function (props: any) {
   useEffect(() => {
     if (image && state.resultItem) {
       uploadImage(image, authToken, {
-        postId: state.resultItem.id,
+        postId: state.resultItem.id
       }).then(() => {
         navigation.goBack();
       }).catch(error => {
@@ -150,8 +148,9 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   image: {
-    flex: 1,
-    width: 600,
-    height: 600
+    width: '100%',
+    aspectRatio: 1.5,
+    resizeMode: 'contain',
+    marginBottom: 16,
   }
 });
