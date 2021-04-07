@@ -28,7 +28,7 @@ export function createQueryOne<
 
   const {fragment, fragmentName} = getFieldFragmentInfo(
     config,
-    config.overrides?.fieldFragments?.delete_by_pk,
+    config.overrides?.fieldFragments?.query_by_pk,
   );
 
   const variables = state.variables;

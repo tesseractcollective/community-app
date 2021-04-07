@@ -24,8 +24,8 @@ export interface PaginationListProps<T> {
   renderItem: ListRenderItem<T>;
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
-  primaryKey?: string;
   pageSize?: number;
+  primaryKey?: string;
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
 }
@@ -44,21 +44,12 @@ export default function <T extends {[key: string]: any}>(
     ...rest
   } = props;
 
-  const [variables, setVariables] = useState<IJsonObject>({});
-  useEffect(() => {
-    setVariables({
-      where,
-      orderBy,
-      pageSize,
-    });
-  }, [where, orderBy, pageSize]);
-
   const {
     loadNextPage,
     items,
     queryState: {fetching, error},
     refresh,
-  } = useReactHasura(config).useInfiniteQueryMany({variables});
+  } = useReactHasura(config).useInfiniteQueryMany({ where, orderBy, pageSize });
 
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);

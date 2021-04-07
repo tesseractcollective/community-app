@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
@@ -6,9 +6,9 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {GroupListItemHome} from '../components/GroupListItem';
-import PaginatedList from '../react-graphql/components/native/PaginatedList';
-import PostListItem from 'components/PostListItem';
-import {useTranslations} from 'components/TranslationProvider';
+import {PaginatedList} from 'react-graphql/components';
+import PostListItem from '../components/PostListItem';
+import {useTranslations} from '../components/TranslationProvider';
 import {
   Group,
   Group_Bool_Exp,
@@ -43,22 +43,21 @@ export default function () {
     });
   }, [navigation, userId]);
 
-  const [whereMyGroups] = useState<Group_Bool_Exp>({
+  const whereMyGroups: Group_Bool_Exp = {
     userGroup: {userId: {_eq: userId}},
-  });
-
-  const [orderByGroups] = useState<Group_Order_By[]>([{name: Order_By.Asc}]);
+  };
+  const orderByGroups: Group_Order_By = {name: Order_By.Asc};
   const renderGroup = ({item}: {item: Group}) => {
     return <GroupListItemHome group={item} />;
   };
 
-  const [whereMyPosts] = useState<Post_Bool_Exp>({
+  const whereMyPosts: Post_Bool_Exp = {
     _or: [
       {userId: {_eq: userId}},
       {group: {userGroup: {userId: {_eq: userId}}}},
       {userId: {_is_null: true}},
     ],
-  });
+  };
   const orderByPosts: Post_Order_By = {createdAt: Order_By.Desc};
   const renderPost = ({item}: {item: Post}) => {
     return <PostListItem post={item} />;
@@ -66,9 +65,6 @@ export default function () {
 
   return (
     <View>
-      <View>
-        <Text>Test</Text>
-      </View>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
@@ -86,9 +82,8 @@ export default function () {
 
       <PaginatedList
         style={styles.groups}
-        horizontal
         showsHorizontalScrollIndicator={false}
-        pullToRefresh={false}
+        horizontal={true}
         config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={whereMyGroups}

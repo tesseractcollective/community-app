@@ -1,44 +1,30 @@
+import { isEqual } from 'lodash';
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import { stateFromMiddleware } from 'react-graphql/support/middlewareHelpers';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {
   QueryMiddleware,
-  QueryPostMiddlewareState,
   QueryPreMiddlewareState,
 } from '../types/hookMiddleware';
 import {findDefaultPks} from './findDefaultPks';
 import {useUrqlQuery} from './useUrqlQuery';
 
 interface IUseInfiniteQueryMany {
+  where?: {[key: string]: any};
+  orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
+  pageSize?: number;
   sharedConfig: HasuraDataConfig;
   middleware: QueryMiddleware[];
-  variables?: IJsonObject;
 }
 
-const stateFromMiddleware = (
-  preState: QueryPreMiddlewareState,
-  middleware: QueryMiddleware[],
-  config: HasuraDataConfig,
-  index = 0,
-): QueryPostMiddlewareState => {
-  if (middleware.length === 0) {
-    throw new Error('no middleware');
-  }
-  const postState = middleware[index](preState, config);
-  if (index === middleware.length - 1) {
-    return postState;
-  }
-  return stateFromMiddleware(
-    {variables: postState.variables},
-    middleware,
-    config,
-    index + 1,
-  );
-};
+const defaultPageSize = 50;
 
 export default function useInfiniteQueryMany<
   TData extends IJsonMapOfArraysObject
 >(props: IUseInfiniteQueryMany) {
-  const {sharedConfig, middleware, variables} = props;
+  const {sharedConfig, middleware, where, orderBy, pageSize} = props;
+
+  const limit = pageSize ?? defaultPageSize;
 
   const [meta, setMeta] = useState<{
     firstQueryCompleted: boolean;
@@ -47,17 +33,20 @@ export default function useInfiniteQueryMany<
     detectedPks: Map<string, string[]>;
   }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
 
+  const [offset, setOffset] = useState(0);
+  const [externalVariables, setExterneralVariables] = useState<any>({ where, orderBy, limit, offset });
   const [itemsMap, setItemsMap] = useState<Map<string, TData>>(new Map());
   const [shouldClearItems, setShouldClearItems] = useState(false);
   const [needsReQuery, setNeedsReQuery] = useState(false);
-  const [objectVariables, setObjectVariables] = useState<IJsonObject>({});
 
   useEffect(() => {
-    if (variables) {
-      setObjectVariables(variables);
+    const checkVariables = { where, orderBy, limit };
+    if (!isEqual(externalVariables, checkVariables)) {
+      setExterneralVariables(checkVariables);
+      setOffset(0);
+      setShouldClearItems(true);
     }
-    
-  }, [variables]);
+  }, [where, orderBy, limit]);
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
@@ -66,25 +55,24 @@ export default function useInfiniteQueryMany<
 
   // Setup the initial query Config so it's for sure ready before we get to urql
   const queryCfg = useMemo(() => {
-    const preState: QueryPreMiddlewareState = {
-      variables: objectVariables,
-    };
-    return stateFromMiddleware(preState, middleware, sharedConfig);
-  }, [sharedConfig, middleware, objectVariables]);
+    const variables = { ...externalVariables, offset }
+    return stateFromMiddleware({ variables }, middleware, sharedConfig);
+  }, [sharedConfig, middleware, externalVariables, offset]);
 
   const [queryState, reExecuteQuery] = useUrqlQuery<TData>(
     queryCfg,
-    objectVariables,
   );
 
   useEffect(() => {
-    //How to reset to page 0
     if (needsReQuery) {
-      console.log('reExecuteQuery - 80', queryCfg, objectVariables);
       setNeedsReQuery(false);
       reExecuteQuery();
     }
   }, [needsReQuery]);
+
+  const loadNextPage = () => {
+    setOffset(offset + limit);
+  };
 
   //Parse response
   useEffect(() => {
@@ -158,11 +146,11 @@ export default function useInfiniteQueryMany<
 
   //Update user items from map
   const items = useMemo(() => {
-    console.log('items -> itemsMap', itemsMap.size);
     return Array.from(itemsMap.values());
   }, [itemsMap]);
 
-  const clear = useCallback(() => {
+  const refresh = useCallback(() => {
+    setOffset(0);
     setShouldClearItems(true);
     setNeedsReQuery(true);
   }, []);
@@ -174,9 +162,8 @@ export default function useInfiniteQueryMany<
     queryState,
     items,
     localError: meta.localError,
-    setObjectVariables,
-    objectVariables,
-    clear,
+    refresh,
+    loadNextPage,
     requeryKeepInfinite,
   };
 }

@@ -11,9 +11,9 @@ export function findDefaultPks(
   console.log('findDefaultPks -> newDetectedPks', newDetectedPks);
   console.log('findDefaultPks -> items', items);
   const item: any = items[0];
-  const validPks = ['id', 'userId', 'user_id'];
+  const validPks = ['id'];
   const pks = filter(
-    item.filter((val: any, key: string) => validPks.indexOf(key) >= 0),
+    item.filter((_: any, key: string) => validPks.indexOf(key) >= 0),
   );
   if (pks.length === 1) {
     newDetectedPks = new Map(detectedPks);
