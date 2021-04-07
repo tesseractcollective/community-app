@@ -2,7 +2,7 @@ type IJsonNotNull = string | number | boolean | IJsonObject | IJsonArray;
 type IJsonAny = IJsonNotNull | null;
 
 interface IJsonObject {
-  [key: string]: IJsonAny;
+  [key: string]: any;
 }
 
 interface IJsonNoNullsObject {

@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import { getFieldFragmentInfo } from '../support/HasuraConfigUtils';
-import { print } from 'graphql';
 import useMutate from './useMutate';
 import { createDeleteMutation, createInsertMutation, createUpdateMutation } from './useMutate.utils';
 import useInfiniteQueryMany from './useInfiniteQueryMany';
 import { createInfiniteQueryMany, usePagination } from './useInfiniteQueryMany.utils';
 import useQueryOne from './useQueryOne';
 import { createQueryOne } from './useQueryOne.utils';
-import { MutationMiddleware, QueryMiddleware } from 'types/hookMiddleware';
-import { HasuraDataConfig } from 'types/hasuraConfig';
+import { MutationMiddleware, QueryMiddleware } from '../types/hookMiddleware';
+import { HasuraDataConfig } from '../types/hasuraConfig';
 
 export default function useReactHasura(config: HasuraDataConfig) {
   return {
@@ -31,9 +29,9 @@ export default function useReactHasura(config: HasuraDataConfig) {
         middleware: props.middleware || [createUpdateMutation],
         initialVariables: props.initialVariables,
       }),
-    useInfiniteQueryMany: (props: { initialVariables?: IJsonObject; 
+    useInfiniteQueryMany: (props: { variables?: IJsonObject; 
       pageSize?: number; middleware?: QueryMiddleware[] }) => {
-      const { refresh, loadNextPage, middleware: paginationMiddleware } = usePagination(
+      const { refresh: refreshPagination, loadNextPage, middleware: paginationMiddleware } = usePagination(
         props?.pageSize as number,
       );
 
@@ -44,7 +42,7 @@ export default function useReactHasura(config: HasuraDataConfig) {
       const q = useInfiniteQueryMany({
         sharedConfig: config,
         middleware: middlewares,
-        initialVariables: props.initialVariables,
+        variables: props.variables,
       });
 
       useEffect(() => {
@@ -53,8 +51,14 @@ export default function useReactHasura(config: HasuraDataConfig) {
         }
       }, [props.middleware, paginationMiddleware]);
 
+      const { clear, ...rest } = q;
+      const refresh = useCallback(() => {
+        clear();
+        refreshPagination();
+      }, [clear, refreshPagination]);
+
       return {
-        ...q,
+        ...rest,
         refresh,
         loadNextPage,
       };

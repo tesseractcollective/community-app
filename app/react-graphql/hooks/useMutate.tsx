@@ -1,7 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { HasuraDataConfig } from 'types/hasuraConfig';
-import { MutationMiddleware, MutationPostMiddlewareState, MutationPreMiddlewareState } from 'types/hookMiddleware';
-import { OperationContext, useMutation } from 'urql';
+import React, {useEffect, useMemo, useState} from 'react';
+import {HasuraDataConfig} from '../types/hasuraConfig';
+import {
+  MutationMiddleware,
+  MutationPostMiddlewareState,
+  MutationPreMiddlewareState,
+} from '../types/hookMiddleware';
+import {OperationContext, useMutation} from 'urql';
 
 interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
@@ -9,12 +13,19 @@ interface IUseMutateProps {
   initialVariables?: IJsonObject;
 }
 
-export default function useMutate<T extends IJsonObject>(props: IUseMutateProps): any {
-  const { sharedConfig, middleware, initialVariables } = props;
+export default function useMutate<T extends IJsonObject>(
+  props: IUseMutateProps,
+): any {
+  const {sharedConfig, middleware, initialVariables} = props;
   //MutationConfig is what we internally refer to the middlewareState as
-  const [objectVariables, setObjectVariables] = useState<{ [key: string]: any }>(initialVariables ?? {});
+  const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
+    initialVariables ?? {},
+  );
   const [needsExecuteMutation, setNeedsExecuteMutation] = useState<boolean>();
-  const [executeContext, setExecuteContext] = useState<Partial<OperationContext> | null>();
+  const [
+    executeContext,
+    setExecuteContext,
+  ] = useState<Partial<OperationContext> | null>();
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
@@ -42,7 +53,10 @@ export default function useMutate<T extends IJsonObject>(props: IUseMutateProps)
     return _mutationCfg;
   }, [sharedConfig, middleware, objectVariables]);
 
-  console.log('mutationCfg:MutationPostMiddlewareState -> _mutationCfg', mutationCfg);
+  console.log(
+    'mutationCfg:MutationPostMiddlewareState -> _mutationCfg',
+    mutationCfg,
+  );
   //The mutation
   const [mutationResult, executeMutation] = useMutation(mutationCfg?.mutation);
   const data = mutationResult.data;
@@ -56,7 +70,12 @@ export default function useMutate<T extends IJsonObject>(props: IUseMutateProps)
       setExecuteContext(null);
       executeMutation(mutationCfg.variables, executeContext);
     }
-  }, [needsExecuteMutation, executeContext, executeMutation, mutationCfg.variables]);
+  }, [
+    needsExecuteMutation,
+    executeContext,
+    executeMutation,
+    mutationCfg.variables,
+  ]);
 
   //Handling variables
   const setVariable = (key: string, value: any) => {
@@ -66,7 +85,7 @@ export default function useMutate<T extends IJsonObject>(props: IUseMutateProps)
     });
   };
 
-  const setVariables = (variables: { [key: string]: any }) => {
+  const setVariables = (variables: {[key: string]: any}) => {
     setObjectVariables({
       ...objectVariables,
       ...variables,
@@ -77,7 +96,10 @@ export default function useMutate<T extends IJsonObject>(props: IUseMutateProps)
   return {
     data,
     resultItem,
-    executeMutation: (_variables?: IJsonObject, context?: Partial<OperationContext>) => {
+    executeMutation: (
+      _variables?: IJsonObject,
+      context?: Partial<OperationContext>,
+    ) => {
       //create combined variables from paassed in ones and existing
       let variables = _variables
         ? {

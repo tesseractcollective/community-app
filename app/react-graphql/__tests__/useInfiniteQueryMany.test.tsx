@@ -1,15 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useInfiniteQueryMany from 'hooks/useInfiniteQueryMany';
-import HasuraConfig from 'support/HasuraConfig';
-import useReactHasura from 'hooks/useReactHasura';
-import { useState } from 'react';
+import HasuraConfig from '../support/HasuraConfig';
+import useReactHasura from '../hooks/useReactHasura';
 jest.mock('../hooks/useUrqlQuery');
-
-function useTestHook() {
-  const [hello, setHello] = useState<String>('hi');
-
-  return hello;
-}
 
 describe('useInfiniteQueryMany', () => {
   it('runs with no setup and returns an empty array', () => {

@@ -1,10 +1,13 @@
-import { getFieldFragmentInfo } from '../support/HasuraConfigUtils';
-import { print } from 'graphql';
+import React, {useCallback, useState} from 'react';
+import {print} from 'graphql';
 import gql from 'graphql-tag';
-import React, { useCallback, useState } from 'react';
-import { map } from 'lodash';
-import { QueryPostMiddlewareState, QueryPreMiddlewareState } from 'types/hookMiddleware';
-import { HasuraDataConfig } from 'types/hasuraConfig';
+
+import {
+  QueryPostMiddlewareState,
+  QueryPreMiddlewareState,
+} from '../types/hookMiddleware';
+import {HasuraDataConfig} from '../types/hasuraConfig';
+import {getFieldFragmentInfo} from '../support/HasuraConfigUtils';
 
 const defaultPageSize = 50;
 
@@ -22,34 +25,37 @@ export function usePagination(pageSize: number) {
   };
 
   const middleware = useCallback(
-    (state: QueryPreMiddlewareState, config: HasuraDataConfig): QueryPostMiddlewareState => {
-      let newState = { ...state } as QueryPostMiddlewareState;
-      if (offset) {
-        newState.variables.offset = offset;
-      }
-      if (limit) {
-        newState.variables.limit = limit;
-      }
-      newState.operationName = '';
-
-      return newState;
+    (
+      state: QueryPreMiddlewareState,
+      config: HasuraDataConfig,
+    ): QueryPostMiddlewareState => {
+      return {
+        ...state,
+        variables: {
+          ...state.variables,
+          offset,
+          limit,
+        },
+        operationName: '',
+      } as QueryPostMiddlewareState;
     },
     [offset, limit],
   );
 
-  return { refresh, loadNextPage, middleware };
+  return {refresh, loadNextPage, middleware};
 }
-
-const querySupportedVariables = { where: true, orderBy: true, limit: true, offset: true };
 
 export function createInfiniteQueryMany(
   state: QueryPreMiddlewareState,
   config: HasuraDataConfig,
 ): QueryPostMiddlewareState {
   const name = config.typename;
-  const operationName = config.overrides?.operationNames?.query_many ?? `delete_${name}_by_pk`;
+  const operationName = config.overrides?.operationNames?.query_many ?? name;
 
-  const { fragment, fragmentName } = getFieldFragmentInfo(config, config.overrides?.fieldFragments?.delete_by_pk);
+  const {fragment, fragmentName} = getFieldFragmentInfo(
+    config,
+    config.overrides?.fieldFragments?.query_many,
+  );
 
   const variables = state.variables;
 
@@ -80,14 +86,6 @@ export function createInfiniteQueryMany(
   }
   ${print(fragment)}`;
 
-  // console.log('queryStr', queryStr);
-
   const query = gql(queryStr);
-
-  const pkColumns: { [key: string]: any } = {};
-  for (const key of config.primaryKey) {
-    pkColumns[key] = state.variables?.[key];
-  }
-
-  return { query, operationName, variables: state.variables ?? {}, pkColumns };
+  return {query, operationName, variables: state.variables ?? {}};
 }

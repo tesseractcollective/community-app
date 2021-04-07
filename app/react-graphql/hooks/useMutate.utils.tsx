@@ -1,8 +1,8 @@
 import { getFieldFragmentInfo } from '../support/HasuraConfigUtils';
 import { print } from 'graphql';
 import gql from 'graphql-tag';
-import { MutationPostMiddlewareState, MutationPreMiddlewareState } from 'types/hookMiddleware';
-import { HasuraDataConfig } from 'types/hasuraConfig';
+import { MutationPostMiddlewareState, MutationPreMiddlewareState } from '../types/hookMiddleware';
+import { HasuraDataConfig } from '../types/hasuraConfig';
 
 export function createDeleteMutation(
   state: MutationPreMiddlewareState,

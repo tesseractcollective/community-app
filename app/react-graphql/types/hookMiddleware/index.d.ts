@@ -9,13 +9,11 @@ interface QueryPreMiddlewareState {
   query?: DocumentNode | string;
   variables: IJsonObject;
   operationName?: string;
-  pkColumns?: { [key: string]: string };
 }
 interface QueryPostMiddlewareState {
   query: DocumentNode;
   variables: IJsonObject;
   operationName: string;
-  pkColumns: { [key: string]: string };
 }
 
 interface MutationMiddleware {

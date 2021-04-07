@@ -20,7 +20,6 @@ import {
 } from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
-import RGPaginatedList from 'react-graphql/components/PaginatedList';
 
 const seeAllButtonGradient = ['#F44336', '#FF9800'];
 
@@ -87,8 +86,9 @@ export default function () {
 
       <PaginatedList
         style={styles.groups}
+        horizontal
         showsHorizontalScrollIndicator={false}
-        horizontal={true}
+        pullToRefresh={false}
         config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={whereMyGroups}
@@ -104,7 +104,7 @@ export default function () {
         orderBy={orderByPosts}
         reloadOnFocus
         contentInset={{
-          top: -40,
+          top: 0,
           left: 0,
           bottom: bottomTabBarHeight * 2,
           right: 0,

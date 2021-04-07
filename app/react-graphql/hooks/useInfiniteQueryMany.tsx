@@ -1,59 +1,81 @@
-import { useEffect, useMemo, useState } from 'react';
-import { HasuraDataConfig } from 'types/hasuraConfig';
-import { QueryMiddleware, QueryPostMiddlewareState, QueryPreMiddlewareState } from 'types/hookMiddleware';
-import { findDefaultPks } from './findDefaultPks';
-import { useUrqlQuery } from './useUrqlQuery';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {HasuraDataConfig} from '../types/hasuraConfig';
+import {
+  QueryMiddleware,
+  QueryPostMiddlewareState,
+  QueryPreMiddlewareState,
+} from '../types/hookMiddleware';
+import {findDefaultPks} from './findDefaultPks';
+import {useUrqlQuery} from './useUrqlQuery';
 
 interface IUseInfiniteQueryMany {
   sharedConfig: HasuraDataConfig;
   middleware: QueryMiddleware[];
-  initialVariables?: IJsonObject;
+  variables?: IJsonObject;
 }
 
-export default function useInfiniteQueryMany<TData extends IJsonMapOfArraysObject, TVariables extends IJsonObject>(
-  props: IUseInfiniteQueryMany,
-) {
-  const { sharedConfig, middleware, initialVariables } = props;
+const stateFromMiddleware = (
+  preState: QueryPreMiddlewareState,
+  middleware: QueryMiddleware[],
+  config: HasuraDataConfig,
+  index = 0,
+): QueryPostMiddlewareState => {
+  if (middleware.length === 0) {
+    throw new Error('no middleware');
+  }
+  const postState = middleware[index](preState, config);
+  if (index === middleware.length - 1) {
+    return postState;
+  }
+  return stateFromMiddleware(
+    {variables: postState.variables},
+    middleware,
+    config,
+    index + 1,
+  );
+};
+
+export default function useInfiniteQueryMany<
+  TData extends IJsonMapOfArraysObject
+>(props: IUseInfiniteQueryMany) {
+  const {sharedConfig, middleware, variables} = props;
 
   const [meta, setMeta] = useState<{
     firstQueryCompleted: boolean;
     localError: string;
     queryError?: string;
-    detectedPks: Map<any, any>;
-  }>({ firstQueryCompleted: false, localError: '', detectedPks: new Map() });
-  const [itemsMap, setItemsMap] = useState<Map<any, TData>>(new Map());
-  const [needsReQuery, setNeedsReQuery] = useState<boolean>();
-  const [objectVariables, setObjectVariables] = useState<{ [key: string]: any }>(initialVariables ?? {});
+    detectedPks: Map<string, string[]>;
+  }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
+
+  const [itemsMap, setItemsMap] = useState<Map<string, TData>>(new Map());
+  const [shouldClearItems, setShouldClearItems] = useState(false);
+  const [needsReQuery, setNeedsReQuery] = useState(false);
+  const [objectVariables, setObjectVariables] = useState<IJsonObject>({});
+
+  useEffect(() => {
+    if (variables) {
+      setObjectVariables(variables);
+    }
+    
+  }, [variables]);
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
     throw new Error('sharedConfig and at least one middleware required');
   }
 
-  const reInitObjectVariables = (newVars: IJsonObject) => {
-    setObjectVariables(newVars);
-  };
-
   // Setup the initial query Config so it's for sure ready before we get to urql
-  const queryCfg: QueryPostMiddlewareState = useMemo(() => {
-    const _tmp = middleware.reduce(
-      (val, next: QueryMiddleware) => {
-        const mState: QueryPostMiddlewareState = next(val, sharedConfig);
-        let newState = {};
-        if (val) Object.assign(newState, val);
-        Object.assign(newState, mState);
-        return newState as QueryPostMiddlewareState;
-      },
-      {
-        variables: objectVariables,
-      } as QueryPreMiddlewareState,
-    );
-
-    const _queryCfg = _tmp as QueryPostMiddlewareState;
-    return _queryCfg;
+  const queryCfg = useMemo(() => {
+    const preState: QueryPreMiddlewareState = {
+      variables: objectVariables,
+    };
+    return stateFromMiddleware(preState, middleware, sharedConfig);
   }, [sharedConfig, middleware, objectVariables]);
 
-  const [resp, reExecuteQuery] = useUrqlQuery<TData>(queryCfg, objectVariables);
+  const [queryState, reExecuteQuery] = useUrqlQuery<TData>(
+    queryCfg,
+    objectVariables,
+  );
 
   useEffect(() => {
     //How to reset to page 0
@@ -66,34 +88,37 @@ export default function useInfiniteQueryMany<TData extends IJsonMapOfArraysObjec
 
   //Parse response
   useEffect(() => {
-    if (resp.data) {
-      // console.log('resp.data', resp.data);
-      const data: IJsonMapOfArraysObject = resp.data;
+    if (queryState.data) {
+      const data: IJsonMapOfArraysObject = queryState.data;
       const keys = Object.keys(data);
       if (keys.length === 1) {
         const key = keys[0];
         //only single response category so use single layer items
-        const items: IJsonArray = data[key];
-        if (!items?.length) return;
+        const queryItems: IJsonArray = data[key];
+        if (!queryItems?.length) return;
 
-        const { detectedPks } = meta;
+        const {detectedPks} = meta;
         let newDetectedPks;
-        let pk: string = detectedPks?.get(key);
+        let pks = detectedPks.get(key);
         //detectPK
-        if (!detectedPks.get(key)) {
+        if (!pks) {
           if (sharedConfig.primaryKey) {
-            //TODO Use this
             newDetectedPks = new Map();
             newDetectedPks.set(key, sharedConfig.primaryKey);
-            pk = sharedConfig.primaryKey?.[0];
           } else {
             //Move to utility function and check for registered regex
-            newDetectedPks = findDefaultPks(items, newDetectedPks, detectedPks, key);
+            newDetectedPks = findDefaultPks(
+              queryItems,
+              newDetectedPks,
+              detectedPks,
+              key,
+            );
           }
+          pks = newDetectedPks?.get(key);
         }
 
         let localError;
-        if (!pk) {
+        if (!pks) {
           localError = 'Could not autodetect PK, please register pk patterns';
           setMeta({
             detectedPks: newDetectedPks ?? meta.detectedPks,
@@ -103,9 +128,17 @@ export default function useInfiniteQueryMany<TData extends IJsonMapOfArraysObjec
           return;
         }
 
-        const newItems = new Map(itemsMap);
-        items.forEach((itm: any) => newItems.set(itm[pk], itm));
-        setItemsMap(newItems);
+        let newItemsMap = new Map(itemsMap);
+        if (shouldClearItems) {
+          newItemsMap = new Map();
+          setShouldClearItems(false);
+        }
+
+        queryItems.forEach((item: any) => {
+          const itemKey = pks!.map((pk) => item[pk]).join(':');
+          newItemsMap.set(itemKey, item);
+        });
+        setItemsMap(newItemsMap);
         setMeta({
           detectedPks: newDetectedPks ?? meta.detectedPks,
           firstQueryCompleted: true,
@@ -121,34 +154,29 @@ export default function useInfiniteQueryMany<TData extends IJsonMapOfArraysObjec
         });
       }
     }
-  }, [resp.data]);
+  }, [queryState.data, shouldClearItems]);
 
   //Update user items from map
-  const results = useMemo(() => {
-    if (itemsMap) {
-      console.log('results -> itemsMap', itemsMap.size)
-      const arrayOfItems: any = Array.from(itemsMap.values());
-      return arrayOfItems;
-    }
-    return [];
+  const items = useMemo(() => {
+    console.log('items -> itemsMap', itemsMap.size);
+    return Array.from(itemsMap.values());
   }, [itemsMap]);
 
-  const reload = () => {
-    setItemsMap(new Map());
+  const clear = useCallback(() => {
+    setShouldClearItems(true);
     setNeedsReQuery(true);
-  };
+  }, []);
   const requeryKeepInfinite = () => {
     setNeedsReQuery(true);
   };
 
   return {
-    resp,
-    results,
+    queryState,
+    items,
     localError: meta.localError,
     setObjectVariables,
     objectVariables,
-    reload,
+    clear,
     requeryKeepInfinite,
-    reInitObjectVariables,
   };
 }
