@@ -8,18 +8,17 @@ import {
   View,
 } from 'react-native';
 import {Avatar, Button, Icon, Image} from 'react-native-elements';
-import ImageCropPicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import ImageCropPicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
 import {
   MutatorSaveButton,
   MutatorTextInput,
   useMutator,
-} from '../components/Mutator';
-import {Post} from '../graphql';
-import HasuraConfig from '../graphql/HasuraConfig';
-import { uploadImage } from '../fileApi/fileApi';
-import { useAuthToken } from '../UserContext';
-
+} from 'react-graphql/components';
+import {Post} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
+import {uploadImage} from '../fileApi/fileApi';
+import {useAuthToken} from '../UserContext';
 
 export interface PostCreateRouterProps {
   userId: string;
@@ -42,22 +41,26 @@ export default function (props: any) {
   const pickImage = useCallback(() => {
     ImageCropPicker.openPicker({
       // compressImageMaxWidth: 1200,
-    }).then(result => {
-      setImage(result);
-    }).catch(error => {
-      console.error(error);
-    });
+    })
+      .then((result) => {
+        setImage(result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   useEffect(() => {
     if (image && state.resultItem) {
       uploadImage(image, authToken, {
-        postId: state.resultItem.id
-      }).then(() => {
-        navigation.goBack();
-      }).catch(error => {
-        console.log(error);
-      });
+        postId: state.resultItem.id,
+      })
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [image, state.resultItem]);
 
@@ -80,10 +83,7 @@ export default function (props: any) {
               style={styles.textContainer}
             />
             {image ? (
-              <Image 
-                source={{ uri: image.path }} 
-                style={styles.image}
-              />
+              <Image source={{uri: image.path}} style={styles.image} />
             ) : null}
             <MutatorSaveButton mutator={mutator} style={styles.textContainer} />
           </View>
@@ -152,5 +152,5 @@ const styles = StyleSheet.create({
     aspectRatio: 1.5,
     resizeMode: 'contain',
     marginBottom: 16,
-  }
+  },
 });

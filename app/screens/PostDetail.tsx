@@ -3,9 +3,9 @@ import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
 
-import {useMutator, MutatorDeleteButton} from '../components/Mutator';
-import {Post} from '../graphql';
-import HasuraConfig from '../graphql/HasuraConfig';
+import {useMutator, MutatorDeleteButton} from 'react-graphql/components';
+import {Post} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 export interface PostDetailRouterProps {
@@ -29,12 +29,11 @@ export default function (props: any) {
   }, [state.resultItem]);
 
   return (
-    <View>      
+    <View>
       <Image source={{uri: post.photoUrl}} />
       <Text>{post.name}</Text>
       <Text>{post.body}</Text>
       {userId === post.user?.id ? (
-    
         <MutatorDeleteButton mutator={mutator} />
       ) : null}
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
-import {Post} from '../graphql';
+import {Post} from 'graphql-api';
 import {StyleSheet, Text, View} from 'react-native';
 import {useAuthToken} from '../UserContext';
 import {urlForFile} from '../fileApi/fileApi';

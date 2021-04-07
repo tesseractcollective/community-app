@@ -7,8 +7,8 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 import {useTranslations} from '../components/TranslationProvider';
 import {
     User
-} from '../graphql';      
-import HasuraConfig from '../graphql/HasuraConfig';
+} from 'graphql-api';      
+import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 const gradient = ['#F44336', '#FF9800'];

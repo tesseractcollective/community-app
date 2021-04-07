@@ -6,8 +6,8 @@ import {Button, ButtonProps, Input, InputProps} from 'react-native-elements';
 import {
   getFieldFragmentInfo,
   HasuraDataConfig,
-} from '../graphql/HasuraConfigType';
-import {useTranslations} from './TranslationProvider';
+} from 'graphql-api/HasuraConfigType';
+import {useTranslations} from 'components/TranslationProvider';
 
 export interface UseMutatorProps<T> {
   config: HasuraDataConfig;

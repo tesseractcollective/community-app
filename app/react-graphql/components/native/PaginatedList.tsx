@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {useQuery} from 'urql';
 import {FlatList} from 'react-native-gesture-handler';
 import isEqual from 'lodash.isequal';
@@ -12,9 +12,10 @@ import {
   getFieldFragmentInfo,
   HasuraDataConfig,
   keyExtractor,
-} from '../graphql/HasuraConfigType';
+} from 'graphql-api/HasuraConfigType';
 import {print} from 'graphql';
-import {useIsFocused} from '@react-navigation/core';
+import {useFocusedEffected, useFocusEffect} from '@react-navigation/core';
+import useReactHasura from 'react-graphql/hooks/useReactHasura';
 
 const defaultPageSize = 50;
 
@@ -40,52 +41,84 @@ export default function <T extends {[key: string]: any}>(
     reloadOnFocus,
     ...rest
   } = props;
-  const isFocused = useIsFocused();
-  const [didLooseFocus, setDidLooseFocus] = useState(false);
-  const [isProgramaticRefresh, setIsProgramaticRefresh] = useState(false);
 
-  const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
-    config,
-    where,
-    orderBy,
-    pageSize,
-  );
+  const {
+    loadNextPage,
+    results: items,
+    resp: {fetching},
+    // error: TODO
+    refresh: resetPagination, //TODO make this be one call, not two
+    reload,
+    setObjectVariables,
+  } = useReactHasura(config).useInfiniteQueryMany({
+    initialVariables: {
+      where,
+      orderBy,
+      pageSize,
+    },
+  });
+
+  const [isManualRefresh, setIsManualRefresh] = useState(false);
+
+  // const {items, error, fetching, refresh, loadNextPage} = usePagination<T>(
+  //   config,
+  //   where,
+  //   orderBy,
+  //   pageSize,
+  // );
 
   useEffect(() => {
-    if (reloadOnFocus) {
-      if (!fetching) {
-        setIsProgramaticRefresh(false);
+    setObjectVariables({
+      where,
+    });
+  }, [where]);
+
+  useEffect(() => {
+    //Deep comparison
+    setObjectVariables({
+      orderBy,
+    });
+  }, [orderBy]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (reloadOnFocus) {
+        if (!fetching) {
+          setIsManualRefresh(false);
+          resetPagination();
+          reload();
+        }
       }
-      if (!isFocused && !didLooseFocus) {
-        setDidLooseFocus(true);
-      } else if (isFocused && didLooseFocus) {
-        refresh();
-        setDidLooseFocus(false);
-        setIsProgramaticRefresh(true);
-      }
-    }
-  }, [isFocused, reloadOnFocus, didLooseFocus, fetching, refresh]);
+    }, [reloadOnFocus, fetching]),
+  );
+
+  const handleRefresh = () => {
+    setIsManualRefresh(true);
+    resetPagination();
+    reload();
+  };
+  console.log('items.length', items.length);
 
   return (
     <>
-      {error ? (
+      {/* {error ? (
         <Text>{error.message}</Text>
-      ) : (
-        <FlatList
-          {...rest}
-          refreshControl={
-            <RefreshControl
-              refreshing={fetching && !isProgramaticRefresh}
-              onRefresh={refresh}
-            />
-          }
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={(item) => keyExtractor(config, item)}
-          onEndReachedThreshold={1}
-          onEndReached={loadNextPage}
-        />
-      )}
+      ) : ( */}
+      <FlatList
+        {...rest}
+        refreshControl={
+          <RefreshControl
+            refreshing={fetching && !isManualRefresh}
+            onRefresh={handleRefresh}
+          />
+        }
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item) => keyExtractor(config, item)}
+        onEndReachedThreshold={1}
+        onEndReached={loadNextPage}
+      />
+      {/* )} */}
     </>
   );
 }
