@@ -10,6 +10,7 @@ import {User} from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 import {bs} from 'react-graphql/support/styling/buildStyles';
+import VersionInfo from 'react-native-version-info';
 
 const gradient = ['#F44336', '#FF9800'];
 
@@ -39,8 +40,15 @@ export default function () {
   };
 
   return (
-    <View style={bs(`f-cc f-1`)}>
-      <Button onPress={logout} title={'Logout'} />
+    <View style={bs(`f-1`)}>
+      <View style={bs(`f-cc f-1`)}>
+        <Button onPress={logout} title={'Logout'} />
+      </View>
+      <View style={bs(`f-ee`)}>
+        <Text>
+          Version: {VersionInfo.appVersion} ( {VersionInfo.buildVersion} )
+        </Text>
+      </View>
     </View>
   );
 }
