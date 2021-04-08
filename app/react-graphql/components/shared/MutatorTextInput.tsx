@@ -17,6 +17,7 @@ export default function MutatorTextInput(
   return (
     <Input
       {...rest}
+      defaultValue={__DEV__ ? 'Test words' : undefined}
       value={value}
       onChangeText={(text) => state.setVariable(input, text)}
     />

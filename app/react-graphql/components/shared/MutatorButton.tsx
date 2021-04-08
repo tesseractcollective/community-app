@@ -8,5 +8,5 @@ export interface MutatorButtonProps {
 
 export default function MutatorButton(props: MutatorButtonProps & ButtonProps) {
   const {state, ...rest} = props;
-  return <Button {...rest} onPress={state.executeMutation} />;
+  return <Button {...rest} onPress={()=> state.executeMutation()} />;
 }

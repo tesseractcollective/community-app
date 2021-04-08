@@ -22,7 +22,6 @@ function stateFromMiddleWare(
   const combinedState = {
     ...postState,
     variables: {
-      ...preState.variables,
       ...postState.variables,
     },
   };
