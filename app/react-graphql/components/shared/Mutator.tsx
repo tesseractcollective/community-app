@@ -121,7 +121,7 @@ function createUpdateMutation(
   return {mutation, operationName, pkColumns};
 }
 
-export function useMutator<T extends {[key: string]: any}>(
+function useMutator<T extends {[key: string]: any}>(
   props: UseMutatorProps<T>,
 ): {mutator: Mutator; state: MutatorState<T>} {
   const {config, item, variables, onConflict, afterMutationCallback} = props;
@@ -201,47 +201,6 @@ export function useMutator<T extends {[key: string]: any}>(
       mutating: mutationResult.fetching || deleteResult.fetching,
     },
   };
-}
-
-export interface MutatorInputProps {
-  mutator: Mutator;
-  input: string;
-}
-
-export interface MutatorSaveProps {
-  mutator: Mutator;
-}
-
-export function MutatorTextInput(props: MutatorInputProps & InputProps) {
-  const {mutator, input, ...rest} = props;
-
-  const value = mutator.item[input];
-
-  return (
-    <Input
-      {...rest}
-      value={value}
-      onChangeText={(text) => mutator.setVariable(input, text)}
-    />
-  );
-}
-
-export function MutatorSaveButton(props: MutatorSaveProps & ButtonProps) {
-  const {mutator, ...rest} = props;
-
-  const translations = useTranslations();
-  const title = rest.title || translations.save;
-
-  return <Button {...rest} title={title} onPress={mutator.save} />;
-}
-
-export function MutatorDeleteButton(props: MutatorSaveProps & ButtonProps) {
-  const {mutator, ...rest} = props;
-
-  const translations = useTranslations();
-  const title = rest.title || translations.delete;
-
-  return <Button {...rest} title={title} onPress={mutator.deleteAction} />;
 }
 
 // function inputForType(mutator: Mutator, type: TypeNode, isRequired = false) {

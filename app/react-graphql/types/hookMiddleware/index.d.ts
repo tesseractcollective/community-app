@@ -24,11 +24,9 @@ interface MutationPreMiddlewareState {
   mutation?: DocumentNode;
   variables?: IJsonObject;
   operationName?: string;
-  pkColumns?: { [key: string]: string };
 }
 interface MutationPostMiddlewareState {
   mutation: DocumentNode;
   variables: IJsonObject;
   operationName: string;
-  pkColumns: { [key: string]: string };
 }

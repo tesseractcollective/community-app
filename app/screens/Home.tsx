@@ -84,6 +84,7 @@ export default function () {
         style={styles.groups}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
+        pullToRefresh={false}
         config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={whereMyGroups}

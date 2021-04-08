@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {
   ActivityIndicator,
@@ -10,15 +10,12 @@ import {
 import {Avatar, Button, Icon, Image} from 'react-native-elements';
 import ImageCropPicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
-import {
-  MutatorSaveButton,
-  MutatorTextInput,
-  useMutator,
-} from 'react-graphql/components';
-import {Post} from 'graphql-api';
+import {MutatorButton, MutatorTextInput} from 'react-graphql/components';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {uploadImage} from '../fileApi/fileApi';
 import {useAuthToken} from '../UserContext';
+import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
+import {useTranslations} from 'components/TranslationProvider';
 
 export interface PostCreateRouterProps {
   userId: string;
@@ -29,13 +26,13 @@ export default function (props: any) {
   const {userId, groupId} = props.route.params;
 
   const navigation = useNavigation();
+  const translations = useTranslations();
   const authToken = useAuthToken();
 
   const [image, setImage] = useState<ImageOrVideo | undefined>();
 
-  const {mutator, state} = useMutator<Post>({
-    config: HasuraConfig.posts,
-    variables: {userId, groupId},
+  const insert = useReactGraphql(HasuraConfig.posts).useInsert({
+    initialVariables: {userId, groupId},
   });
 
   const pickImage = useCallback(() => {
@@ -51,9 +48,10 @@ export default function (props: any) {
   }, []);
 
   useEffect(() => {
-    if (image && state.resultItem) {
+    if (image && insert.resultItem) {
+      console.log('uploading image');
       uploadImage(image, authToken, {
-        postId: state.resultItem.id,
+        postId: insert.resultItem.id,
       })
         .then(() => {
           navigation.goBack();
@@ -62,12 +60,12 @@ export default function (props: any) {
           console.log(error);
         });
     }
-  }, [image, state.resultItem]);
+  }, [image, insert.resultItem]);
 
   return (
     <View>
       <View style={styles.container}>
-        <View style={styles.authorRow}>
+        <View style={styles.row}>
           <Avatar
             rounded
             icon={{name: 'user', type: 'font-awesome'}}
@@ -77,45 +75,42 @@ export default function (props: any) {
             overlayContainerStyle={{backgroundColor: 'gray'}}
           />
           <View style={styles.textColumn}>
-            <MutatorTextInput
-              mutator={mutator}
-              input="body"
-              style={styles.textContainer}
-            />
-            {image ? (
-              <Image source={{uri: image.path}} style={styles.image} />
-            ) : null}
-            <MutatorSaveButton mutator={mutator} style={styles.textContainer} />
+            <MutatorTextInput state={insert} input="body" />
           </View>
         </View>
       </View>
-      {state.mutating ? (
-        <ActivityIndicator style={styles.indicator} size="large" />
-      ) : null}
-      {state.error ? <Text>{state.error.message}</Text> : null}
-      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
-        <View style={styles.authorRow}>
-          <Button
-            type="clear"
-            onPress={pickImage}
-            icon={
-              <Icon
-                style={styles.icon}
-                name="image"
-                type="feather"
-                color="#313643"
-              />
-            }
-          />
+      <View style={styles.row}>
+        {insert.mutating ? (
+          <ActivityIndicator style={styles.indicator} size="large" />
+        ) : null}
+        {insert.error ? <Text>{insert.error.message}</Text> : null}
+      </View>
 
-          {/* <Icon
-            style={styles.icon}
-            name="camera"
-            type="feather"
-            color="#313643"
-          /> */}
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={{flex: 1}}></KeyboardAvoidingView>
+
+      {image ? (
+        <View style={styles.row}>
+          <Image source={{uri: image.path}} style={styles.image} />
         </View>
-      </KeyboardAvoidingView>
+      ) : null}
+
+      <View style={styles.row}>
+        <Button
+          type="clear"
+          onPress={pickImage}
+          icon={
+            <Icon
+              style={styles.icon}
+              name="image"
+              type="feather"
+              color="#313643"
+            />
+          }
+        />
+        <MutatorButton state={insert} title={translations.save} />
+      </View>
     </View>
   );
 }
@@ -127,22 +122,15 @@ const styles = StyleSheet.create({
   indicator: {
     margin: 16,
   },
-  authorRow: {
-    // backgroundColor: '#F2F2F2',
-    height: 50,
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
   },
   textColumn: {
-    height: 50,
-    flexDirection: 'column',
     alignItems: 'center',
-    flex: 1,
-  },
-  textContainer: {
-    flex: 1,
-    marginHorizontal: 10,
+    width: '100%',
+    paddingHorizontal: 10,
   },
   icon: {
     marginRight: 15,

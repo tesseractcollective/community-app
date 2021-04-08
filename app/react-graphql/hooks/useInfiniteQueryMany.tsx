@@ -1,11 +1,8 @@
-import { isEqual } from 'lodash';
+import {isEqual} from 'lodash';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import { stateFromMiddleware } from 'react-graphql/support/middlewareHelpers';
+import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 import {HasuraDataConfig} from '../types/hasuraConfig';
-import {
-  QueryMiddleware,
-  QueryPreMiddlewareState,
-} from '../types/hookMiddleware';
+import {QueryMiddleware} from '../types/hookMiddleware';
 import {findDefaultPks} from './findDefaultPks';
 import {useUrqlQuery} from './useUrqlQuery';
 
@@ -34,13 +31,18 @@ export default function useInfiniteQueryMany<
   }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
 
   const [offset, setOffset] = useState(0);
-  const [externalVariables, setExterneralVariables] = useState<any>({ where, orderBy, limit, offset });
+  const [externalVariables, setExterneralVariables] = useState<any>({
+    where,
+    orderBy,
+    limit,
+    offset,
+  });
   const [itemsMap, setItemsMap] = useState<Map<string, TData>>(new Map());
   const [shouldClearItems, setShouldClearItems] = useState(false);
   const [needsReQuery, setNeedsReQuery] = useState(false);
 
   useEffect(() => {
-    const checkVariables = { where, orderBy, limit };
+    const checkVariables = {where, orderBy, limit};
     if (!isEqual(externalVariables, checkVariables)) {
       setExterneralVariables(checkVariables);
       setOffset(0);
@@ -55,13 +57,11 @@ export default function useInfiniteQueryMany<
 
   // Setup the initial query Config so it's for sure ready before we get to urql
   const queryCfg = useMemo(() => {
-    const variables = { ...externalVariables, offset }
-    return stateFromMiddleware({ variables }, middleware, sharedConfig);
+    const variables = {...externalVariables, offset};
+    return stateFromQueryMiddleware({variables}, middleware, sharedConfig);
   }, [sharedConfig, middleware, externalVariables, offset]);
 
-  const [queryState, reExecuteQuery] = useUrqlQuery<TData>(
-    queryCfg,
-  );
+  const [queryState, reExecuteQuery] = useUrqlQuery<TData>(queryCfg);
 
   useEffect(() => {
     if (needsReQuery) {

@@ -1,11 +1,8 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState, useCallback} from 'react';
 import {HasuraDataConfig} from '../types/hasuraConfig';
-import {
-  MutationMiddleware,
-  MutationPostMiddlewareState,
-  MutationPreMiddlewareState,
-} from '../types/hookMiddleware';
+import {MutationMiddleware} from '../types/hookMiddleware';
 import {OperationContext, useMutation} from 'urql';
+import {stateFromMutationMiddleware} from 'react-graphql/support/middlewareHelpers';
 
 interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
@@ -13,9 +10,18 @@ interface IUseMutateProps {
   initialVariables?: IJsonObject;
 }
 
+export interface MutateState {
+  resultItem?: any;
+  mutating: boolean;
+  error?: Error;
+  executeMutation: () => void;
+  setVariable: (key: string, value: any) => void;
+  setVariables: (variables: {[key: string]: any}) => void;
+}
+
 export default function useMutate<T extends IJsonObject>(
   props: IUseMutateProps,
-): any {
+): MutateState {
   const {sharedConfig, middleware, initialVariables} = props;
   //MutationConfig is what we internally refer to the middlewareState as
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
@@ -33,24 +39,15 @@ export default function useMutate<T extends IJsonObject>(
   }
 
   //Setup the initial mutation Config so it's for sure ready before we get to urql
-  const mutationCfg: MutationPostMiddlewareState = useMemo(() => {
-    let _mutationCfg;
-    const _tmp = middleware.reduce(
-      (val, next: MutationMiddleware) => {
-        const mState: MutationPostMiddlewareState = next(val, sharedConfig);
-        let newState = {};
-        if (val) Object.assign(newState, val);
-        Object.assign(newState, mState);
-        return newState as MutationPostMiddlewareState;
-      },
-      {
-        variables: objectVariables,
-      } as MutationPreMiddlewareState,
+  const mutationCfg = useMemo(() => {
+    console.log('memoizing config');
+    const state = stateFromMutationMiddleware(
+      {variables: objectVariables},
+      middleware,
+      sharedConfig,
     );
-
-    _mutationCfg = _tmp as MutationPostMiddlewareState;
-
-    return _mutationCfg;
+    // console.log('state', state);
+    return state;
   }, [sharedConfig, middleware, objectVariables]);
 
   console.log(
@@ -59,64 +56,75 @@ export default function useMutate<T extends IJsonObject>(
   );
   //The mutation
   const [mutationResult, executeMutation] = useMutation(mutationCfg?.mutation);
-  const data = mutationResult.data;
-  const resultItem = data?.[mutationCfg.operationName];
+  const resultItem = mutationResult.data?.[mutationCfg.operationName];
 
   useEffect(() => {
-    if (needsExecuteMutation) {
+    console.log('mutation useEffect');
+    if (needsExecuteMutation && !executeContext) {
       setNeedsExecuteMutation(false);
-      executeMutation(mutationCfg.variables);
-    } else if (executeContext) {
-      setExecuteContext(null);
-      executeMutation(mutationCfg.variables, executeContext);
+      console.log('executingMutation');
+      executeMutation(mutationCfg.variables).then(result => {
+        console.log('result', result);
+      });
     }
+
+    // setNeedsExecuteMutation(false);
+    // setExecuteContext(null);
+    // if (needsExecuteMutation) {
+    //   setNeedsExecuteMutation(false);
+    //   console.log('executingMutation');
+    //   executeMutation(mutationCfg.variables);
+    // } else if (executeContext) {
+    //   setExecuteContext(null);
+    //   executeMutation(mutationCfg.variables, executeContext);
+    // }
   }, [
     needsExecuteMutation,
     executeContext,
     executeMutation,
-    mutationCfg.variables,
+    mutationCfg,
   ]);
 
   //Handling variables
-  const setVariable = (key: string, value: any) => {
-    setObjectVariables({
-      ...objectVariables,
+  const setVariable = useCallback((key: string, value: any) => {
+    setObjectVariables((original) => ({
+      ...original,
       [key]: value,
-    });
-  };
+    }));
+  }, []);
 
-  const setVariables = (variables: {[key: string]: any}) => {
-    setObjectVariables({
-      ...objectVariables,
+  const setVariables = useCallback((variables: {[key: string]: any}) => {
+    setObjectVariables((original) => ({
+      ...original,
       ...variables,
-    });
-  };
+    }));
+  }, []);
 
-  //Return values
-  return {
-    data,
-    resultItem,
-    executeMutation: (
-      _variables?: IJsonObject,
-      context?: Partial<OperationContext>,
-    ) => {
-      //create combined variables from paassed in ones and existing
-      let variables = _variables
-        ? {
-            ...objectVariables,
-            ..._variables,
-          }
-        : objectVariables;
+  const wrappedExecuteMutation = (_variables?: IJsonObject, context?: Partial<OperationContext>) => {
       if (_variables) {
-        //If variables were passed in then save the new combined variables
-        setObjectVariables(variables);
+        setObjectVariables((original) => ({
+          ...original,
+          ..._variables,
+        }));
       }
+      console.log('setting setNeedsExecuteMutation');
       if (context) {
         setExecuteContext(context);
       } else {
         setNeedsExecuteMutation(true);
       }
-    },
+    };
+
+  // const wrappedExecuteMutation = (_variables?: IJsonObject, context?: Partial<OperationContext>) => {
+  //   console.log('mocked wrappedExecuteMutation');
+  // }
+
+  //Return values
+  return {
+    resultItem,
+    mutating: mutationResult.fetching,
+    error: mutationResult.error,
+    executeMutation: wrappedExecuteMutation,
     setVariable,
     setVariables,
   };

@@ -1,7 +1,5 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {useQuery} from 'urql';
+import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
-import isEqual from 'lodash.isequal';
 import {
   RefreshControl,
   ListRenderItem,
@@ -9,13 +7,11 @@ import {
   ScrollViewProps,
 } from 'react-native';
 import {
-  getFieldFragmentInfo,
   HasuraDataConfig,
   keyExtractor,
 } from 'graphql-api/HasuraConfigType';
-import {print} from 'graphql';
-import {useFocusEffect, useIsFocused} from '@react-navigation/core';
-import useReactHasura from 'react-graphql/hooks/useReactHasura';
+import {useIsFocused} from '@react-navigation/core';
+import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 
 const defaultPageSize = 50;
 
@@ -49,7 +45,7 @@ export default function <T extends {[key: string]: any}>(
     items,
     queryState: {fetching, error},
     refresh,
-  } = useReactHasura(config).useInfiniteQueryMany({ where, orderBy, pageSize });
+  } = useReactGraphql(config).useInfiniteQueryMany({ where, orderBy, pageSize });
 
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);
