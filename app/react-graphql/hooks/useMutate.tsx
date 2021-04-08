@@ -108,11 +108,17 @@ export default function useMutate<T extends IJsonObject>(
     context?: Partial<OperationContext>,
   ) => {
     if (_variables) {
-      console.log('🎁 wrappedExecuteMutation-> _variables', _variables);
-      setObjectVariables((original) => ({
-        ...original,
-        ..._variables,
-      }));
+      if (_variables._dispatchInstances) {
+        console.log(
+          '🎁 wrappedExecuteMutation-> _variables -> Found reactEvent Object.  Will not update variables'
+        );
+      } else {
+        console.log('🎁 wrappedExecuteMutation-> _variables', _variables);
+        setObjectVariables((original) => ({
+          ...original,
+          ..._variables,
+        }));
+      }
     }
     console.log('setting setNeedsExecuteMutation');
     if (context) {

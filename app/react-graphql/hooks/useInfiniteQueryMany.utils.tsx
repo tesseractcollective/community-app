@@ -8,7 +8,7 @@ import {
 } from '../types/hookMiddleware';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {getFieldFragmentInfo} from '../support/HasuraConfigUtils';
-import { isDefined } from 'react-graphql/support/javaScriptHelpers';
+import {isDefined} from 'react-graphql/support/javaScriptHelpers';
 
 export function createInfiniteQueryMany(
   state: QueryPreMiddlewareState,
@@ -29,6 +29,7 @@ export function createInfiniteQueryMany(
     variables['orderBy'] ? `$orderBy: [${name}_order_by!]` : null,
     isDefined(variables['limit']) ? `$limit: Int` : null,
     isDefined(variables['offset']) ? `$offset: Int` : null,
+    isDefined(variables['userId']) ? `$userId: uuid` : null,
   ]
     .filter((x) => !!x)
     .join(', ');
@@ -50,6 +51,24 @@ export function createInfiniteQueryMany(
   }
   ${print(fragment)}`;
 
-  const query = gql(queryStr);
+  let query;
+  try {
+    query = gql(queryStr);
+  } catch (err) {
+    console.error(
+      'Failed to parse graphql',
+      JSON.stringify(
+        {
+          queryStr,
+          name,
+          variablesStr,
+          operationStr,
+          variables: state.variables,
+        },
+        null,
+        2,
+      ),
+    );
+  }
   return {query, operationName, variables: state.variables ?? {}};
 }

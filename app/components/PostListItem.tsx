@@ -3,8 +3,11 @@ import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
 import {Post} from 'graphql-api';
 import {StyleSheet, Text, View} from 'react-native';
-import {useAuthToken} from '../UserContext';
+import {useAuthToken, useUserId} from '../UserContext';
 import {urlForFile} from '../fileApi/fileApi';
+import Reaction from './Reaction';
+import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 
 interface PostListItemProps {
   post: Post;
@@ -16,6 +19,16 @@ export default function (props: PostListItemProps) {
   const navigation = useNavigation();
   const authToken = useAuthToken();
 
+  const {executeMutation: likePost, resultItem: likeResults} = useReactGraphql(
+    HasuraConfig.userPostReactions,
+  ).useInsert({
+    initialVariables: {
+      postId: post.id,
+      reaction: 'LIKE',
+    },
+  });
+  console.log('likeResults', likeResults);
+
   const onPress = () => {
     navigation.navigate('PostDetail', {post});
   };
@@ -23,7 +36,7 @@ export default function (props: PostListItemProps) {
   return (
     <ListItem onPress={onPress} containerStyle={{paddingHorizontal: 0}}>
       <ListItem.Content>
-        <View style={{ paddingHorizontal: 14 }}>
+        <View style={{paddingHorizontal: 14}}>
           <View style={styles.authorRow}>
             <Avatar
               rounded
@@ -60,6 +73,17 @@ export default function (props: PostListItemProps) {
             }}
           />
         ))}
+        <Reaction
+          count={
+            (post?.userPostReactions_aggregate?.aggregate?.count || 0) +
+            (!!likeResults?.userId ? 1 : 0)
+          }
+          hasCurrentUserReacted={
+            !!post?.userPostReactions?.length || !!likeResults?.userId
+          }
+          reactionType="LIKE"
+          toggleReaction={likePost}
+        />
       </ListItem.Content>
     </ListItem>
   );

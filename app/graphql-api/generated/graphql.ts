@@ -10,7 +10,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  citext: any;
   float8: any;
+  geography: any;
+  geometry: any;
   jsonb: any;
   timestamptz: any;
   uuid: any;
@@ -230,6 +233,26 @@ export enum ApiKey_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+
+/** expression to compare columns of type citext. All fields are combined with logical 'AND'. */
+export type Citext_Comparison_Exp = {
+  _eq?: Maybe<Scalars['citext']>;
+  _gt?: Maybe<Scalars['citext']>;
+  _gte?: Maybe<Scalars['citext']>;
+  _ilike?: Maybe<Scalars['String']>;
+  _in?: Maybe<Array<Scalars['citext']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _like?: Maybe<Scalars['String']>;
+  _lt?: Maybe<Scalars['citext']>;
+  _lte?: Maybe<Scalars['citext']>;
+  _neq?: Maybe<Scalars['citext']>;
+  _nilike?: Maybe<Scalars['String']>;
+  _nin?: Maybe<Array<Scalars['citext']>>;
+  _nlike?: Maybe<Scalars['String']>;
+  _nsimilar?: Maybe<Scalars['String']>;
+  _similar?: Maybe<Scalars['String']>;
+};
 
 /** columns and relationships of "device" */
 export type Device = {
@@ -461,6 +484,8 @@ export type File = {
   name?: Maybe<Scalars['String']>;
   postId?: Maybe<Scalars['uuid']>;
   updated_at: Scalars['timestamptz'];
+  /** A computed field, executes function "file_url" */
+  url?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
@@ -871,11 +896,71 @@ export type Float8_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['float8']>>;
 };
 
+
+/** Expression to compare the result of casting a column of type geography. Multiple cast targets are combined with logical 'AND'. */
+export type Geography_Cast_Exp = {
+  geometry?: Maybe<Geometry_Comparison_Exp>;
+};
+
+/** expression to compare columns of type geography. All fields are combined with logical 'AND'. */
+export type Geography_Comparison_Exp = {
+  _cast?: Maybe<Geography_Cast_Exp>;
+  _eq?: Maybe<Scalars['geography']>;
+  _gt?: Maybe<Scalars['geography']>;
+  _gte?: Maybe<Scalars['geography']>;
+  _in?: Maybe<Array<Scalars['geography']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['geography']>;
+  _lte?: Maybe<Scalars['geography']>;
+  _neq?: Maybe<Scalars['geography']>;
+  _nin?: Maybe<Array<Scalars['geography']>>;
+  /** is the column within a distance from a geography value */
+  _st_d_within?: Maybe<St_D_Within_Geography_Input>;
+  /** does the column spatially intersect the given geography value */
+  _st_intersects?: Maybe<Scalars['geography']>;
+};
+
+
+/** Expression to compare the result of casting a column of type geometry. Multiple cast targets are combined with logical 'AND'. */
+export type Geometry_Cast_Exp = {
+  geography?: Maybe<Geography_Comparison_Exp>;
+};
+
+/** expression to compare columns of type geometry. All fields are combined with logical 'AND'. */
+export type Geometry_Comparison_Exp = {
+  _cast?: Maybe<Geometry_Cast_Exp>;
+  _eq?: Maybe<Scalars['geometry']>;
+  _gt?: Maybe<Scalars['geometry']>;
+  _gte?: Maybe<Scalars['geometry']>;
+  _in?: Maybe<Array<Scalars['geometry']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['geometry']>;
+  _lte?: Maybe<Scalars['geometry']>;
+  _neq?: Maybe<Scalars['geometry']>;
+  _nin?: Maybe<Array<Scalars['geometry']>>;
+  /** does the column contain the given geometry value */
+  _st_contains?: Maybe<Scalars['geometry']>;
+  /** does the column crosses the given geometry value */
+  _st_crosses?: Maybe<Scalars['geometry']>;
+  /** is the column within a distance from a geometry value */
+  _st_d_within?: Maybe<St_D_Within_Input>;
+  /** is the column equal to given geometry value. Directionality is ignored */
+  _st_equals?: Maybe<Scalars['geometry']>;
+  /** does the column spatially intersect the given geometry value */
+  _st_intersects?: Maybe<Scalars['geometry']>;
+  /** does the column 'spatially overlap' (intersect but not completely contain) the given geometry value */
+  _st_overlaps?: Maybe<Scalars['geometry']>;
+  /** does the column have atleast one point in common with the given geometry value */
+  _st_touches?: Maybe<Scalars['geometry']>;
+  /** is the column contained in the given geometry value */
+  _st_within?: Maybe<Scalars['geometry']>;
+};
+
 /** columns and relationships of "group" */
 export type Group = {
   __typename?: 'group';
   createdAt: Scalars['timestamptz'];
-  description: Scalars['String'];
+  description: Scalars['citext'];
   /** An array relationship */
   files: Array<File>;
   /** An aggregated array relationship */
@@ -885,7 +970,7 @@ export type Group = {
   /** An object relationship */
   location?: Maybe<Location>;
   locationId?: Maybe<Scalars['uuid']>;
-  name: Scalars['String'];
+  name: Scalars['citext'];
   /** An array relationship */
   posts: Array<Post>;
   /** An aggregated array relationship */
@@ -998,13 +1083,13 @@ export type Group_Bool_Exp = {
   _not?: Maybe<Group_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Group_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  description?: Maybe<String_Comparison_Exp>;
+  description?: Maybe<Citext_Comparison_Exp>;
   files?: Maybe<File_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   isPrivate?: Maybe<Boolean_Comparison_Exp>;
   location?: Maybe<Location_Bool_Exp>;
   locationId?: Maybe<Uuid_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<Citext_Comparison_Exp>;
   posts?: Maybe<Post_Bool_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
   userGroup?: Maybe<UserGroup_Bool_Exp>;
@@ -1021,13 +1106,13 @@ export enum Group_Constraint {
 /** input type for inserting data into table "group" */
 export type Group_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['citext']>;
   files?: Maybe<File_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   isPrivate?: Maybe<Scalars['Boolean']>;
   location?: Maybe<Location_Obj_Rel_Insert_Input>;
   locationId?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
   posts?: Maybe<Post_Arr_Rel_Insert_Input>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userGroup?: Maybe<UserGroup_Arr_Rel_Insert_Input>;
@@ -1037,10 +1122,10 @@ export type Group_Insert_Input = {
 export type Group_Max_Fields = {
   __typename?: 'group_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['citext']>;
   id?: Maybe<Scalars['uuid']>;
   locationId?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1058,10 +1143,10 @@ export type Group_Max_Order_By = {
 export type Group_Min_Fields = {
   __typename?: 'group_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['citext']>;
   id?: Maybe<Scalars['uuid']>;
   locationId?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1138,11 +1223,11 @@ export enum Group_Select_Column {
 /** input type for updating data in table "group" */
 export type Group_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['citext']>;
   id?: Maybe<Scalars['uuid']>;
   isPrivate?: Maybe<Scalars['Boolean']>;
   locationId?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1192,16 +1277,21 @@ export type Jsonb_Comparison_Exp = {
 export type Location = {
   __typename?: 'location';
   addressForLanguage: Scalars['jsonb'];
-  city?: Maybe<Scalars['String']>;
-  country: Scalars['String'];
+  city?: Maybe<Scalars['citext']>;
+  country: Scalars['citext'];
   countryCode: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   formattedAddress: Scalars['String'];
+  /** An array relationship */
+  groups: Array<Group>;
+  /** An aggregated array relationship */
+  groups_aggregate: Group_Aggregate;
   id: Scalars['uuid'];
   latitude: Scalars['float8'];
+  location?: Maybe<Scalars['geometry']>;
   longitude: Scalars['float8'];
-  name: Scalars['String'];
-  state?: Maybe<Scalars['String']>;
+  name: Scalars['citext'];
+  state?: Maybe<Scalars['citext']>;
   updatedAt: Scalars['timestamptz'];
 };
 
@@ -1209,6 +1299,26 @@ export type Location = {
 /** columns and relationships of "location" */
 export type LocationAddressForLanguageArgs = {
   path?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "location" */
+export type LocationGroupsArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
+};
+
+
+/** columns and relationships of "location" */
+export type LocationGroups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Order_By>>;
+  where?: Maybe<Group_Bool_Exp>;
 };
 
 /** aggregated selection of "location" */
@@ -1286,16 +1396,18 @@ export type Location_Bool_Exp = {
   _not?: Maybe<Location_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Location_Bool_Exp>>>;
   addressForLanguage?: Maybe<Jsonb_Comparison_Exp>;
-  city?: Maybe<String_Comparison_Exp>;
-  country?: Maybe<String_Comparison_Exp>;
+  city?: Maybe<Citext_Comparison_Exp>;
+  country?: Maybe<Citext_Comparison_Exp>;
   countryCode?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   formattedAddress?: Maybe<String_Comparison_Exp>;
+  groups?: Maybe<Group_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   latitude?: Maybe<Float8_Comparison_Exp>;
+  location?: Maybe<Geometry_Comparison_Exp>;
   longitude?: Maybe<Float8_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  state?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<Citext_Comparison_Exp>;
+  state?: Maybe<Citext_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1329,32 +1441,34 @@ export type Location_Inc_Input = {
 /** input type for inserting data into table "location" */
 export type Location_Insert_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['citext']>;
+  country?: Maybe<Scalars['citext']>;
   countryCode?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   formattedAddress?: Maybe<Scalars['String']>;
+  groups?: Maybe<Group_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   latitude?: Maybe<Scalars['float8']>;
+  location?: Maybe<Scalars['geometry']>;
   longitude?: Maybe<Scalars['float8']>;
-  name?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
+  state?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
 export type Location_Max_Fields = {
   __typename?: 'location_max_fields';
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['citext']>;
+  country?: Maybe<Scalars['citext']>;
   countryCode?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   formattedAddress?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   latitude?: Maybe<Scalars['float8']>;
   longitude?: Maybe<Scalars['float8']>;
-  name?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
+  state?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1376,16 +1490,16 @@ export type Location_Max_Order_By = {
 /** aggregate min on columns */
 export type Location_Min_Fields = {
   __typename?: 'location_min_fields';
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['citext']>;
+  country?: Maybe<Scalars['citext']>;
   countryCode?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   formattedAddress?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   latitude?: Maybe<Scalars['float8']>;
   longitude?: Maybe<Scalars['float8']>;
-  name?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
+  state?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1434,8 +1548,10 @@ export type Location_Order_By = {
   countryCode?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   formattedAddress?: Maybe<Order_By>;
+  groups_aggregate?: Maybe<Group_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   latitude?: Maybe<Order_By>;
+  location?: Maybe<Order_By>;
   longitude?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
@@ -1471,6 +1587,8 @@ export enum Location_Select_Column {
   /** column name */
   Latitude = 'latitude',
   /** column name */
+  Location = 'location',
+  /** column name */
   Longitude = 'longitude',
   /** column name */
   Name = 'name',
@@ -1483,16 +1601,17 @@ export enum Location_Select_Column {
 /** input type for updating data in table "location" */
 export type Location_Set_Input = {
   addressForLanguage?: Maybe<Scalars['jsonb']>;
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['citext']>;
+  country?: Maybe<Scalars['citext']>;
   countryCode?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   formattedAddress?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   latitude?: Maybe<Scalars['float8']>;
+  location?: Maybe<Scalars['geometry']>;
   longitude?: Maybe<Scalars['float8']>;
-  name?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['citext']>;
+  state?: Maybe<Scalars['citext']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1566,6 +1685,8 @@ export enum Location_Update_Column {
   Id = 'id',
   /** column name */
   Latitude = 'latitude',
+  /** column name */
+  Location = 'location',
   /** column name */
   Longitude = 'longitude',
   /** column name */
@@ -1867,6 +1988,10 @@ export type Mutation_Root = {
   delete_log_by_pk?: Maybe<Log>;
   /** delete data from the table: "post" */
   delete_post?: Maybe<Post_Mutation_Response>;
+  /** delete data from the table: "postComment" */
+  delete_postComment?: Maybe<PostComment_Mutation_Response>;
+  /** delete single row from the table: "postComment" */
+  delete_postComment_by_pk?: Maybe<PostComment>;
   /** delete single row from the table: "post" */
   delete_post_by_pk?: Maybe<Post>;
   /** delete data from the table: "reaction" */
@@ -1911,6 +2036,10 @@ export type Mutation_Root = {
   insert_log_one?: Maybe<Log>;
   /** insert data into the table: "post" */
   insert_post?: Maybe<Post_Mutation_Response>;
+  /** insert data into the table: "postComment" */
+  insert_postComment?: Maybe<PostComment_Mutation_Response>;
+  /** insert a single row into the table: "postComment" */
+  insert_postComment_one?: Maybe<PostComment>;
   /** insert a single row into the table: "post" */
   insert_post_one?: Maybe<Post>;
   /** insert data into the table: "reaction" */
@@ -1955,6 +2084,10 @@ export type Mutation_Root = {
   update_log_by_pk?: Maybe<Log>;
   /** update data of the table: "post" */
   update_post?: Maybe<Post_Mutation_Response>;
+  /** update data of the table: "postComment" */
+  update_postComment?: Maybe<PostComment_Mutation_Response>;
+  /** update single row of the table: "postComment" */
+  update_postComment_by_pk?: Maybe<PostComment>;
   /** update single row of the table: "post" */
   update_post_by_pk?: Maybe<Post>;
   /** update data of the table: "reaction" */
@@ -2055,6 +2188,18 @@ export type Mutation_RootDelete_PostArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_PostCommentArgs = {
+  where: PostComment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_PostComment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Post_By_PkArgs = {
   id: Scalars['uuid'];
 };
@@ -2100,6 +2245,7 @@ export type Mutation_RootDelete_UserPostReactionArgs = {
 /** mutation root */
 export type Mutation_RootDelete_UserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
+  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -2198,6 +2344,20 @@ export type Mutation_RootInsert_Log_OneArgs = {
 export type Mutation_RootInsert_PostArgs = {
   objects: Array<Post_Insert_Input>;
   on_conflict?: Maybe<Post_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_PostCommentArgs = {
+  objects: Array<PostComment_Insert_Input>;
+  on_conflict?: Maybe<PostComment_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_PostComment_OneArgs = {
+  object: PostComment_Insert_Input;
+  on_conflict?: Maybe<PostComment_On_Conflict>;
 };
 
 
@@ -2390,6 +2550,20 @@ export type Mutation_RootUpdate_PostArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_PostCommentArgs = {
+  _set?: Maybe<PostComment_Set_Input>;
+  where: PostComment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PostComment_By_PkArgs = {
+  _set?: Maybe<PostComment_Set_Input>;
+  pk_columns: PostComment_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Post_By_PkArgs = {
   _set?: Maybe<Post_Set_Input>;
   pk_columns: Post_Pk_Columns_Input;
@@ -2484,6 +2658,10 @@ export type Post = {
   /** An object relationship */
   user?: Maybe<User>;
   userId?: Maybe<Scalars['uuid']>;
+  /** An array relationship */
+  userPostReactions: Array<UserPostReaction>;
+  /** An aggregated array relationship */
+  userPostReactions_aggregate: UserPostReaction_Aggregate;
 };
 
 
@@ -2505,6 +2683,222 @@ export type PostFiles_AggregateArgs = {
   order_by?: Maybe<Array<File_Order_By>>;
   where?: Maybe<File_Bool_Exp>;
 };
+
+
+/** columns and relationships of "post" */
+export type PostUserPostReactionsArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+
+/** columns and relationships of "post" */
+export type PostUserPostReactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<UserPostReaction_Order_By>>;
+  where?: Maybe<UserPostReaction_Bool_Exp>;
+};
+
+/** columns and relationships of "postComment" */
+export type PostComment = {
+  __typename?: 'postComment';
+  body: Scalars['String'];
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  postId: Scalars['uuid'];
+  updatedAt: Scalars['timestamptz'];
+  userId: Scalars['uuid'];
+};
+
+/** aggregated selection of "postComment" */
+export type PostComment_Aggregate = {
+  __typename?: 'postComment_aggregate';
+  aggregate?: Maybe<PostComment_Aggregate_Fields>;
+  nodes: Array<PostComment>;
+};
+
+/** aggregate fields of "postComment" */
+export type PostComment_Aggregate_Fields = {
+  __typename?: 'postComment_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<PostComment_Max_Fields>;
+  min?: Maybe<PostComment_Min_Fields>;
+};
+
+
+/** aggregate fields of "postComment" */
+export type PostComment_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<PostComment_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "postComment" */
+export type PostComment_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<PostComment_Max_Order_By>;
+  min?: Maybe<PostComment_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "postComment" */
+export type PostComment_Arr_Rel_Insert_Input = {
+  data: Array<PostComment_Insert_Input>;
+  on_conflict?: Maybe<PostComment_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "postComment". All fields are combined with a logical 'AND'. */
+export type PostComment_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<PostComment_Bool_Exp>>>;
+  _not?: Maybe<PostComment_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<PostComment_Bool_Exp>>>;
+  body?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  postId?: Maybe<Uuid_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  userId?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "postComment" */
+export enum PostComment_Constraint {
+  /** unique or primary key constraint */
+  PostCommentPkey = 'postComment_pkey'
+}
+
+/** input type for inserting data into table "postComment" */
+export type PostComment_Insert_Input = {
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type PostComment_Max_Fields = {
+  __typename?: 'postComment_max_fields';
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "postComment" */
+export type PostComment_Max_Order_By = {
+  body?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type PostComment_Min_Fields = {
+  __typename?: 'postComment_min_fields';
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "postComment" */
+export type PostComment_Min_Order_By = {
+  body?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "postComment" */
+export type PostComment_Mutation_Response = {
+  __typename?: 'postComment_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<PostComment>;
+};
+
+/** input type for inserting object relation for remote table "postComment" */
+export type PostComment_Obj_Rel_Insert_Input = {
+  data: PostComment_Insert_Input;
+  on_conflict?: Maybe<PostComment_On_Conflict>;
+};
+
+/** on conflict condition type for table "postComment" */
+export type PostComment_On_Conflict = {
+  constraint: PostComment_Constraint;
+  update_columns: Array<PostComment_Update_Column>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "postComment" */
+export type PostComment_Order_By = {
+  body?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  postId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "postComment" */
+export type PostComment_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "postComment" */
+export enum PostComment_Select_Column {
+  /** column name */
+  Body = 'body',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "postComment" */
+export type PostComment_Set_Input = {
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  postId?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "postComment" */
+export enum PostComment_Update_Column {
+  /** column name */
+  Body = 'body',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'postId',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId'
+}
 
 /** aggregated selection of "post" */
 export type Post_Aggregate = {
@@ -2555,6 +2949,7 @@ export type Post_Bool_Exp = {
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
   user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
+  userPostReactions?: Maybe<UserPostReaction_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "post" */
@@ -2574,6 +2969,7 @@ export type Post_Insert_Input = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
   user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
+  userPostReactions?: Maybe<UserPostReaction_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -2651,6 +3047,7 @@ export type Post_Order_By = {
   updatedAt?: Maybe<Order_By>;
   user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
+  userPostReactions_aggregate?: Maybe<UserPostReaction_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "post" */
@@ -2741,6 +3138,12 @@ export type Query_Root = {
   log_by_pk?: Maybe<Log>;
   /** fetch data from the table: "post" */
   post: Array<Post>;
+  /** fetch data from the table: "postComment" */
+  postComment: Array<PostComment>;
+  /** fetch aggregated fields from the table: "postComment" */
+  postComment_aggregate: PostComment_Aggregate;
+  /** fetch data from the table: "postComment" using primary key columns */
+  postComment_by_pk?: Maybe<PostComment>;
   /** fetch aggregated fields from the table: "post" */
   post_aggregate: Post_Aggregate;
   /** fetch data from the table: "post" using primary key columns */
@@ -2939,6 +3342,32 @@ export type Query_RootPostArgs = {
 
 
 /** query root */
+export type Query_RootPostCommentArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootPostComment_AggregateArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootPostComment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootPost_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3040,6 +3469,7 @@ export type Query_RootUserPostReaction_AggregateArgs = {
 /** query root */
 export type Query_RootUserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
+  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -3203,6 +3633,17 @@ export enum Reaction_Update_Column {
   Name = 'name'
 }
 
+export type St_D_Within_Geography_Input = {
+  distance: Scalars['Float'];
+  from: Scalars['geography'];
+  use_spheroid?: Maybe<Scalars['Boolean']>;
+};
+
+export type St_D_Within_Input = {
+  distance: Scalars['Float'];
+  from: Scalars['geometry'];
+};
+
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
@@ -3244,6 +3685,12 @@ export type Subscription_Root = {
   log_by_pk?: Maybe<Log>;
   /** fetch data from the table: "post" */
   post: Array<Post>;
+  /** fetch data from the table: "postComment" */
+  postComment: Array<PostComment>;
+  /** fetch aggregated fields from the table: "postComment" */
+  postComment_aggregate: PostComment_Aggregate;
+  /** fetch data from the table: "postComment" using primary key columns */
+  postComment_by_pk?: Maybe<PostComment>;
   /** fetch aggregated fields from the table: "post" */
   post_aggregate: Post_Aggregate;
   /** fetch data from the table: "post" using primary key columns */
@@ -3442,6 +3889,32 @@ export type Subscription_RootPostArgs = {
 
 
 /** subscription root */
+export type Subscription_RootPostCommentArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPostComment_AggregateArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootPostComment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
 export type Subscription_RootPost_AggregateArgs = {
   distinct_on?: Maybe<Array<Post_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3543,6 +4016,7 @@ export type Subscription_RootUserPostReaction_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootUserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
+  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -3887,6 +4361,10 @@ export type UserPostReaction = {
   __typename?: 'userPostReaction';
   postId: Scalars['uuid'];
   reaction: Reaction_Enum;
+  /** An object relationship */
+  reactionByReaction: Reaction;
+  /** An object relationship */
+  user: User;
   userId: Scalars['uuid'];
 };
 
@@ -3932,19 +4410,23 @@ export type UserPostReaction_Bool_Exp = {
   _or?: Maybe<Array<Maybe<UserPostReaction_Bool_Exp>>>;
   postId?: Maybe<Uuid_Comparison_Exp>;
   reaction?: Maybe<Reaction_Enum_Comparison_Exp>;
+  reactionByReaction?: Maybe<Reaction_Bool_Exp>;
+  user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "userPostReaction" */
 export enum UserPostReaction_Constraint {
   /** unique or primary key constraint */
-  UserPostReactionsPkey = 'userPostReactions_pkey'
+  UserPostReactionPkey = 'userPostReaction_pkey'
 }
 
 /** input type for inserting data into table "userPostReaction" */
 export type UserPostReaction_Insert_Input = {
   postId?: Maybe<Scalars['uuid']>;
   reaction?: Maybe<Reaction_Enum>;
+  reactionByReaction?: Maybe<Reaction_Obj_Rel_Insert_Input>;
+  user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
@@ -4000,12 +4482,15 @@ export type UserPostReaction_On_Conflict = {
 export type UserPostReaction_Order_By = {
   postId?: Maybe<Order_By>;
   reaction?: Maybe<Order_By>;
+  reactionByReaction?: Maybe<Reaction_Order_By>;
+  user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "userPostReaction" */
 export type UserPostReaction_Pk_Columns_Input = {
   postId: Scalars['uuid'];
+  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -4267,6 +4752,15 @@ export type PostFieldsFragment = (
   )>, files: Array<(
     { __typename?: 'file' }
     & Pick<File, 'id' | 'domain' | 'meta'>
+  )>, userPostReactions_aggregate: (
+    { __typename?: 'userPostReaction_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'userPostReaction_aggregate_fields' }
+      & Pick<UserPostReaction_Aggregate_Fields, 'count'>
+    )> }
+  ), userPostReactions: Array<(
+    { __typename?: 'userPostReaction' }
+    & Pick<UserPostReaction, 'postId' | 'reaction' | 'userId'>
   )> }
 );
 
@@ -4277,6 +4771,11 @@ export type UserGroupFieldsFragment = (
     { __typename?: 'user' }
     & Pick<User, 'id' | 'name'>
   ) }
+);
+
+export type UserPostReactionFieldsFragment = (
+  { __typename?: 'userPostReaction' }
+  & Pick<UserPostReaction, 'userId' | 'postId' | 'reaction'>
 );
 
 import { IntrospectionQuery } from 'graphql';
@@ -4992,6 +5491,14 @@ export default {
                 "kind": "SCALAR",
                 "name": "Any"
               }
+            },
+            "args": []
+          },
+          {
+            "name": "url",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           },
@@ -6265,6 +6772,130 @@ export default {
             "args": []
           },
           {
+            "name": "groups",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "group"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "groups_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "group_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
             "name": "id",
             "type": {
               "kind": "NON_NULL",
@@ -6283,6 +6914,14 @@ export default {
                 "kind": "SCALAR",
                 "name": "Any"
               }
+            },
+            "args": []
+          },
+          {
+            "name": "location",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           },
@@ -7433,6 +8072,44 @@ export default {
             ]
           },
           {
+            "name": "delete_postComment",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_mutation_response"
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_postComment_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "delete_post_by_pk",
             "type": {
               "kind": "OBJECT",
@@ -7584,6 +8261,16 @@ export default {
             "args": [
               {
                 "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "reaction",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -7991,6 +8678,64 @@ export default {
                         "name": "Any"
                       }
                     }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_postComment",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_mutation_response"
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_postComment_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment"
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
                   }
                 }
               },
@@ -8838,6 +9583,58 @@ export default {
             ]
           },
           {
+            "name": "update_postComment",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_mutation_response"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_postComment_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment"
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "update_post_by_pk",
             "type": {
               "kind": "OBJECT",
@@ -9275,6 +10072,432 @@ export default {
             "type": {
               "kind": "SCALAR",
               "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userPostReactions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "userPostReaction"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "userPostReactions_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userPostReaction_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment",
+        "fields": [
+          {
+            "name": "body",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_aggregate_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "postComment"
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_max_fields"
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment_min_fields"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment_max_fields",
+        "fields": [
+          {
+            "name": "body",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment_min_fields",
+        "fields": [
+          {
+            "name": "body",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "postComment_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "postComment"
+                  }
+                }
+              }
             },
             "args": []
           }
@@ -10438,6 +11661,149 @@ export default {
             ]
           },
           {
+            "name": "postComment",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "postComment"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "postComment_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "postComment_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "postComment_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "post_aggregate",
             "type": {
               "kind": "NON_NULL",
@@ -11009,6 +12375,16 @@ export default {
             "args": [
               {
                 "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "reaction",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -12205,6 +13581,149 @@ export default {
             ]
           },
           {
+            "name": "postComment",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "postComment"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "postComment_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "postComment_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "postComment_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "postComment"
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "post_aggregate",
             "type": {
               "kind": "NON_NULL",
@@ -12776,6 +14295,16 @@ export default {
             "args": [
               {
                 "name": "postId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "reaction",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -13762,6 +15291,28 @@ export default {
             "args": []
           },
           {
+            "name": "reactionByReaction",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "reaction"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "user"
+              }
+            },
+            "args": []
+          },
+          {
             "name": "userId",
             "type": {
               "kind": "NON_NULL",
@@ -14693,6 +16244,16 @@ export const PostFieldsFragmentDoc = gql`
     domain
     meta
   }
+  userPostReactions_aggregate(where: {reaction: {_eq: LIKE}}) {
+    aggregate {
+      count
+    }
+  }
+  userPostReactions(where: {userId: {_eq: $userId}}) {
+    postId
+    reaction
+    userId
+  }
 }
     `;
 export const UserGroupFieldsFragmentDoc = gql`
@@ -14703,5 +16264,12 @@ export const UserGroupFieldsFragmentDoc = gql`
     id
     name
   }
+}
+    `;
+export const UserPostReactionFieldsFragmentDoc = gql`
+    fragment userPostReactionFields on userPostReaction {
+  userId
+  postId
+  reaction
 }
     `;

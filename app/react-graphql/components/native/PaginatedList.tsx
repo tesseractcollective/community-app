@@ -12,6 +12,7 @@ import {
 } from 'graphql-api/HasuraConfigType';
 import {useIsFocused} from '@react-navigation/core';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
+import { QueryMiddleware } from 'react-graphql/types/hookMiddleware';
 
 const defaultPageSize = 50;
 
@@ -24,6 +25,7 @@ export interface PaginationListProps<T> {
   primaryKey?: string;
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
+  middleware?: QueryMiddleware[];
 }
 
 export default function <T extends {[key: string]: any}>(
@@ -37,6 +39,7 @@ export default function <T extends {[key: string]: any}>(
     pageSize,
     reloadOnFocus,
     pullToRefresh = true,
+    middleware,
     ...rest
   } = props;
 
@@ -45,7 +48,7 @@ export default function <T extends {[key: string]: any}>(
     items,
     queryState: {fetching, error},
     refresh,
-  } = useReactGraphql(config).useInfiniteQueryMany({ where, orderBy, pageSize });
+  } = useReactGraphql(config).useInfiniteQueryMany({ where, orderBy, pageSize, middleware: middleware || undefined });
 
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);

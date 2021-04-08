@@ -31,6 +31,16 @@ fragment postFields on post {
     domain
     meta
   }
+  userPostReactions_aggregate(where: {reaction: {_eq: LIKE}}) {
+    aggregate {
+      count
+    }
+  }
+  userPostReactions(where: {userId: {_eq: $userId}}) {
+    postId
+    reaction
+    userId
+  }
 }
 
 fragment userGroupFields on userGroup {
@@ -40,4 +50,10 @@ fragment userGroupFields on userGroup {
     id
     name
   }
+}
+
+fragment userPostReactionFields on userPostReaction {
+  userId
+  postId
+  reaction
 }
