@@ -1,21 +1,20 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Icon} from 'react-native-elements';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import {useTranslations} from '../components/TranslationProvider';
-import {
-    User
-} from '../graphql';      
-import HasuraConfig from '../graphql/HasuraConfig';
+import {User} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
+import {bs} from 'react-graphql/support/styling/buildStyles';
 
 const gradient = ['#F44336', '#FF9800'];
 
 const styles = StyleSheet.create({
-  list: {
-  },
+  list: {},
 });
 
 export default function () {
@@ -35,9 +34,13 @@ export default function () {
     });
   }, [navigation, userId]);
 
+  const logout = () => {
+    AsyncStorage.removeItem('user_token');
+  };
+
   return (
-    <View style={{backgroundColor: "red"}}>
-      
+    <View style={bs(`f-cc f-1`)}>
+      <Button onPress={logout} title={'Logout'} />
     </View>
   );
 }

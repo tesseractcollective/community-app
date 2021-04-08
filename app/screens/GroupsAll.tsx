@@ -3,15 +3,15 @@ import {StyleSheet} from 'react-native';
 import {Input} from 'react-native-elements';
 
 import GroupListItem from '../components/GroupListItem';
-import PaginatedList from '../components/PaginatedList';
+import PaginatedList from '../react-graphql/components/native/PaginatedList';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Group,
   Group_Bool_Exp,
   Group_Order_By,
   Order_By,
-} from '../graphql';
-import HasuraConfig from '../graphql/HasuraConfig';
+} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 
 const styles = StyleSheet.create({
   groups: {

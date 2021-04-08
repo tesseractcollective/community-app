@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 import Login from './screens/Login';
 import constants from './config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface UserContextType {
   userId: string;
@@ -27,9 +28,23 @@ export const useAuthToken = () => {
 
 export const UserProvider = ({children}: any) => {
   const [userId, setUserId] = useState<string>("");
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const [token, _setToken] = useState<string | undefined>(undefined);
 
   console.log(`token`, token);
+
+  const setToken = (token) => {
+    AsyncStorage.setItem('user_token', token);
+    _setToken(token);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const tkn = await AsyncStorage.getItem('user_token');
+      if (tkn) {
+        _setToken(tkn);
+      }
+    })();
+  }, []);
 
   const client = createClient({
     url: constants.graphqlUrl,

@@ -1,7 +1,7 @@
 const baseUrl = 'https://d15aepxy5dvdf2.cloudfront.net';
 
 import {ImageOrVideo} from 'react-native-image-crop-picker';
-import { File } from '../graphql';
+import { File } from 'graphql-api';
 
 export async function uploadImage(
   image: ImageOrVideo,

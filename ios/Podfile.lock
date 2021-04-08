@@ -1,5 +1,5 @@
 PODS:
-  - A0Auth0 (2.7.0):
+  - A0Auth0 (2.8.0):
     - React
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
@@ -326,11 +326,11 @@ PODS:
     - React-perflogger (= 0.64.0)
   - ReactNativeLocalization (2.1.6):
     - React
-  - RNCAsyncStorage (1.13.2):
-    - React
+  - RNCAsyncStorage (1.15.1):
+    - React-Core
   - RNCMaskedView (0.1.10):
     - React
-  - RNGestureHandler (1.9.0):
+  - RNGestureHandler (1.10.3):
     - React-Core
   - RNImageCropPicker (0.36.0):
     - React-Core
@@ -341,11 +341,11 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNLocalize (2.0.1):
+  - RNLocalize (2.0.2):
     - React-Core
-  - RNReanimated (1.13.2):
+  - RNReanimated (1.13.3):
     - React-Core
-  - RNScreens (2.16.1):
+  - RNScreens (2.18.1):
     - React-Core
   - RNVectorIcons (7.1.0):
     - React
@@ -519,7 +519,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  A0Auth0: d8dfb271aead73b19cb30910e7dbe77b03c03633
+  A0Auth0: b22979300d6c6962c2d4e0c3a083dbf130f80776
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -562,13 +562,13 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
   ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
   ReactNativeLocalization: dbb269b27d8a84bb22b9c2cdec38ba780b51dd72
-  RNCAsyncStorage: 05bae7ecfab1cbd5441993f1ca098f7c3b3f8d0e
+  RNCAsyncStorage: 08719e311ab90492c2dafd6d6fb7ffb396493638
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: e641bf83ac47324994cac139bde74635ec52c17c
-  RNLocalize: 41026b7c14878f1a1b381bc79f668f1fbf841adb
-  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
-  RNScreens: 45c457af3d2ee9e08fc01e70da87e653d46b1198
+  RNLocalize: 43f6c30d8e19ad92282ae434d310fb463b31f419
+  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
+  RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
