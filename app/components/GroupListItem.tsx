@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
 import {Group} from 'graphql-api';
@@ -43,19 +44,15 @@ export function GroupListItemHome(props: GroupListItemProps) {
   return (
     <ListItem
       style={{ 
-        height: 100
+        height: 100,
+        width: 100
       }}
-      containerStyle={{ 
-        marginHorizontal: 8, 
-        borderRadius: 10, 
-        height: '80%', 
-        elevation: 2
-      }}
+      containerStyle={styles.container}
       onPress={onPress}
       Component={TouchableScale}
       friction={90}
       tension={100}
-      activeScale={0.95}
+      activeScale={1}
       linearGradientProps={{
         colors: gradient,
         start: {x: 1, y: 0},
@@ -64,10 +61,27 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title style={{ color: 'black', fontFamily: "Montserrat-Semibold", fontSize: 14, textTransform: 'uppercase' }}>
+        <ListItem.Title style={styles.title}>
           {group.name}
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 8, 
+    borderRadius: 10, 
+    height: '80%', 
+    elevation: 2
+  },
+  title: {
+    color: 'black',
+    fontFamily: "Montserrat-Semibold",
+    fontSize: 14,
+    textTransform: 'uppercase',
+    flex: 1,
+    flexWrap: 'wrap'
+  }
+});

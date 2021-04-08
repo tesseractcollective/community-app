@@ -42,8 +42,7 @@ export default function (props: PostListItemProps) {
               </Text>
             </View>
           </View>
-
-          <View style={styles.authorRow}>
+          <View style={styles.postTextRow}>
             <Text style={styles.bodyText}>{post.body ?? 'John Doe'}</Text>
           </View>
         </View>
@@ -73,6 +72,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 0,
   },
+  postTextRow: {
+    marginTop: 8,
+    marginBottom: 16,
+    width: '100%'
+    // flexDirection: 'row',
+    // flexWrap:'wrap',
+    // flex: 1,
+    // alignItems: 'flex-start',    
+  },
   textContainer: {
     width: '100%',
     marginHorizontal: 10,
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
   bodyText: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 14,
+    lineHeight: 14*1.4
   },
   groupNameText: {
     fontFamily: 'Montserrat-Regular',

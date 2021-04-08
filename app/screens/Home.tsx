@@ -20,8 +20,7 @@ import {
 } from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
-
-const seeAllButtonGradient = ['#F44336', '#FF9800'];
+import { TouchableOpacity } from 'react-native';
 
 export default function () {
   const translations = useTranslations();
@@ -94,6 +93,7 @@ export default function () {
 
       <PaginatedList
         style={styles.posts}
+        showsVerticalScrollIndicator={false}
         config={HasuraConfig.posts}
         renderItem={renderPost}
         where={whereMyPosts}
@@ -102,7 +102,7 @@ export default function () {
         contentInset={{
           top: 0,
           left: 0,
-          bottom: bottomTabBarHeight * 2,
+          bottom: bottomTabBarHeight * 4,
           right: 0,
         }}
       />
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 12,
   },
   posts: {
-    height: '100%',
+    // height: '100%',
   },
   groups: {
     paddingTop: 10,
