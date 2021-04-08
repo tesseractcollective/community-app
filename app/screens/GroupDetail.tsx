@@ -1,27 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {Image, ListItem} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  MutatorDeleteButton,
-  MutatorSaveButton,
-  useMutator,
-} from 'react-graphql/components';
-import PaginatedList, {
-  usePagination,
-} from '../react-graphql/components/native/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
 import {
   Group,
   Post,
   Post_Order_By,
-  UserGroup,
   Order_By,
   UserGroup_Bool_Exp,
 } from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
+import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
+import { MutatorButton, PaginatedList } from 'react-graphql/components';
 
 export interface GroupDetailRouterProps {
   group: Group;
@@ -33,25 +26,25 @@ export default function (props: any) {
   const {group} = props.route.params;
 
   const translations = useTranslations();
-  const where: UserGroup_Bool_Exp = {groupId: {_eq: group.id}};
-  const pagination = usePagination<UserGroup>(HasuraConfig.userGroups, where);
   const userId = useUserId();
 
-  const myUserGroup = pagination.items?.find((item) => item.userId === userId);
+  const reactGraphql = useReactGraphql(HasuraConfig.userGroups);
+  const [initialVariables] = useState({userId, groupId: group.id});
 
-  const {mutator, state} = useMutator<UserGroup>({
-    config: HasuraConfig.userGroups,
-    variables: {userId, groupId: group.id},
-    item: myUserGroup,
-    afterMutationCallback: () => {
-      pagination.refresh();
-    },
-  });
+  const insertState = reactGraphql.useInsert({initialVariables});
+  const deleteState = reactGraphql.useDelete({initialVariables});
+  const queryOneState = reactGraphql.useQueryOne({initialVariables});
+
+  useEffect(() => {
+    queryOneState.refresh();
+  }, [insertState.resultItem, deleteState.resultItem]);
+
+  const where: UserGroup_Bool_Exp = {groupId: {_eq: group.id}};
+  const orderByPosts: Post_Order_By = {createdAt: Order_By.Desc};
 
   const renderPost = ({item}: {item: Post}) => {
     return <PostListItem post={item} />;
   };
-  const orderByPosts: Post_Order_By = {createdAt: Order_By.Desc};
 
   return (
     <View>
@@ -74,14 +67,14 @@ export default function (props: any) {
           <Text style={styles.groupLocationText}>{group.description}</Text>
         </ImageBackground>
       </ListItem>
-      {myUserGroup ? (
-        <MutatorDeleteButton
+      {queryOneState.item ? (
+        <MutatorButton
           style={{flex: 1}}
-          mutator={mutator}
+          state={deleteState}
           title={translations.groupsRemoveMe}
         />
       ) : (
-        <MutatorSaveButton mutator={mutator} title={translations.groupsAddMe} />
+        <MutatorButton state={insertState} title={translations.groupsAddMe} />
       )}
       <PaginatedList
         style={styles.posts}

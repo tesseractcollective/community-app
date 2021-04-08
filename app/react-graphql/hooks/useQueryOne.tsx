@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { HasuraDataConfig } from 'types/hasuraConfig';
-import { QueryMiddleware, QueryPostMiddlewareState, QueryPreMiddlewareState } from 'types/hookMiddleware';
-import { UseQueryResponse, useQuery, UseQueryArgs } from 'urql';
-import { usePagination } from './useInfiniteQueryMany.utils';
+import React, {useState, useEffect, useCallback} from 'react';
+import {HasuraDataConfig} from 'types/hasuraConfig';
+import {
+  QueryMiddleware,
+} from 'types/hookMiddleware';
+import {useQuery} from 'urql';
+import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 
 interface IUseQueryOne {
   sharedConfig: HasuraDataConfig;
@@ -10,16 +12,22 @@ interface IUseQueryOne {
   initialVariables?: IJsonObject;
 }
 
-export default function useQueryOne<TData extends IJsonObject, TVariables extends IJsonObject>(props: IUseQueryOne) {
-  const { sharedConfig, middleware, initialVariables } = props;
+export default function useQueryOne<
+  TData extends IJsonObject,
+  TVariables extends IJsonObject
+>(props: IUseQueryOne) {
+  const {sharedConfig, middleware, initialVariables} = props;
 
   const [meta, setMeta] = useState<{
     firstQueryCompleted: boolean;
     localError: string;
     detectedPks: Map<any, any>;
-  }>({ firstQueryCompleted: false, localError: '', detectedPks: new Map() });
+  }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
+  
   const [item, setItem] = useState<TData>();
-  const [objectVariables, setObjectVariables] = useState<{ [key: string]: any }>(initialVariables ?? {});
+  const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
+    initialVariables ?? {},
+  );
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
@@ -39,7 +47,10 @@ export default function useQueryOne<TData extends IJsonObject, TVariables extend
 
   useEffect(() => {
     const newState = computeConfig();
-    console.log('useQueryOne -> useEffect -> computeConfig -> newState', newState);
+    console.log(
+      'useQueryOne -> useEffect -> computeConfig -> newState',
+      newState,
+    );
     setQueryCfg(newState);
   }, [objectVariables]);
 
@@ -53,27 +64,17 @@ export default function useQueryOne<TData extends IJsonObject, TVariables extend
   return {
     item,
     localError: meta.localError,
+    refresh: reExecuteQuery,
     setObjectVariables,
     objectVariables,
   };
 
   function computeConfig() {
-    const _tmp = middleware.reduce(
-      (val, next: QueryMiddleware) => {
-        const mState: QueryPostMiddlewareState = next(val, sharedConfig);
-        let newState = {};
-        if (val)
-          Object.assign(newState, val);
-        Object.assign(newState, mState);
-        return newState as QueryPostMiddlewareState;
-      },
-      {
-        variables: objectVariables,
-      } as QueryPreMiddlewareState);
-
-    const _queryCfg = _tmp as QueryPostMiddlewareState;
-
-    return _queryCfg;
+    return stateFromQueryMiddleware(
+      {variables: objectVariables},
+      middleware,
+      sharedConfig,
+    );
   }
 }
 
