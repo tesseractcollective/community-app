@@ -52,7 +52,7 @@ export default function (props: PostListItemProps) {
             key={file.id}
             style={{
               ...styles.image,
-              aspectRatio: file.meta?.image?.aspectRatio || 1,
+              aspectRatio: file.meta?.image?.aspectRatio || 1,              
             }}
             source={{
               uri: urlForFile(file, authToken),
@@ -75,11 +75,7 @@ const styles = StyleSheet.create({
   postTextRow: {
     marginTop: 8,
     marginBottom: 16,
-    width: '100%'
-    // flexDirection: 'row',
-    // flexWrap:'wrap',
-    // flex: 1,
-    // alignItems: 'flex-start',    
+    width: '100%'  
   },
   textContainer: {
     width: '100%',

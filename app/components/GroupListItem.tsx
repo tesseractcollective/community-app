@@ -44,7 +44,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
   return (
     <ListItem
       style={{ 
-        height: 100,
+        height: 80,
         width: 100
       }}
       containerStyle={styles.container}
@@ -52,7 +52,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
       Component={TouchableScale}
       friction={90}
       tension={100}
-      activeScale={1}
+      activeScale={0.95}
       linearGradientProps={{
         colors: gradient,
         start: {x: 1, y: 0},
@@ -61,7 +61,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title style={styles.title}>
+        <ListItem.Title adjustsFontSizeToFit style={styles.title}>
           {group.name}
         </ListItem.Title>
       </ListItem.Content>
@@ -71,17 +71,18 @@ export function GroupListItemHome(props: GroupListItemProps) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8, 
+    marginHorizontal: 4, 
     borderRadius: 10, 
     height: '80%', 
     elevation: 2
   },
   title: {
+  
     color: 'black',
     fontFamily: "Montserrat-Semibold",
-    fontSize: 14,
+    fontSize: 11,    
+    textAlign: 'center',
     textTransform: 'uppercase',
-    flex: 1,
-    flexWrap: 'wrap'
+    width: '100%'
   }
 });

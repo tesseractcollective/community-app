@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     // height: '100%',
   },
   groups: {
-    paddingTop: 10,
+    paddingTop: 0,
     paddingBottom: 20,
   },
   listButton: {
