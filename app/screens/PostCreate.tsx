@@ -32,7 +32,7 @@ export default function (props: any) {
   const [image, setImage] = useState<ImageOrVideo | undefined>();
 
   const insert = useReactGraphql(HasuraConfig.posts).useInsert({
-    initialVariables: {userId, groupId},
+    initialVariables: {groupId},
   });
 
   const pickImage = useCallback(() => {
@@ -75,7 +75,11 @@ export default function (props: any) {
             overlayContainerStyle={{backgroundColor: 'gray'}}
           />
           <View style={styles.textColumn}>
-            <MutatorTextInput state={insert} input="body" />
+            <MutatorTextInput
+              state={insert}
+              input="body"
+              defaultValue={'Jeremy Test'}
+            />
           </View>
         </View>
       </View>

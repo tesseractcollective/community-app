@@ -11,6 +11,7 @@ import {useTranslations} from './components/TranslationProvider';
 import GroupsAll from './screens/GroupsAll';
 import PostCreate, {PostCreateRouterProps} from './screens/PostCreate';
 import PostDetail, {PostDetailRouterProps} from './screens/PostDetail';
+import Profile from 'screens/Profile';
 
 type HomeStackParams = {
   Home: undefined;
@@ -60,7 +61,7 @@ function ProfileStackNavigator() {
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="Profile"
-        component={View}
+        component={Profile}
         options={{title: translations.profileTabTitle}}
       />
     </ProfileStack.Navigator>
