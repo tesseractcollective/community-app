@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ReactElement} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
 import {
   RefreshControl,
@@ -26,6 +26,8 @@ export interface PaginationListProps<T> {
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
   middleware?: QueryMiddleware[];
+  name?: string;
+  renderEmpty?: () => ReactElement;
 }
 
 export default function <T extends {[key: string]: any}>(
@@ -56,12 +58,12 @@ export default function <T extends {[key: string]: any}>(
 
   useEffect(() => {
     if (reloadOnFocus) {
-      setHasLostFocus(!isFocused);
       if (isFocused && hasLostFocus) {
         setIsManualRefresh(false);
-        console.log('refresh');
+        console.log('🥝 refresh');
         refresh();
       }
+      setHasLostFocus(!isFocused);
     }
 
   }, [isFocused, hasLostFocus, reloadOnFocus]);
@@ -70,6 +72,10 @@ export default function <T extends {[key: string]: any}>(
     setIsManualRefresh(true);
     refresh();
   };
+
+  if (items && items.length === 0 && props.renderEmpty) {
+    return props.renderEmpty();
+  }
 
   return (
     <>
