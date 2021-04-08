@@ -63,7 +63,7 @@ export default function useReactGraphql(config: HasuraDataConfig) {
 
     useQueryOne: (props?: {
       initialVariables?: IJsonObject;
-      middleware: QueryMiddleware[];
+      middleware?: QueryMiddleware[];
     }) =>
       useQueryOne({
         sharedConfig: config,

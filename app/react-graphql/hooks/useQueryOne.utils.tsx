@@ -35,16 +35,18 @@ export function createQueryOne<
 
   const operationStr = config.primaryKey
     .map((key) => {
-      return variables[key] ? `$${key}: ${variables[key]}` : null;
+      return variables[key] ? `${key}: "${variables[key]}"` : null;
     })
     .filter((x) => !!x)
     .join(', ');
-
-  const query = gql`query ${name}Query {
-      ${name}(${operationStr}) {
-        ...${fragmentName}
-      }
+  const queryString = `query ${name}Query {
+    ${name}(${operationStr}) {
+      ...${fragmentName}
     }
-    ${print(fragment)}`;
+  }
+  ${print(fragment)}`;
+  console.log(queryString);
+
+  const query = gql(queryString);
   return {query, operationName, variables: state.variables ?? {}};
 }

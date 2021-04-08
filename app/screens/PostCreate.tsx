@@ -18,12 +18,11 @@ import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import {useTranslations} from 'components/TranslationProvider';
 
 export interface PostCreateRouterProps {
-  userId: string;
   groupId?: string;
 }
 
 export default function (props: any) {
-  const {userId, groupId} = props.route.params;
+  const {groupId} = props.route.params;
 
   const navigation = useNavigation();
   const translations = useTranslations();

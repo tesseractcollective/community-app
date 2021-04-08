@@ -27,7 +27,7 @@ export default function () {
       headerRight: (props: any) => (
         <Button
           type="clear"
-          onPress={() => navigation.navigate('PostCreate', {userId})}
+          onPress={() => navigation.navigate('PostCreate')}
           icon={<FeatherIcons name="plus" size={24} color={props.tintColor} />}
         />
       ),
