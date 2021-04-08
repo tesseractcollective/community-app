@@ -1,5 +1,5 @@
 import {isEqual} from 'lodash';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useState, useMemo} from 'react';
 import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {QueryMiddleware} from '../types/hookMiddleware';
@@ -55,12 +55,15 @@ export default function useInfiniteQueryMany<
     throw new Error('sharedConfig and at least one middleware required');
   }
 
-  // Setup the initial query Config so it's for sure ready before we get to urql
-  const queryCfg = useMemo(() => {
-    const variables = {...externalVariables, offset};
-    return stateFromQueryMiddleware({variables}, middleware, sharedConfig);
-  }, [sharedConfig, middleware, externalVariables, offset]);
+  const [queryCfg, setQueryCfg] = useState(computeConfig);
 
+  useEffect(() => {
+    const newState = computeConfig();
+    console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
+    setQueryCfg(newState);
+  }, [externalVariables, offset]);
+
+  // Setup the initial query Config so it's for sure ready before we get to urql
   const [queryState, reExecuteQuery] = useUrqlQuery<TData>(queryCfg);
 
   useEffect(() => {
@@ -166,4 +169,9 @@ export default function useInfiniteQueryMany<
     loadNextPage,
     requeryKeepInfinite,
   };
+
+  function computeConfig() {
+    const variables = {...externalVariables, offset};
+    return stateFromQueryMiddleware({variables}, middleware, sharedConfig);
+  }
 }

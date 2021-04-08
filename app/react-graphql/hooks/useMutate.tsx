@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState, useCallback} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {MutationMiddleware} from '../types/hookMiddleware';
 import {OperationContext, useMutation} from 'urql';
@@ -55,7 +55,10 @@ export default function useMutate<T extends IJsonObject>(
   //Setup the initial mutation Config so it's for sure ready before we get to urql
   useEffect(() => {
     const newState = computeConfig();
-    console.log('useEffect -> computeConfig -> newState', newState);
+    console.log(
+      'useInfiniteQueryMany-> useEffect -> computeConfig -> newState',
+      newState,
+    );
     setMutationCfg(newState);
   }, [objectVariables]);
 
@@ -110,7 +113,7 @@ export default function useMutate<T extends IJsonObject>(
     if (_variables) {
       if (_variables._dispatchInstances) {
         console.log(
-          '🎁 wrappedExecuteMutation-> _variables -> Found reactEvent Object.  Will not update variables'
+          '🎁 wrappedExecuteMutation-> _variables -> Found reactEvent Object.  Will not update variables',
         );
       } else {
         console.log('🎁 wrappedExecuteMutation-> _variables', _variables);

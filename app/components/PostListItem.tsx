@@ -27,7 +27,6 @@ export default function (props: PostListItemProps) {
       reaction: 'LIKE',
     },
   });
-  console.log('likeResults', likeResults);
 
   const onPress = () => {
     navigation.navigate('PostDetail', {post});

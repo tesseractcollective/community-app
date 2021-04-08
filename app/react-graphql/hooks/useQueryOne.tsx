@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { HasuraDataConfig } from 'types/hasuraConfig';
 import { QueryMiddleware, QueryPostMiddlewareState, QueryPreMiddlewareState } from 'types/hookMiddleware';
 import { UseQueryResponse, useQuery, UseQueryArgs } from 'urql';
@@ -26,25 +26,7 @@ export default function useQueryOne<TData extends IJsonObject, TVariables extend
     throw new Error('sharedConfig and at least one middleware required');
   }
 
-  //Setup the initial query Config so it's for sure ready before we get to urql
-  const queryCfg: QueryPostMiddlewareState = useMemo(() => {
-    const _tmp = middleware.reduce(
-      (val, next: QueryMiddleware) => {
-        const mState: QueryPostMiddlewareState = next(val, sharedConfig);
-        let newState = {};
-        if (val) Object.assign(newState, val);
-        Object.assign(newState, mState);
-        return newState as QueryPostMiddlewareState;
-      },
-      {
-        variables: objectVariables,
-      } as QueryPreMiddlewareState,
-    );
-
-    const _queryCfg = _tmp as QueryPostMiddlewareState;
-
-    return _queryCfg;
-  }, [sharedConfig, middleware, objectVariables]);
+  const [queryCfg, setQueryCfg] = useState(computeConfig);
 
   const [resp, reExecuteQuery] = useQuery<TData>({
     query: queryCfg?.query,
@@ -54,6 +36,12 @@ export default function useQueryOne<TData extends IJsonObject, TVariables extend
   useEffect(() => {
     reExecuteQuery();
   }, [queryCfg]);
+
+  useEffect(() => {
+    const newState = computeConfig();
+    console.log('useQueryOne -> useEffect -> computeConfig -> newState', newState);
+    setQueryCfg(newState);
+  }, [objectVariables]);
 
   //Parse response
   useEffect(() => {
@@ -68,6 +56,25 @@ export default function useQueryOne<TData extends IJsonObject, TVariables extend
     setObjectVariables,
     objectVariables,
   };
+
+  function computeConfig() {
+    const _tmp = middleware.reduce(
+      (val, next: QueryMiddleware) => {
+        const mState: QueryPostMiddlewareState = next(val, sharedConfig);
+        let newState = {};
+        if (val)
+          Object.assign(newState, val);
+        Object.assign(newState, mState);
+        return newState as QueryPostMiddlewareState;
+      },
+      {
+        variables: objectVariables,
+      } as QueryPreMiddlewareState);
+
+    const _queryCfg = _tmp as QueryPostMiddlewareState;
+
+    return _queryCfg;
+  }
 }
 
 // document: DocumentNode,
