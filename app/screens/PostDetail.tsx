@@ -3,10 +3,15 @@ import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
 
-import {useMutator, MutatorDeleteButton} from '../components/Mutator';
-import {Post} from '../graphql';
-import HasuraConfig from '../graphql/HasuraConfig';
+import {
+  useMutator,
+  MutatorDeleteButton,
+  MutatorButton,
+} from 'react-graphql/components';
+import {Post} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
+import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 
 export interface PostDetailRouterProps {
   post: Post;
@@ -17,25 +22,23 @@ export default function (props: any) {
 
   const userId = useUserId();
   const navigation = useNavigation();
-  const {mutator, state} = useMutator<Post>({
-    config: HasuraConfig.posts,
-    item: post,
+  const deleteState = useReactGraphql(HasuraConfig.posts).useDelete({
+    initialVariables: {id: post.id},
   });
 
   useEffect(() => {
-    if (state.resultItem) {
+    if (deleteState.resultItem) {
       navigation.goBack();
     }
-  }, [state.resultItem]);
+  }, [deleteState.resultItem]);
 
   return (
-    <View>      
+    <View>
       <Image source={{uri: post.photoUrl}} />
       <Text>{post.name}</Text>
       <Text>{post.body}</Text>
       {userId === post.user?.id ? (
-    
-        <MutatorDeleteButton mutator={mutator} />
+        <MutatorButton state={deleteState} title={'delete'} />
       ) : null}
     </View>
   );

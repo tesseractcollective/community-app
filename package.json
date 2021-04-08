@@ -12,7 +12,8 @@
     "clear:cache": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start --reset-cache",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "codegen": "graphql-codegen --config codegen.js"
+    "codegen": "graphql-codegen --config codegen.js",
+    "setupdevlink": "yarn link react-graphql && yarn link react"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
@@ -52,11 +53,15 @@
     "@react-native-community/eslint-config": "^1.1.0",
     "@types/jest": "^25.2.3",
     "@types/lodash.isequal": "^4.5.5",
+    "@types/react": "^17.0.3",
     "@types/react-native": "^0.63.2",
     "@types/react-native-auth0": "^2.5.5",
+    "@types/react-native-elements": "^0.18.0",
     "@types/react-native-vector-icons": "^6.4.6",
+    "@types/react-navigation": "^3.4.0",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^25.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",

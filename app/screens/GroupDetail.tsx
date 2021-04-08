@@ -6,12 +6,21 @@ import {
   MutatorDeleteButton,
   MutatorSaveButton,
   useMutator,
-} from '../components/Mutator';
-import PaginatedList, {usePagination} from '../components/PaginatedList';
+} from 'react-graphql/components';
+import PaginatedList, {
+  usePagination,
+} from '../react-graphql/components/native/PaginatedList';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
-import {Group, Post, Post_Order_By, UserGroup, Order_By, UserGroup_Bool_Exp} from '../graphql';
-import HasuraConfig from '../graphql/HasuraConfig';
+import {
+  Group,
+  Post,
+  Post_Order_By,
+  UserGroup,
+  Order_By,
+  UserGroup_Bool_Exp,
+} from 'graphql-api';
+import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 
 export interface GroupDetailRouterProps {
@@ -27,14 +36,16 @@ export default function (props: any) {
   const where: UserGroup_Bool_Exp = {groupId: {_eq: group.id}};
   const pagination = usePagination<UserGroup>(HasuraConfig.userGroups, where);
   const userId = useUserId();
-  
+
   const myUserGroup = pagination.items?.find((item) => item.userId === userId);
 
   const {mutator, state} = useMutator<UserGroup>({
     config: HasuraConfig.userGroups,
     variables: {userId, groupId: group.id},
     item: myUserGroup,
-    afterMutationCallback: () => { pagination.refresh() },
+    afterMutationCallback: () => {
+      pagination.refresh();
+    },
   });
 
   const renderPost = ({item}: {item: Post}) => {
@@ -44,11 +55,10 @@ export default function (props: any) {
 
   return (
     <View>
-      <ListItem 
-      style={{
-        height: "20%",
-        flexDirection:'column'
-        
+      <ListItem
+        style={{
+          height: '20%',
+          flexDirection: 'column',
         }}
         linearGradientProps={{
           colors: gradient,
@@ -56,9 +66,10 @@ export default function (props: any) {
           end: {x: 0.2, y: 0},
         }}
         ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
-        >
-        <ImageBackground source={{uri: group.photoUrl}} style={{height: '100%', backgroundColor: 'clear'}}>
-          
+      >
+        <ImageBackground
+          source={{uri: group.photoUrl}}
+          style={{height: '100%', backgroundColor: 'clear'}}>
           <Text style={styles.groupNameText}>{group.name}</Text>
           <Text style={styles.groupLocationText}>{group.description}</Text>
         </ImageBackground>
@@ -68,8 +79,10 @@ export default function (props: any) {
           style={{flex: 1}}
           mutator={mutator}
           title={translations.groupsRemoveMe}
-        />) :
-        (<MutatorSaveButton mutator={mutator} title={translations.groupsAddMe} />)}
+        />
+      ) : (
+        <MutatorSaveButton mutator={mutator} title={translations.groupsAddMe} />
+      )}
       <PaginatedList
         style={styles.posts}
         config={HasuraConfig.posts}
@@ -87,12 +100,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
   },
   groupNameText: {
-    fontFamily: "Montserrat-Medium",
+    fontFamily: 'Montserrat-Medium',
     fontSize: 24,
     color: '#F2F2F2',
   },
   groupLocationText: {
-    fontFamily: "Montserrat-Semibold",
+    fontFamily: 'Montserrat-Semibold',
     fontSize: 12,
     color: '#F2F2F2',
   },
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
     marginEnd: 16,
   },
   sectionTitle: {
-    fontFamily: "Montserrat-Medium",
+    fontFamily: 'Montserrat-Medium',
     color: '#222222',
     fontSize: 24,
     textShadowColor: '#FFFFFF',
@@ -120,13 +133,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
-  listButton: {    
+  listButton: {
     borderRadius: 22,
   },
-  listButtonTitle: {    
+  listButtonTitle: {
     textTransform: 'uppercase',
     paddingStart: 8,
-    fontFamily: "Montserrat-Bold",
+    fontFamily: 'Montserrat-Bold',
     fontSize: 11,
   },
   listButtonContainer: {
