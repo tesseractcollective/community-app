@@ -6,13 +6,10 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import {
-  HasuraDataConfig,
-  keyExtractor,
-} from 'graphql-api/HasuraConfigType';
+import {HasuraDataConfig, keyExtractor} from 'graphql-api/HasuraConfigType';
 import {useIsFocused} from '@react-navigation/core';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
-import { QueryMiddleware } from 'react-graphql/types/hookMiddleware';
+import {QueryMiddleware} from 'react-graphql/types/hookMiddleware';
 
 const defaultPageSize = 50;
 
@@ -50,7 +47,12 @@ export default function <T extends {[key: string]: any}>(
     items,
     queryState: {fetching, error},
     refresh,
-  } = useReactGraphql(config).useInfiniteQueryMany({ where, orderBy, pageSize, middleware: middleware || undefined });
+  } = useReactGraphql(config).useInfiniteQueryMany({
+    where,
+    orderBy,
+    pageSize,
+    middleware: middleware || undefined,
+  });
 
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);
@@ -65,8 +67,7 @@ export default function <T extends {[key: string]: any}>(
       }
       setHasLostFocus(!isFocused);
     }
-
-  }, [isFocused, hasLostFocus, reloadOnFocus]);
+  }, [isFocused]);
 
   const handleRefresh = () => {
     setIsManualRefresh(true);
@@ -87,9 +88,9 @@ export default function <T extends {[key: string]: any}>(
           refreshControl={
             pullToRefresh ? (
               <RefreshControl
-              refreshing={fetching && !isManualRefresh}
-              onRefresh={handleRefresh}
-            />
+                refreshing={fetching && !isManualRefresh}
+                onRefresh={handleRefresh}
+              />
             ) : undefined
           }
           data={items}
