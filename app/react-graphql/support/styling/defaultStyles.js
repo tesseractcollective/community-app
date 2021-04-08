@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { extrapolateStyles } from './buildStyles';
+import { extrapolateStyles } from "./extrapolateStyles";
 import { colorsMap } from './colorsMap';
 import shadowStyles from './shadow-styles';
 
