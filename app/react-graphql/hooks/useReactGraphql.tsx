@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {EffectCallback} from 'react';
 
 import useMutate from './useMutate';
 import {
@@ -7,9 +7,7 @@ import {
   createUpdateMutation,
 } from './useMutate.utils';
 import useInfiniteQueryMany from './useInfiniteQueryMany';
-import {
-  createInfiniteQueryMany,
-} from './useInfiniteQueryMany.utils';
+import {createInfiniteQueryMany} from './useInfiniteQueryMany.utils';
 import useQueryOne from './useQueryOne';
 import {createQueryOne} from './useQueryOne.utils';
 import {MutationMiddleware, QueryMiddleware} from '../types/hookMiddleware';
@@ -17,35 +15,40 @@ import {HasuraDataConfig} from '../types/hasuraConfig';
 
 export default function useReactGraphql(config: HasuraDataConfig) {
   return {
-
     useInsert: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
+      mutationCompletedEffect?: EffectCallback;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createInsertMutation],
         initialVariables: props?.initialVariables,
+        mutationCompletedEffect: props?.mutationCompletedEffect,
       }),
 
     useDelete: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
+      mutationCompletedEffect?: EffectCallback;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createDeleteMutation],
         initialVariables: props?.initialVariables,
+        mutationCompletedEffect: props?.mutationCompletedEffect,
       }),
 
     useUpdate: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
+      mutationCompletedEffect?: EffectCallback;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createUpdateMutation],
         initialVariables: props?.initialVariables,
+        mutationCompletedEffect: props?.mutationCompletedEffect,
       }),
 
     useInfiniteQueryMany: (props?: {

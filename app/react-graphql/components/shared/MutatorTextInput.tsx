@@ -1,25 +1,55 @@
-import React from 'react';
-import {Input, InputProps} from 'react-native-elements';
+import React, {useState, useEffect} from 'react';
+import {TextInput, TextInputProps} from 'react-native';
 import {MutateState} from 'react-graphql/hooks/useMutate';
+import {bs} from 'react-graphql/support/styling/buildStyles';
+import {isDefined} from 'react-graphql/support/javaScriptHelpers';
 
 export interface MutatorInputProps {
   state: MutateState;
   input: string;
+  defaultValue?: string;
+  value?: string;
 }
 
-export default function MutatorTextInput(
-  props: MutatorInputProps & InputProps,
-) {
-  const {state, input, ...rest} = props;
+const defaultStyleStr = `b-0 bb-1 p-sxx p-s mb-s`;
 
-  const value = state.resultItem ? state.resultItem[input] : undefined;
+export default function MutatorTextInput(
+  props: MutatorInputProps & TextInputProps,
+) {
+  const {state, input, defaultValue, ...rest} = props;
+  const [value, setValue] = useState<string>(props.value || defaultValue || '');
+  useEffect(() => {
+    if (
+      isDefined(state?.resultItem?.[input]) &&
+      state?.resultItem?.[input] !== value
+    ) {
+      setValue(state.resultItem[input]);
+    }
+  }, [state?.resultItem?.[input]]);
+
+  useEffect(() => {
+    if (props.value !== value) {
+      setValue(props.value);
+    }
+  }, [props.value]);
+
+  useEffect(() => {
+    if (
+      isDefined(state?.objectVariables?.[input]) &&
+      state?.objectVariables?.[input] !== value
+    ) {
+      setValue(state.objectVariables[input]);
+    }
+  }, [state.objectVariables]);
 
   return (
-    <Input
+    <TextInput
       {...rest}
-      defaultValue={__DEV__ ? 'Test words' : undefined}
+      style={rest.style || bs(defaultStyleStr)}
       value={value}
       onChangeText={(text) => state.setVariable(input, text)}
     />
   );
 }
+
+MutatorTextInput.defaultStyleStr = defaultStyleStr;

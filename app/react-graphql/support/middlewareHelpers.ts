@@ -14,7 +14,6 @@ function stateFromMiddleWare(
   config: HasuraDataConfig,
   index = 0,
 ): any {
-  console.log('stateFromMiddleware');
   if (middleware.length === 0) {
     throw new Error('no middleware');
   }

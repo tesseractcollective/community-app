@@ -4,6 +4,8 @@ import {
   PostFieldsFragmentDoc,
   UserGroupFieldsFragmentDoc,
   UserPostReactionFieldsFragmentDoc,
+  PostCommentFieldsFragmentDoc,
+  PostMutationtFieldsFragmentDoc,
 } from './generated/graphql';
 
 const HasuraConfig: HasuraConfigType = {
@@ -26,6 +28,11 @@ const HasuraConfig: HasuraConfigType = {
     typename: 'userPostReaction',
     primaryKey: ['userId', 'postId'],
     fieldFragment: UserPostReactionFieldsFragmentDoc,
+  },
+  postComments: {
+    typename: 'postComment',
+    primaryKey: ['id'],
+    fieldFragment: PostCommentFieldsFragmentDoc,
   },
 };
 

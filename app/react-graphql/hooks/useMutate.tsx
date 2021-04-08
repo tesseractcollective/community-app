@@ -1,23 +1,29 @@
-import {useEffect, useState, useCallback} from 'react';
+import {useEffect, useState, useCallback, EffectCallback} from 'react';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {MutationMiddleware} from '../types/hookMiddleware';
-import {OperationContext, useMutation} from 'urql';
+import {OperationContext, useMutation, UseMutationState} from 'urql';
 import {stateFromMutationMiddleware} from 'react-graphql/support/middlewareHelpers';
-import isEqual from 'lodash.isequal';
+import {useMonitorResult} from './monitorResult';
 
 interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
   middleware: MutationMiddleware[];
   initialVariables?: IJsonObject;
+  mutationCompletedEffect?: EffectCallback;
 }
 
 export interface MutateState {
   resultItem?: any;
   mutating: boolean;
   error?: Error;
-  executeMutation: () => void;
+  mutationState: UseMutationState;
+  executeMutation: (
+    variables?: IJsonObject,
+    context?: Partial<OperationContext>,
+  ) => void;
   setVariable: (key: string, value: any) => void;
   setVariables: (variables: {[key: string]: any}) => void;
+  objectVariables: {[key: string]: any};
 }
 
 export default function useMutate<T extends IJsonObject>(
@@ -39,14 +45,14 @@ export default function useMutate<T extends IJsonObject>(
     throw new Error('sharedConfig and at least one middleware required');
   }
   const computeConfig = () => {
-    console.log('computing config');
-    console.log('computeConfig -> objectVariables', objectVariables);
+    // console.log('computing config');
+    // console.log('computeConfig -> objectVariables', objectVariables);
     const state = stateFromMutationMiddleware(
       {variables: objectVariables},
       middleware,
       sharedConfig,
     );
-    console.log('state', state.variables);
+    // console.log('state', state.variables);
     return state;
   };
 
@@ -55,20 +61,15 @@ export default function useMutate<T extends IJsonObject>(
   //Setup the initial mutation Config so it's for sure ready before we get to urql
   useEffect(() => {
     const newState = computeConfig();
-    console.log(
-      'useInfiniteQueryMany-> useEffect -> computeConfig -> newState',
-      newState,
-    );
+    // console.log('useMutate-> useEffect -> computeConfig -> newState', newState);
     setMutationCfg(newState);
   }, [objectVariables]);
 
   //The mutation
   const [mutationResult, executeMutation] = useMutation(mutationCfg?.mutation);
-  console.log('mutationResult', mutationResult);
   const resultItem = mutationResult.data?.[mutationCfg.operationName];
 
   useEffect(() => {
-    console.log('mutation useEffect');
     if (needsExecuteMutation && !executeContext) {
       console.log('💪 executingMutation', {
         executeContext,
@@ -90,6 +91,8 @@ export default function useMutate<T extends IJsonObject>(
     //   executeMutation(mutationCfg.variables, executeContext);
     // }
   }, [needsExecuteMutation, executeContext, executeMutation, mutationCfg]);
+
+  useMonitorResult('mutation', mutationResult, mutationCfg);
 
   //Handling variables
   const setVariable = useCallback((key: string, value: any) => {
@@ -131,17 +134,24 @@ export default function useMutate<T extends IJsonObject>(
     }
   };
 
-  // const wrappedExecuteMutation = (_variables?: IJsonObject, context?: Partial<OperationContext>) => {
-  //   console.log('mocked wrappedExecuteMutation');
-  // }
+  useEffect(() => {
+    if (
+      !mutationResult.fetching &&
+      (mutationResult.data || mutationResult.error)
+    ) {
+      props.mutationCompletedEffect?.();
+    }
+  }, [mutationResult]);
 
   //Return values
   return {
     resultItem,
     mutating: mutationResult.fetching,
     error: mutationResult.error,
+    mutationState: mutationResult,
     executeMutation: wrappedExecuteMutation,
     setVariable,
     setVariables,
+    objectVariables,
   };
 }

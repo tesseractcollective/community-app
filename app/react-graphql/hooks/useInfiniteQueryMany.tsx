@@ -5,6 +5,7 @@ import {HasuraDataConfig} from '../types/hasuraConfig';
 import {QueryMiddleware} from '../types/hookMiddleware';
 import {findDefaultPks} from './findDefaultPks';
 import {useUrqlQuery} from './useUrqlQuery';
+import {useMonitorResult} from './monitorResult';
 
 interface IUseInfiniteQueryMany {
   where?: {[key: string]: any};
@@ -59,7 +60,7 @@ export default function useInfiniteQueryMany<
 
   useEffect(() => {
     const newState = computeConfig();
-    console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
+    // console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
     setQueryCfg(newState);
   }, [externalVariables, offset]);
 
@@ -73,9 +74,7 @@ export default function useInfiniteQueryMany<
     }
   }, [needsReQuery]);
 
-  const loadNextPage = () => {
-    setOffset(offset + limit);
-  };
+  useMonitorResult('query', queryState, queryCfg);
 
   //Parse response
   useEffect(() => {
@@ -152,11 +151,20 @@ export default function useInfiniteQueryMany<
     return Array.from(itemsMap.values());
   }, [itemsMap]);
 
+  const loadNextPage = () => {
+    if (!queryState.fetching) {
+      if (items?.length && items?.length % limit === 0) {
+        setOffset(offset + limit);
+      }
+    }
+  };
+
   const refresh = useCallback(() => {
     setOffset(0);
     setShouldClearItems(true);
     setNeedsReQuery(true);
   }, []);
+  
   const requeryKeepInfinite = () => {
     setNeedsReQuery(true);
   };

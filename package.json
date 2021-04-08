@@ -38,6 +38,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
+    "react-native-toast-message": "^1.4.9",
     "react-native-touchable-scale": "^2.1.2",
     "react-native-vector-icons": "^7.1.0",
     "urql": "^2.0.1"

@@ -6,19 +6,16 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import {
-  HasuraDataConfig,
-  keyExtractor,
-} from 'graphql-api/HasuraConfigType';
+import {HasuraDataConfig, keyExtractor} from 'graphql-api/HasuraConfigType';
 import {useIsFocused} from '@react-navigation/core';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
-import { QueryMiddleware } from 'react-graphql/types/hookMiddleware';
+import {QueryMiddleware} from 'react-graphql/types/hookMiddleware';
 
 const defaultPageSize = 50;
 
 export interface PaginationListProps<T> {
   config: HasuraDataConfig;
-  renderItem: ListRenderItem<T>;
+  renderItem: ListRenderItem<T> & {refresh: () => void};
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
   pageSize?: number;
@@ -26,6 +23,7 @@ export interface PaginationListProps<T> {
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
   middleware?: QueryMiddleware[];
+  name?: string;
 }
 
 export default function <T extends {[key: string]: any}>(
@@ -40,16 +38,23 @@ export default function <T extends {[key: string]: any}>(
     reloadOnFocus,
     pullToRefresh = true,
     middleware,
+    name,
     ...rest
   } = props;
 
-  const {
-    loadNextPage,
-    items,
-    queryState: {fetching, error},
-    refresh,
-  } = useReactGraphql(config).useInfiniteQueryMany({ where, orderBy, pageSize, middleware: middleware || undefined });
+  const {loadNextPage, items, queryState, refresh} = useReactGraphql(
+    config,
+  ).useInfiniteQueryMany({
+    where,
+    orderBy,
+    pageSize,
+    middleware: middleware || undefined,
+  });
+  const {fetching, error} = queryState;
 
+  // if (name === 'PostComments') {
+  //   console.log('items', items, queryState);
+  // }
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);
   const [hasLostFocus, setHasLostFocus] = useState(false);
@@ -63,7 +68,6 @@ export default function <T extends {[key: string]: any}>(
         refresh();
       }
     }
-
   }, [isFocused, hasLostFocus, reloadOnFocus]);
 
   const handleRefresh = () => {
@@ -81,13 +85,13 @@ export default function <T extends {[key: string]: any}>(
           refreshControl={
             pullToRefresh ? (
               <RefreshControl
-              refreshing={fetching && !isManualRefresh}
-              onRefresh={handleRefresh}
-            />
+                refreshing={fetching && !isManualRefresh}
+                onRefresh={handleRefresh}
+              />
             ) : undefined
           }
           data={items}
-          renderItem={renderItem}
+          renderItem={(params) => renderItem({...params, refresh})}
           keyExtractor={(item) => keyExtractor(config, item)}
           onEndReachedThreshold={1}
           onEndReached={loadNextPage}

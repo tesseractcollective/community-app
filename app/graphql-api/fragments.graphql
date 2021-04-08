@@ -57,3 +57,14 @@ fragment userPostReactionFields on userPostReaction {
   postId
   reaction
 }
+
+fragment postCommentFields on postComment {
+  body
+  id
+  createdAt
+  updatedAt
+  userId
+  user {
+    name
+  }
+}

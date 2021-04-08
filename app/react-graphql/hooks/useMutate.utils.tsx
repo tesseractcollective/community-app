@@ -29,7 +29,6 @@ export function createDeleteMutation(
       }
     }
     ${print(fragment)}`;
-  console.log('mutationStr', mutationStr);
   const mutation = gql(mutationStr);
 
   const pkColumns: {[key: string]: any} = {};
@@ -37,9 +36,11 @@ export function createDeleteMutation(
     pkColumns[key] = state.variables?.[key];
   }
 
-  const variables = {object: {...state.variables}};
-  delete variables.object.id;
-  console.log('🚦 state.variables', state.variables);
+  let variables =
+    operationName === `delete_${name}_by_pk`
+      ? {}
+      : {object: {...state.variables}};
+  // console.log('🚦 state.variables', state.variables);
 
   return {mutation, mutationStr, operationName, variables, pkColumns};
 }
@@ -78,9 +79,9 @@ export function createInsertMutation(
 
   const variables = {object: {...state.variables}};
   delete variables.object.id;
-  console.log('🚦 state.variables', state.variables);
+  // console.log('🚦 state.variables', state.variables);
 
-  console.log('🚦 variables', variables);
+  // console.log('🚦 variables', variables);
   return {mutation, mutationStr, operationName, variables, pkColumns};
 }
 
@@ -98,14 +99,15 @@ export function createUpdateMutation(
     config.overrides?.operationNames?.update_by_pk ?? `update_${name}_by_pk`;
 
   const _id = state?.variables?.id;
-  console.log('_id', _id);
 
-  const mutation = gql`mutation ${name}Mutation($object:${name}_set_input!) {
+  const mutationStr = `mutation ${name}Mutation($object:${name}_set_input!) {
     ${operationName}(pk_columns: {id: "${_id}"} _set:$object ) {
       ...${fragmentName}
     }
   }
   ${print(fragment)}`;
+
+  const mutation = gql(mutationStr);
 
   const pkColumns: {[key: string]: any} = {};
   for (const key of config.primaryKey) {
@@ -115,5 +117,5 @@ export function createUpdateMutation(
   const variables = {object: {...state.variables}};
   delete variables.object.id;
 
-  return {mutation, operationName, variables, pkColumns};
+  return {mutation, mutationStr, operationName, variables, pkColumns};
 }
