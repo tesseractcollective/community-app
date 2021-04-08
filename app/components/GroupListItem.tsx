@@ -61,7 +61,7 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title adjustsFontSizeToFit style={styles.title}>
+        <ListItem.Title adjustsFontSizeToFit minimumFontScale={0.8} style={styles.title}>
           {group.name}
         </ListItem.Title>
       </ListItem.Content>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   
     color: 'black',
     fontFamily: "Montserrat-Semibold",
-    fontSize: 11,    
+    fontSize: 11,        
     textAlign: 'center',
     textTransform: 'uppercase',
     width: '100%'

@@ -63,14 +63,14 @@ export default function () {
   };
 
   return (
-    <View>
+    <View style={{height: '100%'}}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
           type="clear"
           buttonStyle={styles.listButton}
           titleStyle={styles.listButtonTitle}
-          title={translations.seeAll.toUpperCase()}
+          title={translations.seeAll.toUpperCase()}          
           iconRight
           icon={<Icon name="chevron-right" size={18} color="black" />}
           onPress={() => {
@@ -102,10 +102,13 @@ export default function () {
         contentInset={{
           top: 0,
           left: 0,
-          bottom: bottomTabBarHeight * 4,
+          bottom: bottomTabBarHeight,
           right: 0,
         }}
       />
+      <TouchableOpacity onPress={() => navigation.navigate('PostCreate', {userId})} style={styles.fab}>
+        <Text style={styles.fabIcon}><FeatherIcons name="plus" size={24} color={'white'} /></Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -154,4 +157,20 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 0, height: 4},
     textShadowRadius: 12,
   },
+  fab: { 
+    position: 'absolute', 
+    width: 56, 
+    height: 56, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    right: 20, 
+    bottom: 20, 
+    backgroundColor: '#522C2C', 
+    borderRadius: 30, 
+    elevation: 8 
+  }, 
+  fabIcon: { 
+    fontSize: 40, 
+    color: 'white' 
+  }
 });
