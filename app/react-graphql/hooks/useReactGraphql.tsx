@@ -18,14 +18,12 @@ export default function useReactGraphql(config: HasuraDataConfig) {
     useInsert: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
-      mutationCompletedEffect?: EffectCallback;
       listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createInsertMutation],
         initialVariables: props?.initialVariables,
-        mutationCompletedEffect: props?.mutationCompletedEffect,
         operationEventType: 'insert',
         listKey: props?.listKey,
       }),
@@ -33,14 +31,12 @@ export default function useReactGraphql(config: HasuraDataConfig) {
     useDelete: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
-      mutationCompletedEffect?: EffectCallback;
       listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createDeleteMutation],
         initialVariables: props?.initialVariables,
-        mutationCompletedEffect: props?.mutationCompletedEffect,
         operationEventType: 'delete',
         listKey: props?.listKey,
       }),
@@ -48,14 +44,12 @@ export default function useReactGraphql(config: HasuraDataConfig) {
     useUpdate: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
-      mutationCompletedEffect?: EffectCallback;
       listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createUpdateMutation],
         initialVariables: props?.initialVariables,
-        mutationCompletedEffect: props?.mutationCompletedEffect,
         operationEventType: 'update',
         listKey: props?.listKey,
       }),
@@ -65,12 +59,14 @@ export default function useReactGraphql(config: HasuraDataConfig) {
       orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
       pageSize?: number;
       middleware?: QueryMiddleware[];
+      listKey?: string;
     }) =>
       useInfiniteQueryMany({
         where: props?.where,
         orderBy: props?.orderBy,
         sharedConfig: config,
         middleware: props?.middleware || [createInfiniteQueryMany],
+        listKey: props?.listKey,
       }),
 
     useQueryOne: (props?: {

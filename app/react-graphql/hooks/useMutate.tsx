@@ -12,7 +12,6 @@ interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
   middleware: MutationMiddleware[];
   initialVariables?: IJsonObject;
-  mutationCompletedEffect?: EffectCallback;
   operationEventType: 'insert' | 'update' | 'delete';
   listKey?: string;
 }
@@ -95,7 +94,7 @@ export default function useMutate<T extends IJsonObject>(
           console.log('setMutationEvent');
 
           setMutationEvent(() => ({
-            listKey,
+            listKey: listKey,
             type: props.operationEventType,
             pk: pkValue,
             payload: {
@@ -148,15 +147,6 @@ export default function useMutate<T extends IJsonObject>(
       setNeedsExecuteMutation(true);
     }
   };
-
-  useEffect(() => {
-    if (
-      !mutationResult.fetching &&
-      (mutationResult.data || mutationResult.error)
-    ) {
-      props.mutationCompletedEffect?.();
-    }
-  }, [mutationResult]);
 
   //Return values
   return {

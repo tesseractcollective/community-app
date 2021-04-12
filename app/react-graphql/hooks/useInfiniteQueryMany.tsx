@@ -15,6 +15,7 @@ interface IUseInfiniteQueryMany {
   pageSize?: number;
   sharedConfig: HasuraDataConfig;
   middleware: QueryMiddleware[];
+  listKey?: string;
 }
 
 const defaultPageSize = 50;
@@ -22,7 +23,7 @@ const defaultPageSize = 50;
 export default function useInfiniteQueryMany<TData extends any>(
   props: IUseInfiniteQueryMany,
 ) {
-  const {sharedConfig, middleware, where, orderBy, pageSize} = props;
+  const {sharedConfig, middleware, where, orderBy, pageSize, listKey} = props;
 
   const limit = pageSize ?? defaultPageSize;
 
@@ -154,15 +155,28 @@ export default function useInfiniteQueryMany<TData extends any>(
   const [mutationEvent] = useAtom<IMutationEvent>(mutationEventAtom);
 
   useEffect(() => {
+    const isMatchingListKey = !listKey || listKey === mutationEvent.listKey;
+
+    if (!isMatchingListKey) {
+      return;
+    }
     console.log(
       'mutationEvent recieved <- useInfiniteQueryMany',
       mutationEvent,
+      listKey,
     );
+
     if (mutationEvent?.type === 'insert') {
       itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
-    } else if (mutationEvent?.type === 'update') {
+    } else if (
+      mutationEvent?.type === 'update' &&
+      itemsMap.has(mutationEvent.pk)
+    ) {
       itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
-    } else if (mutationEvent?.type === 'delete') {
+    } else if (
+      mutationEvent?.type === 'delete' &&
+      itemsMap.has(mutationEvent.pk)
+    ) {
       itemsMap.delete(mutationEvent.pk);
     }
   }, [mutationEvent]);

@@ -20,6 +20,8 @@ export interface PostDetailRouterProps {
   post: Post;
 }
 
+export const PostDetailCommentsListKey = 'PostDetailCommentsListKey';
+
 export default function (props: any) {
   const post = props.route.params.post;
 
@@ -27,6 +29,7 @@ export default function (props: any) {
   const navigation = useNavigation();
   const deleteState = useReactGraphql(HasuraConfig.posts).useDelete({
     initialVariables: {id: post.id},
+    listKey: PostDetailCommentsListKey,
   });
 
   useEffect(() => {
@@ -41,9 +44,9 @@ export default function (props: any) {
       <Text>{post.name}</Text>
       <Text>{post.body}</Text>
 
-      <PostCommentCreate postId={post.id}></PostCommentCreate>
+      <PostCommentCreate postId={post.id} />
       <View style={bs('f-1')}>
-        <PostComments postId={post.id}></PostComments>
+        <PostComments postId={post.id} />
       </View>
 
       {userId === post.user?.id ? (

@@ -15,6 +15,7 @@ import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {MutatorTextInput, MutatorButton} from 'react-graphql/components';
 import useOperationStateHelper from 'react-graphql/hooks/useOperationStateHelper';
+import {PostDetailCommentsListKey} from 'screens/PostDetail';
 
 export interface IPostCommentItemProps {
   comment: PostComment;
@@ -33,40 +34,35 @@ const PostCommentItem: FunctionComponent<IPostCommentItemProps> = function PostC
     initialVariables: {
       id: comment.id,
     },
+    listKey: PostDetailCommentsListKey,
   });
 
-  const successCB = useCallback(() => {
-    console.log('successCB');
-    setIsEditing(false);
-    //How to update master list?
-    //Best/only idea is to pass something through PaginatedList.renderItem
-  }, [isEditing]);
-
-  const {error: UpdateError, success: UpdateSuccess} = useOperationStateHelper(
-    update.mutationState,
-    {
-      successToastMessage: 'Comment updated!',
-      errorToastMessage: 'Sorry, We failed to save your changes',
-      onSuccess: successCB,
-    },
-  );
+  const {
+    error: UpdateError,
+    success: UpdateSuccess,
+    queryCompleted: updateCompleted,
+  } = useOperationStateHelper(update.mutationState, {
+    successToastMessage: 'Comment updated!',
+    errorToastMessage: 'Sorry, We failed to save your changes',
+  });
   //delete
+
+  useEffect(() => {
+    if (updateCompleted) {
+      setIsEditing(false);
+    }
+  }, [updateCompleted]);
 
   const deleteState = postCommentApi.useDelete({
     initialVariables: {
       id: comment.id,
     },
+    listKey: PostDetailCommentsListKey,
   });
-
-  const deleteSuccessCB = useCallback((data) => {
-    console.log('deleteSuccessCB -> ', data);
-    //How to update master list?
-  }, []);
 
   useOperationStateHelper(deleteState.mutationState, {
     successToastMessage: 'Comment removed!',
     errorToastMessage: 'Sorry, We failed to save your changes',
-    onSuccess: deleteSuccessCB,
   });
 
   return (

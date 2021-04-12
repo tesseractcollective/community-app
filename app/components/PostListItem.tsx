@@ -32,6 +32,14 @@ export default function (props: PostListItemProps) {
     navigation.navigate('PostDetail', {post});
   };
 
+  if (!post) {
+    return (
+      <View>
+        <Text>Invalid post</Text>
+      </View>
+    );
+  }
+
   return (
     <ListItem onPress={onPress} containerStyle={{paddingHorizontal: 0}}>
       <ListItem.Content>
@@ -60,7 +68,7 @@ export default function (props: PostListItemProps) {
           </View>
         </View>
 
-        {post.files.map((file) => (
+        {post.files?.map((file) => (
           <Image
             key={file.id}
             style={{

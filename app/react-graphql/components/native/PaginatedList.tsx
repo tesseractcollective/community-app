@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ReactElement} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
 import {
   RefreshControl,
@@ -23,7 +23,8 @@ export interface PaginationListProps<T> {
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
   middleware?: QueryMiddleware[];
-  name?: string;
+  renderEmpty?: () => ReactElement;
+  listKey?: string;
 }
 
 export default function <T extends {[key: string]: any}>(
@@ -38,7 +39,7 @@ export default function <T extends {[key: string]: any}>(
     reloadOnFocus,
     pullToRefresh = true,
     middleware,
-    name,
+    listKey,
     ...rest
   } = props;
 
@@ -49,12 +50,10 @@ export default function <T extends {[key: string]: any}>(
     orderBy,
     pageSize,
     middleware: middleware || undefined,
+    listKey,
   });
   const {fetching, error} = queryState;
 
-  // if (name === 'PostComments') {
-  //   console.log('items', items, queryState);
-  // }
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);
   const [hasLostFocus, setHasLostFocus] = useState(false);

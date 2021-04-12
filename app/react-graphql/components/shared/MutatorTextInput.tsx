@@ -9,6 +9,7 @@ export interface MutatorInputProps {
   input: string;
   defaultValue?: string;
   value?: string;
+  clearState?: boolean;
 }
 
 const defaultStyleStr = `b-0 bb-1 p-sxx p-s mb-s`;
@@ -41,6 +42,12 @@ export default function MutatorTextInput(
       setValue(state.objectVariables[input]);
     }
   }, [state.objectVariables]);
+
+  useEffect(() => {
+    if (props.clearState) {
+      setValue('');
+    }
+  }, [props.clearState]);
 
   return (
     <TextInput

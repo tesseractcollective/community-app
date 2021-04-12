@@ -36,7 +36,6 @@ export default function useOperationStateHelper(
 
   useEffect(() => {
     if (queryCompleted) {
-      console.log('queryState', queryState);
       if (queryState.error) {
         //TODO: Show error
         if (options.errorToastMessage) {
