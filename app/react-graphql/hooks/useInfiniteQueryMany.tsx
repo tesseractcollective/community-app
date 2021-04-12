@@ -6,6 +6,8 @@ import {QueryMiddleware} from '../types/hookMiddleware';
 import {findDefaultPks} from './findDefaultPks';
 import {useUrqlQuery} from './useUrqlQuery';
 import {useMonitorResult} from './monitorResult';
+import {useAtom} from 'jotai';
+import {mutationEventAtom, IMutationEvent} from './mutationEventAtom';
 
 interface IUseInfiniteQueryMany {
   where?: {[key: string]: any};
@@ -17,9 +19,9 @@ interface IUseInfiniteQueryMany {
 
 const defaultPageSize = 50;
 
-export default function useInfiniteQueryMany<
-  TData extends IJsonMapOfArraysObject
->(props: IUseInfiniteQueryMany) {
+export default function useInfiniteQueryMany<TData extends any>(
+  props: IUseInfiniteQueryMany,
+) {
   const {sharedConfig, middleware, where, orderBy, pageSize} = props;
 
   const limit = pageSize ?? defaultPageSize;
@@ -42,6 +44,12 @@ export default function useInfiniteQueryMany<
   const [shouldClearItems, setShouldClearItems] = useState(false);
   const [needsReQuery, setNeedsReQuery] = useState(false);
 
+  //Guards
+  if (!sharedConfig || !middleware?.length) {
+    throw new Error('sharedConfig and at least one middleware required');
+  }
+
+  //Update internal variables from explicitly passed in
   useEffect(() => {
     const checkVariables = {where, orderBy, limit};
     if (!isEqual(externalVariables, checkVariables)) {
@@ -51,11 +59,7 @@ export default function useInfiniteQueryMany<
     }
   }, [where, orderBy, limit]);
 
-  //Guards
-  if (!sharedConfig || !middleware?.length) {
-    throw new Error('sharedConfig and at least one middleware required');
-  }
-
+  //setup config
   const [queryCfg, setQueryCfg] = useState(computeConfig);
 
   useEffect(() => {
@@ -146,6 +150,23 @@ export default function useInfiniteQueryMany<
     }
   }, [queryState.data, shouldClearItems]);
 
+  //Effect/react on mutation events
+  const [mutationEvent] = useAtom<IMutationEvent>(mutationEventAtom);
+
+  useEffect(() => {
+    console.log(
+      'mutationEvent recieved <- useInfiniteQueryMany',
+      mutationEvent,
+    );
+    if (mutationEvent?.type === 'insert') {
+      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+    } else if (mutationEvent?.type === 'update') {
+      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+    } else if (mutationEvent?.type === 'delete') {
+      itemsMap.delete(mutationEvent.pk);
+    }
+  }, [mutationEvent]);
+
   //Update user items from map
   const items = useMemo(() => {
     return Array.from(itemsMap.values());
@@ -164,7 +185,7 @@ export default function useInfiniteQueryMany<
     setShouldClearItems(true);
     setNeedsReQuery(true);
   }, []);
-  
+
   const requeryKeepInfinite = () => {
     setNeedsReQuery(true);
   };

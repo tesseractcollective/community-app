@@ -23,6 +23,7 @@
     "@react-navigation/stack": "^5.13.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
+    "jotai": "^0.16.0",
     "jwt-decode": "^3.1.2",
     "lodash.isequal": "^4.5.0",
     "react": "16.13.1",

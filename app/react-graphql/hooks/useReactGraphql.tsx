@@ -19,36 +19,45 @@ export default function useReactGraphql(config: HasuraDataConfig) {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
       mutationCompletedEffect?: EffectCallback;
+      listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createInsertMutation],
         initialVariables: props?.initialVariables,
         mutationCompletedEffect: props?.mutationCompletedEffect,
+        operationEventType: 'insert',
+        listKey: props?.listKey,
       }),
 
     useDelete: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
       mutationCompletedEffect?: EffectCallback;
+      listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createDeleteMutation],
         initialVariables: props?.initialVariables,
         mutationCompletedEffect: props?.mutationCompletedEffect,
+        operationEventType: 'delete',
+        listKey: props?.listKey,
       }),
 
     useUpdate: (props?: {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
       mutationCompletedEffect?: EffectCallback;
+      listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createUpdateMutation],
         initialVariables: props?.initialVariables,
         mutationCompletedEffect: props?.mutationCompletedEffect,
+        operationEventType: 'update',
+        listKey: props?.listKey,
       }),
 
     useInfiniteQueryMany: (props?: {
