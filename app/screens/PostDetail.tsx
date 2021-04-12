@@ -15,21 +15,21 @@ import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import PostComments from './PostParts/PostComments';
 import PostCommentCreate from './PostParts/PostCommentCreate';
 import {bs} from 'react-graphql/support/styling/buildStyles';
+import {useTranslations} from 'components/TranslationProvider';
 
 export interface PostDetailRouterProps {
   post: Post;
 }
 
-export const PostDetailCommentsListKey = 'PostDetailCommentsListKey';
-
 export default function (props: any) {
   const post = props.route.params.post;
+
+  const translations = useTranslations();
 
   const userId = useUserId();
   const navigation = useNavigation();
   const deleteState = useReactGraphql(HasuraConfig.posts).useDelete({
     initialVariables: {id: post.id},
-    listKey: PostDetailCommentsListKey,
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function (props: any) {
       </View>
 
       {userId === post.user?.id ? (
-        <MutatorButton state={deleteState} title={'delete'} />
+        <MutatorButton state={deleteState} title={translations.delete} />
       ) : null}
     </View>
   );

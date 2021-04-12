@@ -11,7 +11,6 @@ import {
 } from 'graphql-api';
 import {PaginatedList} from 'react-graphql/components';
 import PostCommentItem from './PostCommentItem';
-import {PostDetailCommentsListKey} from 'screens/PostDetail';
 
 export interface IPostCommentsProps {
   postId: number;
@@ -23,7 +22,6 @@ const PostComments: FunctionComponent<IPostCommentsProps> = function PostComment
   return (
     <View style={bs(`px-mxx py-s f-1`)}>
       <PaginatedList
-        listKey={PostDetailCommentsListKey}
         style={bs(``)}
         showsHorizontalScrollIndicator={false}
         horizontal={false}

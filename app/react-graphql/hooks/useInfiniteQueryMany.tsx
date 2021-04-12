@@ -155,7 +155,8 @@ export default function useInfiniteQueryMany<TData extends any>(
   const [mutationEvent] = useAtom<IMutationEvent>(mutationEventAtom);
 
   useEffect(() => {
-    const isMatchingListKey = !listKey || listKey === mutationEvent.listKey;
+    const _listKey = listKey ?? sharedConfig.typename;
+    const isMatchingListKey = _listKey === mutationEvent.listKey;
 
     if (!isMatchingListKey) {
       return;
@@ -166,7 +167,12 @@ export default function useInfiniteQueryMany<TData extends any>(
       listKey,
     );
 
-    if (mutationEvent?.type === 'insert') {
+    if (mutationEvent?.type === 'insert-first') {
+      const newMap = new Map();
+      newMap.set(mutationEvent.pk, mutationEvent.payload as any);
+      itemsMap.forEach((val, key) => newMap.set(key, val));
+      setItemsMap(newMap);
+    } else if (mutationEvent?.type === 'insert-last') {
       itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
     } else if (
       mutationEvent?.type === 'update' &&

@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from 'react';
 import {bs} from 'react-graphql/support/styling/buildStyles';
 import {View, StyleSheet} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, UrlTile} from 'react-native-maps';
+import {Text} from 'react-native-elements';
+// import MapView, {PROVIDER_GOOGLE, UrlTile} from 'react-native-maps';
 
 export interface IGroupsAllMapSectionProps {}
 
@@ -23,7 +24,8 @@ const GroupsAllMapSection: FunctionComponent<IGroupsAllMapSectionProps> = functi
 ) {
   return (
     <View style={styles.container}>
-      <MapView
+      <Text>An amazing map will go here!</Text>
+      {/* <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         zoomEnabled={false}
@@ -33,7 +35,7 @@ const GroupsAllMapSection: FunctionComponent<IGroupsAllMapSectionProps> = functi
         pitchEnabled={false}
         toolbarEnabled={false}>
         <UrlTile urlTemplate="http://c.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      </MapView>
+      </MapView> */}
     </View>
   );
 };

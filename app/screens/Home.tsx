@@ -21,6 +21,7 @@ import {
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 import {createInfiniteQueryMany} from 'react-graphql/hooks/useInfiniteQueryMany.utils';
+import {addUserIdToVariables} from '../graphql-api/utils/addUserIdToVariables';
 
 const seeAllButtonGradient = ['#F44336', '#FF9800'];
 
@@ -100,12 +101,7 @@ export default function () {
         where={whereMyPosts}
         orderBy={orderByPosts}
         reloadOnFocus
-        middleware={[
-          (state: any) => {
-            return {...state, variables: {...state.variables, userId}};
-          },
-          createInfiniteQueryMany,
-        ]}
+        middleware={[addUserIdToVariables(userId), createInfiniteQueryMany]}
         contentInset={{
           top: 0,
           left: 0,

@@ -6,7 +6,7 @@ interface IMutationEventPayload {
 
 interface IMutationInsertEvent {
   listKey?: string;
-  type: 'insert';
+  type: 'insert-first' | 'insert-last';
   pk: any;
   payload: IMutationEventPayload;
 }

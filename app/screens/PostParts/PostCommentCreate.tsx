@@ -6,7 +6,6 @@ import HasuraConfig from 'graphql-api/HasuraConfig';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import {useTranslations} from 'components/TranslationProvider';
 import {Text} from 'react-native-elements';
-import {PostDetailCommentsListKey} from 'screens/PostDetail';
 import useOperationStateHelper from 'react-graphql/hooks/useOperationStateHelper';
 
 export interface IPostCommentCreateProps {
@@ -19,7 +18,6 @@ const PostCommentCreate: FunctionComponent<IPostCommentCreateProps> = function P
   const translations = useTranslations();
   const insert = useReactGraphql(HasuraConfig.postComments).useInsert({
     initialVariables: {postId: props.postId},
-    listKey: PostDetailCommentsListKey,
   });
 
   const {queryCompleted} = useOperationStateHelper(insert.mutationState, {

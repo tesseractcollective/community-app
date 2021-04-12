@@ -9,13 +9,19 @@ export default {
   save: 'Save',
   delete: 'Delete',
   seeAll: 'See All',
-  
+  filter: 'Filter',
+
   groupsMyGroups: 'My Collectives',
   groupsNoGroups: "You haven't joined any collectives yet",
-  groupsAll: "All Collectives",
-  groupsAddMe: "Add me to Collective",
-  groupsRemoveMe: "Remove me from Collective",
+  groupsAll: 'All Collectives',
+  groupsAddMe: 'Add me to Collective',
+  groupsRemoveMe: 'Remove me from Collective',
 
-  postCreate: "Create Post",
-  search: "Search",
+  postCreate: 'Create Post',
+  search: 'Search',
+
+  postCommentUpdateSuccess: 'Comment updated!',
+  postCommentUpdateError: 'Sorry, We failed to save your changes',
+  postCommentDeleteSuccess: 'Comment removed!',
+  postCommentDeleteError: 'Sorry, We failed to save your changes',
 };

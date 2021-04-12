@@ -19,12 +19,13 @@ export default function useReactGraphql(config: HasuraDataConfig) {
       initialVariables?: IJsonObject;
       middleware?: MutationMiddleware[];
       listKey?: string;
+      firstOrLast?: 'insert-first' | 'insert-last';
     }) =>
       useMutate({
         sharedConfig: config,
         middleware: props?.middleware || [createInsertMutation],
         initialVariables: props?.initialVariables,
-        operationEventType: 'insert',
+        operationEventType: props?.firstOrLast ?? 'insert-first',
         listKey: props?.listKey,
       }),
 

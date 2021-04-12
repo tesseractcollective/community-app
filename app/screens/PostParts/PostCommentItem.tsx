@@ -15,7 +15,7 @@ import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {MutatorTextInput, MutatorButton} from 'react-graphql/components';
 import useOperationStateHelper from 'react-graphql/hooks/useOperationStateHelper';
-import {PostDetailCommentsListKey} from 'screens/PostDetail';
+import {useTranslations} from 'components/TranslationProvider';
 
 export interface IPostCommentItemProps {
   comment: PostComment;
@@ -26,6 +26,7 @@ const PostCommentItem: FunctionComponent<IPostCommentItemProps> = function PostC
 }) {
   const userId = useUserId();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const translations = useTranslations();
 
   const postCommentApi = useReactGraphql(HasuraConfig.postComments);
 
@@ -34,17 +35,15 @@ const PostCommentItem: FunctionComponent<IPostCommentItemProps> = function PostC
     initialVariables: {
       id: comment.id,
     },
-    listKey: PostDetailCommentsListKey,
   });
 
-  const {
-    error: UpdateError,
-    success: UpdateSuccess,
-    queryCompleted: updateCompleted,
-  } = useOperationStateHelper(update.mutationState, {
-    successToastMessage: 'Comment updated!',
-    errorToastMessage: 'Sorry, We failed to save your changes',
-  });
+  const {queryCompleted: updateCompleted} = useOperationStateHelper(
+    update.mutationState,
+    {
+      successToastMessage: translations.postCommentUpdateSuccess,
+      errorToastMessage: translations.postCommentUpdateError,
+    },
+  );
   //delete
 
   useEffect(() => {
@@ -57,12 +56,11 @@ const PostCommentItem: FunctionComponent<IPostCommentItemProps> = function PostC
     initialVariables: {
       id: comment.id,
     },
-    listKey: PostDetailCommentsListKey,
   });
 
   useOperationStateHelper(deleteState.mutationState, {
-    successToastMessage: 'Comment removed!',
-    errorToastMessage: 'Sorry, We failed to save your changes',
+    successToastMessage: translations.postCommentDeleteSuccess,
+    errorToastMessage: translations.postCommentDeleteError,
   });
 
   return (

@@ -12,7 +12,7 @@ interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
   middleware: MutationMiddleware[];
   initialVariables?: IJsonObject;
-  operationEventType: 'insert' | 'update' | 'delete';
+  operationEventType: 'insert-first' | 'insert-last' | 'update' | 'delete';
   listKey?: string;
 }
 
@@ -44,7 +44,7 @@ export default function useMutate<T extends IJsonObject>(
     setExecuteContext,
   ] = useState<Partial<OperationContext> | null>();
 
-  const [mutationEvent, setMutationEvent] = useAtom(mutationEventAtom);
+  const [_, setMutationEvent] = useAtom(mutationEventAtom);
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
@@ -94,7 +94,7 @@ export default function useMutate<T extends IJsonObject>(
           console.log('setMutationEvent');
 
           setMutationEvent(() => ({
-            listKey: listKey,
+            listKey: listKey ?? sharedConfig.typename,
             type: props.operationEventType,
             pk: pkValue,
             payload: {
