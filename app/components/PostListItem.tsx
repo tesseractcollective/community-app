@@ -8,6 +8,7 @@ import {urlForFile} from '../fileApi/fileApi';
 import Reaction from './Reaction';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import HasuraConfig from 'graphql-api/HasuraConfig';
+import { useTranslations } from './TranslationProvider';
 
 interface PostListItemProps {
   post: Post;
@@ -16,6 +17,7 @@ interface PostListItemProps {
 export default function (props: PostListItemProps) {
   const {post} = props;
 
+  const translations = useTranslations();
   const navigation = useNavigation();
   const authToken = useAuthToken();
 
@@ -35,7 +37,7 @@ export default function (props: PostListItemProps) {
   if (!post) {
     return (
       <View>
-        <Text>Invalid post</Text>
+        <Text>{translations.postInvalid}</Text>
       </View>
     );
   }

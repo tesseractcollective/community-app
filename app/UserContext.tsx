@@ -32,9 +32,9 @@ export const UserProvider = ({children}: any) => {
 
   console.log(`token`, token);
 
-  const setToken = (token) => {
-    AsyncStorage.setItem('user_token', token);
-    _setToken(token);
+  const setToken = (newToken: string | undefined) => {
+    AsyncStorage.setItem('user_token', newToken || '');
+    _setToken(newToken);
   };
 
   useEffect(() => {

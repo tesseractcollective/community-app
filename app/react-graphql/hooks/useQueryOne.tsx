@@ -57,8 +57,6 @@ export default function useQueryOne<
     if (resp.data) {
       console.log('⛱️ resp.data', resp.data);
       setItem(resp.data[queryCfg?.operationName]);
-    } else {
-      // console.log('❗ ⛱️ resp', resp);
     }
   }, [resp.fetching]);
 

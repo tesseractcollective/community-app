@@ -40,7 +40,6 @@ export function createDeleteMutation(
     operationName === `delete_${name}_by_pk`
       ? {}
       : {object: {...state.variables}};
-  // console.log('🚦 state.variables', state.variables);
 
   return {mutation, mutationStr, operationName, variables, pkColumns};
 }
@@ -79,9 +78,7 @@ export function createInsertMutation(
 
   const variables = {object: {...state.variables}};
   delete variables.object.id;
-  // console.log('🚦 state.variables', state.variables);
 
-  // console.log('🚦 variables', variables);
   return {mutation, mutationStr, operationName, variables, pkColumns};
 }
 

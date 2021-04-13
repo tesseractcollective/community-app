@@ -51,14 +51,11 @@ export default function useMutate<T extends IJsonObject>(
     throw new Error('sharedConfig and at least one middleware required');
   }
   const computeConfig = () => {
-    // console.log('computing config');
-    // console.log('computeConfig -> objectVariables', objectVariables);
     const state = stateFromMutationMiddleware(
       {variables: objectVariables},
       middleware,
       sharedConfig,
     );
-    // console.log('state', state.variables);
     return state;
   };
 
@@ -67,10 +64,6 @@ export default function useMutate<T extends IJsonObject>(
   //Setup the initial mutation Config so it's for sure ready before we get to urql
   useEffect(() => {
     const newState = computeConfig();
-    // console.log(
-    //   'useInfiniteQueryMany-> useEffect -> computeConfig -> newState',
-    //   newState,
-    // );
     setMutationCfg(newState);
   }, [objectVariables]);
 

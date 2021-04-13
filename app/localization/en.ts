@@ -10,6 +10,7 @@ export default {
   delete: 'Delete',
   seeAll: 'See All',
   filter: 'Filter',
+  search: 'Search',
 
   groupsMyGroups: 'My Collectives',
   groupsNoGroups: "You haven't joined any collectives yet",
@@ -18,7 +19,7 @@ export default {
   groupsRemoveMe: 'Remove me from Collective',
 
   postCreate: 'Create Post',
-  search: 'Search',
+  postInvalid: 'Invalid Post',
 
   postCommentUpdateSuccess: 'Comment updated!',
   postCommentUpdateError: 'Sorry, We failed to save your changes',

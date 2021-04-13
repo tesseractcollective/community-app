@@ -31,8 +31,6 @@ export default function () {
   const userId = useUserId();
   const bottomTabBarHeight = useBottomTabBarHeight();
 
-  // console.log('bottomTabBarHeight', bottomTabBarHeight);
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (props: any) => (
