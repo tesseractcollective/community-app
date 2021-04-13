@@ -70,5 +70,5 @@ export function createInfiniteQueryMany(
       ),
     );
   }
-  return {query, operationName, variables: state.variables ?? {}};
+  return {query, queryStr, operationName, variables: state.variables ?? {}};
 }

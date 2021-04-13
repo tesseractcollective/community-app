@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {HasuraDataConfig} from 'types/hasuraConfig';
-import {
-  QueryMiddleware,
-} from 'types/hookMiddleware';
+import {QueryMiddleware} from 'types/hookMiddleware';
 import {useQuery} from 'urql';
 import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 
@@ -23,7 +21,7 @@ export default function useQueryOne<
     localError: string;
     detectedPks: Map<any, any>;
   }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
-  
+
   const [item, setItem] = useState<TData>();
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
     initialVariables ?? {},
@@ -38,7 +36,7 @@ export default function useQueryOne<
 
   const [resp, reExecuteQuery] = useQuery<TData>({
     query: queryCfg?.query,
-    variables: objectVariables,
+    variables: queryCfg.variables,
   });
 
   useEffect(() => {
@@ -57,9 +55,10 @@ export default function useQueryOne<
   //Parse response
   useEffect(() => {
     if (resp.data) {
-      setItem(resp.data);
+      console.log('⛱️ resp.data', resp.data);
+      setItem(resp.data[queryCfg?.operationName]);
     }
-  }, [resp.data]);
+  }, [resp.fetching]);
 
   return {
     item,

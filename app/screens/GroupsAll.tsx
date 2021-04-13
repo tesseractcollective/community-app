@@ -6,10 +6,11 @@ import GroupsAllListSection from './GroupsParts/GroupsAllListSection';
 import GroupsAllMapSection from './GroupsParts/GroupsAllMapSection';
 import GroupsAllSearchBoxSection from './GroupsParts/GroupsAllSearchBoxSection';
 import GroupsAllSegmentedButtonSection from './GroupsParts/GroupsAllSegmentedButtonSection';
+import { bs } from 'react-graphql/support/styling/buildStyles';
 
 export default function () {
   const [searchText, setSearchText] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(2);
 
   const groupFilter: Group_Bool_Exp = {
     _or: [
@@ -41,7 +42,7 @@ export default function () {
         </View>
       )}
       {selectedIndex === 2 && (
-        <View>
+        <View style={bs(`f-1 bg-white`)}>
           <GroupsAllSearchBoxSection
             setSearchText={setSearchText}
             searchText={searchText}

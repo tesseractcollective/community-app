@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {bs} from 'react-graphql/support/styling/buildStyles';
 import {useTranslations} from 'components/TranslationProvider';
-import {Input, Divider} from 'react-native-elements';
+import {Input, Divider, Text} from 'react-native-elements';
 import {View} from 'react-native';
 
 export interface IGroupsAllSearchBoxSectionProps {
@@ -16,6 +16,7 @@ const GroupsAllSearchBoxSection: FunctionComponent<IGroupsAllSearchBoxSectionPro
 
   return (
     <View style={bs(``)}>
+      <Text>{translations.filter}:</Text>
       <Input
         placeholder={translations.groupsAll}
         onChangeText={setSearchText}

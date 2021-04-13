@@ -5,6 +5,9 @@ import {HasuraDataConfig} from '../types/hasuraConfig';
 import {QueryMiddleware} from '../types/hookMiddleware';
 import {findDefaultPks} from './findDefaultPks';
 import {useUrqlQuery} from './useUrqlQuery';
+import {useMonitorResult} from './monitorResult';
+import {useAtom} from 'jotai';
+import {mutationEventAtom, IMutationEvent} from './mutationEventAtom';
 
 interface IUseInfiniteQueryMany {
   where?: {[key: string]: any};
@@ -12,14 +15,15 @@ interface IUseInfiniteQueryMany {
   pageSize?: number;
   sharedConfig: HasuraDataConfig;
   middleware: QueryMiddleware[];
+  listKey?: string;
 }
 
 const defaultPageSize = 50;
 
-export default function useInfiniteQueryMany<
-  TData extends IJsonMapOfArraysObject
->(props: IUseInfiniteQueryMany) {
-  const {sharedConfig, middleware, where, orderBy, pageSize} = props;
+export default function useInfiniteQueryMany<TData extends any>(
+  props: IUseInfiniteQueryMany,
+) {
+  const {sharedConfig, middleware, where, orderBy, pageSize, listKey} = props;
 
   const limit = pageSize ?? defaultPageSize;
 
@@ -41,6 +45,12 @@ export default function useInfiniteQueryMany<
   const [shouldClearItems, setShouldClearItems] = useState(false);
   const [needsReQuery, setNeedsReQuery] = useState(false);
 
+  //Guards
+  if (!sharedConfig || !middleware?.length) {
+    throw new Error('sharedConfig and at least one middleware required');
+  }
+
+  //Update internal variables from explicitly passed in
   useEffect(() => {
     const checkVariables = {where, orderBy, limit};
     if (!isEqual(externalVariables, checkVariables)) {
@@ -50,16 +60,12 @@ export default function useInfiniteQueryMany<
     }
   }, [where, orderBy, limit]);
 
-  //Guards
-  if (!sharedConfig || !middleware?.length) {
-    throw new Error('sharedConfig and at least one middleware required');
-  }
-
+  //setup config
   const [queryCfg, setQueryCfg] = useState(computeConfig);
 
   useEffect(() => {
     const newState = computeConfig();
-    console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
+    // console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
     setQueryCfg(newState);
   }, [externalVariables, offset]);
 
@@ -73,9 +79,7 @@ export default function useInfiniteQueryMany<
     }
   }, [needsReQuery]);
 
-  const loadNextPage = () => {
-    setOffset(offset + limit);
-  };
+  useMonitorResult('query', queryState, queryCfg);
 
   //Parse response
   useEffect(() => {
@@ -147,16 +151,61 @@ export default function useInfiniteQueryMany<
     }
   }, [queryState.data, shouldClearItems]);
 
+  //Effect/react on mutation events
+  const [mutationEvent] = useAtom<IMutationEvent>(mutationEventAtom);
+
+  useEffect(() => {
+    const _listKey = listKey ?? sharedConfig.typename;
+    const isMatchingListKey = _listKey === mutationEvent.listKey;
+
+    if (!isMatchingListKey) {
+      return;
+    }
+    console.log(
+      'mutationEvent recieved <- useInfiniteQueryMany',
+      mutationEvent,
+      listKey,
+    );
+
+    if (mutationEvent?.type === 'insert-first') {
+      const newMap = new Map();
+      newMap.set(mutationEvent.pk, mutationEvent.payload as any);
+      itemsMap.forEach((val, key) => newMap.set(key, val));
+      setItemsMap(newMap);
+    } else if (mutationEvent?.type === 'insert-last') {
+      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+    } else if (
+      mutationEvent?.type === 'update' &&
+      itemsMap.has(mutationEvent.pk)
+    ) {
+      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+    } else if (
+      mutationEvent?.type === 'delete' &&
+      itemsMap.has(mutationEvent.pk)
+    ) {
+      itemsMap.delete(mutationEvent.pk);
+    }
+  }, [mutationEvent]);
+
   //Update user items from map
   const items = useMemo(() => {
     return Array.from(itemsMap.values());
   }, [itemsMap]);
+
+  const loadNextPage = () => {
+    if (!queryState.fetching) {
+      if (items?.length && items?.length % limit === 0) {
+        setOffset(offset + limit);
+      }
+    }
+  };
 
   const refresh = useCallback(() => {
     setOffset(0);
     setShouldClearItems(true);
     setNeedsReQuery(true);
   }, []);
+
   const requeryKeepInfinite = () => {
     setNeedsReQuery(true);
   };

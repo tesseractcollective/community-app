@@ -2654,6 +2654,10 @@ export type Post = {
   group?: Maybe<Group>;
   groupId?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
+  /** An array relationship */
+  postComments: Array<PostComment>;
+  /** An aggregated array relationship */
+  postComments_aggregate: PostComment_Aggregate;
   updatedAt: Scalars['timestamptz'];
   /** An object relationship */
   user?: Maybe<User>;
@@ -2686,6 +2690,26 @@ export type PostFiles_AggregateArgs = {
 
 
 /** columns and relationships of "post" */
+export type PostPostCommentsArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "post" */
+export type PostPostComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<PostComment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PostComment_Order_By>>;
+  where?: Maybe<PostComment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "post" */
 export type PostUserPostReactionsArgs = {
   distinct_on?: Maybe<Array<UserPostReaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -2710,8 +2734,12 @@ export type PostComment = {
   body: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   id: Scalars['uuid'];
+  /** An object relationship */
+  post: Post;
   postId: Scalars['uuid'];
   updatedAt: Scalars['timestamptz'];
+  /** An object relationship */
+  user: User;
   userId: Scalars['uuid'];
 };
 
@@ -2758,8 +2786,10 @@ export type PostComment_Bool_Exp = {
   body?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  post?: Maybe<Post_Bool_Exp>;
   postId?: Maybe<Uuid_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
 };
 
@@ -2774,8 +2804,10 @@ export type PostComment_Insert_Input = {
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+  post?: Maybe<Post_Obj_Rel_Insert_Input>;
   postId?: Maybe<Scalars['uuid']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
 };
 
@@ -2848,8 +2880,10 @@ export type PostComment_Order_By = {
   body?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  post?: Maybe<Post_Order_By>;
   postId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
+  user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -2946,6 +2980,7 @@ export type Post_Bool_Exp = {
   group?: Maybe<Group_Bool_Exp>;
   groupId?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  postComments?: Maybe<PostComment_Bool_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
   user?: Maybe<User_Bool_Exp>;
   userId?: Maybe<Uuid_Comparison_Exp>;
@@ -2966,6 +3001,7 @@ export type Post_Insert_Input = {
   group?: Maybe<Group_Obj_Rel_Insert_Input>;
   groupId?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  postComments?: Maybe<PostComment_Arr_Rel_Insert_Input>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   user?: Maybe<User_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['uuid']>;
@@ -3044,6 +3080,7 @@ export type Post_Order_By = {
   group?: Maybe<Group_Order_By>;
   groupId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  postComments_aggregate?: Maybe<PostComment_Aggregate_Order_By>;
   updatedAt?: Maybe<Order_By>;
   user?: Maybe<User_Order_By>;
   userId?: Maybe<Order_By>;
@@ -4764,6 +4801,11 @@ export type PostFieldsFragment = (
   )> }
 );
 
+export type PostMutationtFieldsFragment = (
+  { __typename?: 'post' }
+  & Pick<Post, 'id' | 'body' | 'createdAt' | 'updatedAt'>
+);
+
 export type UserGroupFieldsFragment = (
   { __typename?: 'userGroup' }
   & Pick<UserGroup, 'userId' | 'groupId'>
@@ -4776,6 +4818,15 @@ export type UserGroupFieldsFragment = (
 export type UserPostReactionFieldsFragment = (
   { __typename?: 'userPostReaction' }
   & Pick<UserPostReaction, 'userId' | 'postId' | 'reaction'>
+);
+
+export type PostCommentFieldsFragment = (
+  { __typename?: 'postComment' }
+  & Pick<PostComment, 'body' | 'id' | 'createdAt' | 'updatedAt' | 'userId'>
+  & { user: (
+    { __typename?: 'user' }
+    & Pick<User, 'name'>
+  ) }
 );
 
 import { IntrospectionQuery } from 'graphql';
@@ -10049,6 +10100,130 @@ export default {
             "args": []
           },
           {
+            "name": "postComments",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "postComment"
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "postComments_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "postComment_aggregate"
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
             "name": "updatedAt",
             "type": {
               "kind": "NON_NULL",
@@ -10240,6 +10415,17 @@ export default {
             "args": []
           },
           {
+            "name": "post",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "post"
+              }
+            },
+            "args": []
+          },
+          {
             "name": "postId",
             "type": {
               "kind": "NON_NULL",
@@ -10257,6 +10443,17 @@ export default {
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "user"
               }
             },
             "args": []
@@ -16256,6 +16453,14 @@ export const PostFieldsFragmentDoc = gql`
   }
 }
     `;
+export const PostMutationtFieldsFragmentDoc = gql`
+    fragment postMutationtFields on post {
+  id
+  body
+  createdAt
+  updatedAt
+}
+    `;
 export const UserGroupFieldsFragmentDoc = gql`
     fragment userGroupFields on userGroup {
   userId
@@ -16271,5 +16476,17 @@ export const UserPostReactionFieldsFragmentDoc = gql`
   userId
   postId
   reaction
+}
+    `;
+export const PostCommentFieldsFragmentDoc = gql`
+    fragment postCommentFields on postComment {
+  body
+  id
+  createdAt
+  updatedAt
+  userId
+  user {
+    name
+  }
 }
     `;

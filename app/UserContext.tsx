@@ -12,29 +12,29 @@ export interface UserContextType {
   setToken: (token: string | undefined) => void;
 }
 
-export const UserContext = createContext<UserContextType>({ 
-  userId: "",
-  token: "",
+export const UserContext = createContext<UserContextType>({
+  userId: '',
+  token: '',
   setToken: () => {},
 });
 
 export const useUserId = () => {
   return useContext(UserContext).userId;
-}
+};
 
 export const useAuthToken = () => {
   return useContext(UserContext).token;
-}
+};
 
 export const UserProvider = ({children}: any) => {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<string>('');
   const [token, _setToken] = useState<string | undefined>(undefined);
 
   console.log(`token`, token);
 
-  const setToken = (token) => {
-    AsyncStorage.setItem('user_token', token);
-    _setToken(token);
+  const setToken = (newToken: string | undefined) => {
+    AsyncStorage.setItem('user_token', newToken || '');
+    _setToken(newToken);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const UserProvider = ({children}: any) => {
       return {
         headers: {
           authorization: token ? `Bearer ${token}` : '',
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
     },
@@ -60,13 +60,13 @@ export const UserProvider = ({children}: any) => {
 
   useEffect(() => {
     if (token) {
-      const jwtData = jwtDecode<{ [key: string] : any }>(token);
+      const jwtData = jwtDecode<{[key: string]: any}>(token);
       const claims = jwtData[constants.jwtClaimsKey];
       setUserId(claims['x-hasura-user-id']);
     }
   }, [token]);
 
-  const userContextValue = { userId, token: token || "", setToken };
+  const userContextValue = {userId, token: token || '', setToken};
 
   if (userId && token) {
     return (
@@ -85,4 +85,4 @@ export const UserProvider = ({children}: any) => {
       </UserContext.Provider>
     </UrqlProvider>
   );
-}
+};

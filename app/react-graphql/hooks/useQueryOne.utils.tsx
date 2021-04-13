@@ -40,13 +40,13 @@ export function createQueryOne<
     .filter((x) => !!x)
     .join(', ');
   const queryString = `query ${name}Query {
-    ${name}(${operationStr}) {
+    ${operationName}(${operationStr}) {
       ...${fragmentName}
     }
   }
   ${print(fragment)}`;
-  console.log(queryString);
+  console.log('queryString <- createQueryOne', queryString);
 
   const query = gql(queryString);
-  return {query, operationName, variables: state.variables ?? {}};
+  return {query, operationName, variables: {} ?? {}};
 }

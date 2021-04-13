@@ -15,7 +15,7 @@ const defaultPageSize = 50;
 
 export interface PaginationListProps<T> {
   config: HasuraDataConfig;
-  renderItem: ListRenderItem<T>;
+  renderItem: ListRenderItem<T> & {refresh: () => void};
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
   pageSize?: number;
@@ -23,8 +23,8 @@ export interface PaginationListProps<T> {
   reloadOnFocus?: boolean;
   pullToRefresh?: boolean;
   middleware?: QueryMiddleware[];
-  name?: string;
   renderEmpty?: () => ReactElement;
+  listKey?: string;
 }
 
 export default function <T extends {[key: string]: any}>(
@@ -39,20 +39,20 @@ export default function <T extends {[key: string]: any}>(
     reloadOnFocus,
     pullToRefresh = true,
     middleware,
+    listKey,
     ...rest
   } = props;
 
-  const {
-    loadNextPage,
-    items,
-    queryState: {fetching, error},
-    refresh,
-  } = useReactGraphql(config).useInfiniteQueryMany({
+  const {loadNextPage, items, queryState, refresh} = useReactGraphql(
+    config,
+  ).useInfiniteQueryMany({
     where,
     orderBy,
     pageSize,
     middleware: middleware || undefined,
+    listKey,
   });
+  const {fetching, error} = queryState;
 
   const isFocused = useIsFocused();
   const [isManualRefresh, setIsManualRefresh] = useState(false);
@@ -67,7 +67,7 @@ export default function <T extends {[key: string]: any}>(
       }
       setHasLostFocus(!isFocused);
     }
-  }, [isFocused]);
+  }, [isFocused, hasLostFocus, reloadOnFocus]);
 
   const handleRefresh = () => {
     setIsManualRefresh(true);
@@ -94,7 +94,7 @@ export default function <T extends {[key: string]: any}>(
             ) : undefined
           }
           data={items}
-          renderItem={renderItem}
+          renderItem={(params) => renderItem({...params, refresh})}
           keyExtractor={(item) => keyExtractor(config, item)}
           onEndReachedThreshold={1}
           onEndReached={loadNextPage}

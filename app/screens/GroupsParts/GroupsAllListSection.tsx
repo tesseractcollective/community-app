@@ -21,9 +21,10 @@ const GroupsAllListSection: FunctionComponent<IGroupsAllListSectionProps> = func
   };
 
   return (
-    <Divider style={bs(`b-1 b-green px-mxx py-s f-sc f-1`)}>
+    <Divider style={bs(`px-mxx py-s f-start-stretch f-1 bg-white`)}>
       <PaginatedList
-        style={bs(`h-99p`)}
+        style={bs(`bg-white`)}
+        contentContainerStyle={bs(`bg-white`)}
         config={HasuraConfig.groups}
         renderItem={renderGroup}
         where={groupFilter}

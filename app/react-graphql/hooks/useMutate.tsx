@@ -1,29 +1,39 @@
-import {useEffect, useState, useCallback} from 'react';
+import {useEffect, useState, useCallback, EffectCallback} from 'react';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 import {MutationMiddleware} from '../types/hookMiddleware';
-import {OperationContext, useMutation} from 'urql';
+import {OperationContext, useMutation, UseMutationState} from 'urql';
 import {stateFromMutationMiddleware} from 'react-graphql/support/middlewareHelpers';
-import isEqual from 'lodash.isequal';
+import {useMonitorResult} from './monitorResult';
+import {mutationEventAtom} from './mutationEventAtom';
+import {useAtom} from 'jotai';
+import {findPkValueForItem} from './findDefaultPks';
 
 interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
   middleware: MutationMiddleware[];
   initialVariables?: IJsonObject;
+  operationEventType: 'insert-first' | 'insert-last' | 'update' | 'delete';
+  listKey?: string;
 }
 
 export interface MutateState {
   resultItem?: any;
   mutating: boolean;
   error?: Error;
-  executeMutation: () => void;
+  mutationState: UseMutationState;
+  executeMutation: (
+    variables?: IJsonObject,
+    context?: Partial<OperationContext>,
+  ) => void;
   setVariable: (key: string, value: any) => void;
   setVariables: (variables: {[key: string]: any}) => void;
+  objectVariables: {[key: string]: any};
 }
 
 export default function useMutate<T extends IJsonObject>(
   props: IUseMutateProps,
 ): MutateState {
-  const {sharedConfig, middleware, initialVariables} = props;
+  const {sharedConfig, middleware, initialVariables, listKey} = props;
   //MutationConfig is what we internally refer to the middlewareState as
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
     initialVariables ?? {},
@@ -34,19 +44,18 @@ export default function useMutate<T extends IJsonObject>(
     setExecuteContext,
   ] = useState<Partial<OperationContext> | null>();
 
+  const [_, setMutationEvent] = useAtom(mutationEventAtom);
+
   //Guards
   if (!sharedConfig || !middleware?.length) {
     throw new Error('sharedConfig and at least one middleware required');
   }
   const computeConfig = () => {
-    console.log('computing config');
-    console.log('computeConfig -> objectVariables', objectVariables);
     const state = stateFromMutationMiddleware(
       {variables: objectVariables},
       middleware,
       sharedConfig,
     );
-    console.log('state', state.variables);
     return state;
   };
 
@@ -55,41 +64,42 @@ export default function useMutate<T extends IJsonObject>(
   //Setup the initial mutation Config so it's for sure ready before we get to urql
   useEffect(() => {
     const newState = computeConfig();
-    console.log(
-      'useInfiniteQueryMany-> useEffect -> computeConfig -> newState',
-      newState,
-    );
     setMutationCfg(newState);
   }, [objectVariables]);
 
   //The mutation
   const [mutationResult, executeMutation] = useMutation(mutationCfg?.mutation);
-  console.log('mutationResult', mutationResult);
   const resultItem = mutationResult.data?.[mutationCfg.operationName];
 
   useEffect(() => {
-    console.log('mutation useEffect');
-    if (needsExecuteMutation && !executeContext) {
-      console.log('💪 executingMutation', {
-        executeContext,
-        needsExecuteMutation,
-        variables: mutationCfg?.variables,
-      });
-      setNeedsExecuteMutation(false);
-      executeMutation(mutationCfg?.variables);
-    }
+    (async () => {
+      if (needsExecuteMutation && !executeContext) {
+        console.log('💪 executingMutation', {
+          executeContext,
+          needsExecuteMutation,
+          variables: mutationCfg?.variables,
+        });
+        setNeedsExecuteMutation(false);
+        const resp = await executeMutation(mutationCfg?.variables);
+        const successItem = resp?.data?.[mutationCfg.operationName];
+        if (successItem) {
+          const pkValue = findPkValueForItem(successItem, sharedConfig);
+          console.log('setMutationEvent');
 
-    // setNeedsExecuteMutation(false);
-    // setExecuteContext(null);
-    // if (needsExecuteMutation) {
-    //   setNeedsExecuteMutation(false);
-    //   console.log('executingMutation');
-    //   executeMutation(mutationCfg.variables);
-    // } else if (executeContext) {
-    //   setExecuteContext(null);
-    //   executeMutation(mutationCfg.variables, executeContext);
-    // }
+          setMutationEvent(() => ({
+            listKey: listKey ?? sharedConfig.typename,
+            type: props.operationEventType,
+            pk: pkValue,
+            payload: {
+              ...successItem,
+            },
+          }));
+        }
+      }
+    })();
   }, [needsExecuteMutation, executeContext, executeMutation, mutationCfg]);
+
+  useMonitorResult('mutation', mutationResult, mutationCfg);
 
   //Handling variables
   const setVariable = useCallback((key: string, value: any) => {
@@ -131,17 +141,15 @@ export default function useMutate<T extends IJsonObject>(
     }
   };
 
-  // const wrappedExecuteMutation = (_variables?: IJsonObject, context?: Partial<OperationContext>) => {
-  //   console.log('mocked wrappedExecuteMutation');
-  // }
-
   //Return values
   return {
     resultItem,
     mutating: mutationResult.fetching,
     error: mutationResult.error,
+    mutationState: mutationResult,
     executeMutation: wrappedExecuteMutation,
     setVariable,
     setVariables,
+    objectVariables,
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {Image, ListItem} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,10 +14,13 @@ import {
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
-import { MutatorButton, PaginatedList } from 'react-graphql/components';
+import {MutatorButton, PaginatedList} from 'react-graphql/components';
+import {addUserIdToVariables} from 'graphql-api/utils/addUserIdToVariables';
+import {createInfiniteQueryMany} from 'react-graphql/hooks/useInfiniteQueryMany.utils';
 
 export interface GroupDetailRouterProps {
   group: Group;
+  isMyGroup: boolean;
 }
 
 const gradient = ['#FF9800', '#F44336'];
@@ -46,6 +49,8 @@ export default function (props: any) {
     return <PostListItem post={item} />;
   };
 
+  console.log('queryOneState.item', queryOneState);
+
   return (
     <View>
       <ListItem
@@ -69,7 +74,6 @@ export default function (props: any) {
       </ListItem>
       {queryOneState.item ? (
         <MutatorButton
-          style={{flex: 1}}
           state={deleteState}
           title={translations.groupsRemoveMe}
         />
@@ -80,7 +84,8 @@ export default function (props: any) {
         style={styles.posts}
         config={HasuraConfig.posts}
         renderItem={renderPost}
-        // where={where}
+        where={where}
+        middleware={[addUserIdToVariables(userId), createInfiniteQueryMany]}
         orderBy={orderByPosts}
         reloadOnFocus
       />
