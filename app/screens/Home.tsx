@@ -20,6 +20,7 @@ import {
 } from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
+import { TouchableOpacity } from 'react-native';
 import {createInfiniteQueryMany} from 'react-graphql/hooks/useInfiniteQueryMany.utils';
 import {addUserIdToVariables} from '../graphql-api/utils/addUserIdToVariables';
 
@@ -64,14 +65,14 @@ export default function () {
   };
 
   return (
-    <View>
+    <View style={{height: '100%'}}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>{translations.groupsMyGroups}</Text>
         <Button
           type="clear"
           buttonStyle={styles.listButton}
           titleStyle={styles.listButtonTitle}
-          title={translations.seeAll.toUpperCase()}
+          title={translations.seeAll.toUpperCase()}          
           iconRight
           icon={<Icon name="chevron-right" size={18} color="black" />}
           onPress={() => {
@@ -94,6 +95,7 @@ export default function () {
 
       <PaginatedList
         style={styles.posts}
+        showsVerticalScrollIndicator={false}
         config={HasuraConfig.posts}
         renderItem={renderPost}
         where={whereMyPosts}
@@ -103,10 +105,13 @@ export default function () {
         contentInset={{
           top: 0,
           left: 0,
-          bottom: bottomTabBarHeight * 2,
+          bottom: bottomTabBarHeight,
           right: 0,
         }}
       />
+      <TouchableOpacity onPress={() => navigation.navigate('PostCreate', {userId})} style={styles.fab}>
+        <Text style={styles.fabIcon}><FeatherIcons name="plus" size={24} color={'white'} /></Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -134,10 +139,10 @@ const styles = StyleSheet.create({
     textShadowRadius: 12,
   },
   posts: {
-    height: '100%',
+    // height: '100%',
   },
   groups: {
-    paddingTop: 10,
+    paddingTop: 0,
     paddingBottom: 20,
   },
   listButton: {
@@ -155,4 +160,20 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 0, height: 4},
     textShadowRadius: 12,
   },
+  fab: { 
+    position: 'absolute', 
+    width: 56, 
+    height: 56, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    right: 20, 
+    bottom: 20, 
+    backgroundColor: '#522C2C', 
+    borderRadius: 30, 
+    elevation: 8 
+  }, 
+  fabIcon: { 
+    fontSize: 40, 
+    color: 'white' 
+  }
 });
