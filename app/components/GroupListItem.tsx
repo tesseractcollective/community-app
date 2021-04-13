@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
 import {Group, UserGroup} from 'graphql-api';
@@ -53,14 +54,10 @@ export function UserGroupListItemHome(props: UserGroupListItemProps) {
   return (
     <ListItem
       style={{
-        height: 100,
+        height: 80,
+        width: 100,
       }}
-      containerStyle={{
-        marginHorizontal: 8,
-        borderRadius: 10,
-        height: '80%',
-        elevation: 2,
-      }}
+      containerStyle={styles.container}
       onPress={onPress}
       Component={TouchableScale}
       friction={90}
@@ -75,15 +72,29 @@ export function UserGroupListItemHome(props: UserGroupListItemProps) {
     >
       <ListItem.Content>
         <ListItem.Title
-          style={{
-            color: 'black',
-            fontFamily: 'Montserrat-Semibold',
-            fontSize: 14,
-            textTransform: 'uppercase',
-          }}>
-          {group?.name}
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+          style={styles.title}>
+          {group.name}
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 4,
+    borderRadius: 10,
+    height: '80%',
+    elevation: 2,
+  },
+  title: {
+    color: 'black',
+    fontFamily: 'Montserrat-Semibold',
+    fontSize: 11,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    width: '100%',
+  },
+});
