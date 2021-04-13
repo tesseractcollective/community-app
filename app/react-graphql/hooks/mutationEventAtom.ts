@@ -24,6 +24,7 @@ interface IMutationUpdateEvent {
 interface IMutationInitEvent {
   listKey?: string;
   type: 'init';
+  key: 'init';
 }
 
 export type IMutationEvent =
@@ -34,4 +35,5 @@ export type IMutationEvent =
 
 export const mutationEventAtom = atom<IMutationEvent>({
   type: 'init',
+  key: 'init',
 });

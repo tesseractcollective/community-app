@@ -1,8 +1,11 @@
 import {useState, useEffect} from 'react';
 import {HasuraDataConfig} from 'react-graphql/types/hasuraConfig';
 import {QueryMiddleware} from 'react-graphql/types/hookMiddleware';
-import {useQuery} from 'urql';
+import {OperationContext, useQuery} from 'urql';
 import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
+import {keyExtractor} from 'react-graphql/support/HasuraConfigUtils';
+import {useAtom} from 'jotai';
+import {IMutationEvent, mutationEventAtom} from './mutationEventAtom';
 
 interface IUseQueryOne {
   sharedConfig: HasuraDataConfig;
@@ -16,16 +19,13 @@ export default function useQueryOne<
 >(props: IUseQueryOne) {
   const {sharedConfig, middleware, variables} = props;
 
-  const [meta, setMeta] = useState<{
-    firstQueryCompleted: boolean;
-    localError: string;
-    detectedPks: Map<any, any>;
-  }>({firstQueryCompleted: false, localError: '', detectedPks: new Map()});
-
   const [item, setItem] = useState<TData>();
+  const [key, setKey] = useState<string>();
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
     variables,
   );
+
+  const [mutationEvent] = useAtom<IMutationEvent>(mutationEventAtom);
 
   //Guards
   if (!sharedConfig || !middleware?.length) {
@@ -38,6 +38,26 @@ export default function useQueryOne<
     query: queryCfg?.document,
     variables: queryCfg.variables,
   });
+
+  useEffect(() => {
+    if (item) {
+      setKey(keyExtractor(sharedConfig, item));
+    }
+  }, [item]);
+
+  useEffect(() => {
+    if (
+      mutationEvent.listKey == sharedConfig.typename &&
+      mutationEvent.key === key &&
+      mutationEvent.type !== 'init'
+    ) {
+      if (mutationEvent.type === 'delete') {
+        setItem(undefined);
+      } else {
+        setItem(mutationEvent.payload as TData);
+      }
+    }
+  }, [mutationEvent]);
 
   useEffect(() => {
     reExecuteQuery();
@@ -56,16 +76,19 @@ export default function useQueryOne<
   useEffect(() => {
     if (resp.data) {
       console.log('⛱️ resp.data', resp.data);
-      setItem(resp.data[queryCfg?.operationName]);
+      setItem(resp.data[queryCfg.operationName]);
     }
-  }, [resp.fetching]);
+  }, [resp.data]);
 
   return {
     item,
-    localError: meta.localError,
+    localError: undefined,
+    fetching: resp.fetching,
+    error: resp.error,
+    stale: resp.stale,
     refresh: reExecuteQuery,
-    setObjectVariables,
-    objectVariables,
+    setVariables: setObjectVariables,
+    variables: objectVariables,
   };
 
   function computeConfig() {

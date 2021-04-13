@@ -32,13 +32,14 @@ export default function (props: any) {
   const userId = useUserId();
 
   const reactGraphql = useReactGraphql(HasuraConfig.userGroups);
-  const [initialVariables] = useState({userId, groupId: group.id});
+  const variables = {userId, groupId: group.id};
 
-  const insertState = reactGraphql.useInsert({initialVariables});
-  const deleteState = reactGraphql.useDelete({initialVariables});
-  const queryOneState = reactGraphql.useQueryOne({initialVariables});
+  const insertState = reactGraphql.useInsert({initialVariables: variables});
+  const deleteState = reactGraphql.useDelete({variables});
+  const queryOneState = reactGraphql.useQueryOne({variables, opts: { requestPolicy: 'network-only'}});
 
   useEffect(() => {
+    console.log('queryOneState.refresh()');
     queryOneState.refresh();
   }, [insertState.resultItem, deleteState.resultItem]);
 
@@ -48,8 +49,6 @@ export default function (props: any) {
   const renderPost = ({item}: {item: Post}) => {
     return <PostListItem post={item} />;
   };
-
-  console.log('queryOneState.item', queryOneState);
 
   return (
     <View>

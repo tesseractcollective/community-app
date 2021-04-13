@@ -1,5 +1,3 @@
-import React, {EffectCallback} from 'react';
-
 import useMutate from './useMutate';
 import {
   createDeleteMutation,
@@ -12,6 +10,7 @@ import useQueryOne from './useQueryOne';
 import {createQueryOne} from './useQueryOne.utils';
 import {QueryMiddleware} from '../types/hookMiddleware';
 import {HasuraDataConfig} from '../types/hasuraConfig';
+import { OperationContext } from '@urql/core';
 
 export default function useReactGraphql(config: HasuraDataConfig) {
   return {
