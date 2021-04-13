@@ -47,6 +47,6 @@ export function createQueryOne<
   ${print(fragment)}`;
   console.log('queryString <- createQueryOne', queryString);
 
-  const query = gql(queryString);
-  return {query, operationName, variables: {} ?? {}};
+  const document = gql(queryString);
+  return {document, operationName, variables: {} ?? {}};
 }

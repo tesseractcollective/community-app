@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
-import {Post} from 'graphql-api';
+import {Post, Reaction_Enum} from 'graphql-api';
 import {StyleSheet, Text, View} from 'react-native';
 import {useAuthToken, useUserId} from '../UserContext';
 import {urlForFile} from '../fileApi/fileApi';
 import Reaction from './Reaction';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import HasuraConfig from 'graphql-api/HasuraConfig';
-import { useTranslations } from './TranslationProvider';
+import {useTranslations} from './TranslationProvider';
 
 interface PostListItemProps {
   post: Post;
@@ -17,22 +17,31 @@ interface PostListItemProps {
 export default function (props: PostListItemProps) {
   const {post} = props;
 
+  const userId = useUserId();
   const translations = useTranslations();
   const navigation = useNavigation();
   const authToken = useAuthToken();
+  const [reactionToggle, setReactionToggle] = useState(post.userPostReactions.length > 0);
+  const [reactionCount, setReactionCount] = useState(post.userPostReactions_aggregate.aggregate?.count || 0);
 
-  const {executeMutation: likePost, resultItem: likeResults} = useReactGraphql(
-    HasuraConfig.userPostReactions,
-  ).useInsert({
-    initialVariables: {
+  const reactGraphql = useReactGraphql(HasuraConfig.userPostReactions);
+
+  const {
+    executeMutation: insertReaction,
+  } = reactGraphql.useInsert({ initialVariables: { postId: post.id }});
+
+  const {executeMutation: deleteReaction} = reactGraphql.useDelete({
+    variables: {
       postId: post.id,
-      reaction: 'LIKE',
+      userId,
     },
   });
 
   const onPress = () => {
     navigation.navigate('PostDetail', {post});
   };
+
+
 
   if (!post) {
     return (
@@ -83,15 +92,19 @@ export default function (props: PostListItemProps) {
           />
         ))}
         <Reaction
-          count={
-            (post?.userPostReactions_aggregate?.aggregate?.count || 0) +
-            (!!likeResults?.userId ? 1 : 0)
-          }
-          hasCurrentUserReacted={
-            !!post?.userPostReactions?.length || !!likeResults?.userId
-          }
-          reactionType="LIKE"
-          toggleReaction={likePost}
+          count={reactionCount}
+          hasCurrentUserReacted={reactionToggle}
+          reactionType={Reaction_Enum.Like}
+          toggleReaction={() => {
+            if (reactionToggle) {
+              deleteReaction();
+              setReactionCount(reactionCount + 1);
+            } else {
+              insertReaction({reaction: Reaction_Enum.Like});
+              setReactionCount(reactionCount - 1);
+            }
+            setReactionToggle(!reactionToggle);
+          }}
         />
       </ListItem.Content>
     </ListItem>

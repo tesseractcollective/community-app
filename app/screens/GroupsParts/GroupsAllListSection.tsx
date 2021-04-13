@@ -4,7 +4,7 @@ import {Divider} from 'react-native-elements';
 import PaginatedList from 'react-graphql/components/native/PaginatedList';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import GroupListItem from 'components/GroupListItem';
-import {Group_Bool_Exp, Group_Order_By} from 'graphql-api';
+import {Group, Group_Bool_Exp, Group_Order_By} from 'graphql-api';
 
 export interface IGroupsAllListSectionProps {
   groupFilter: Group_Bool_Exp;

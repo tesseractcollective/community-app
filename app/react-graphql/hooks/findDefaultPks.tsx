@@ -1,5 +1,4 @@
 import {filter} from 'lodash';
-import {HasuraDataConfig} from 'react-graphql/types/hasuraConfig';
 
 export function findDefaultPks(
   items: IJsonArray,
@@ -21,27 +20,4 @@ export function findDefaultPks(
     newDetectedPks.set(key, pks);
   }
   return newDetectedPks;
-}
-
-export function findPkValueForItem(
-  item: IJsonObject,
-  config: HasuraDataConfig,
-): {[key: string]: any} {
-  console.log('findDefaultPks -> items', item);
-  const validPks = config.primaryKey ?? ['id'];
-  const pks = filter(item, (_: any, key: string) => validPks.indexOf(key) >= 0);
-  console.log('pks', pks);
-  let val;
-  if (pks.length === 1) {
-    val = pks[0];
-  } else if (pks.length === 0) {
-    console.log('❗ Err: No pk found on', item, config);
-  } else {
-    console.log(
-      '❗ Err: Only mutations with a single primary key supported at this time',
-      item,
-      config,
-    );
-  }
-  return val;
 }

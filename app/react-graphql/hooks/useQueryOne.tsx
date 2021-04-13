@@ -1,20 +1,20 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {HasuraDataConfig} from 'types/hasuraConfig';
-import {QueryMiddleware} from 'types/hookMiddleware';
+import {useState, useEffect} from 'react';
+import {HasuraDataConfig} from 'react-graphql/types/hasuraConfig';
+import {QueryMiddleware} from 'react-graphql/types/hookMiddleware';
 import {useQuery} from 'urql';
 import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 
 interface IUseQueryOne {
   sharedConfig: HasuraDataConfig;
   middleware: QueryMiddleware[];
-  initialVariables?: IJsonObject;
+  variables: IJsonObject;
 }
 
 export default function useQueryOne<
   TData extends IJsonObject,
   TVariables extends IJsonObject
 >(props: IUseQueryOne) {
-  const {sharedConfig, middleware, initialVariables} = props;
+  const {sharedConfig, middleware, variables} = props;
 
   const [meta, setMeta] = useState<{
     firstQueryCompleted: boolean;
@@ -24,7 +24,7 @@ export default function useQueryOne<
 
   const [item, setItem] = useState<TData>();
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
-    initialVariables ?? {},
+    variables,
   );
 
   //Guards
@@ -35,7 +35,7 @@ export default function useQueryOne<
   const [queryCfg, setQueryCfg] = useState(computeConfig);
 
   const [resp, reExecuteQuery] = useQuery<TData>({
-    query: queryCfg?.query,
+    query: queryCfg?.document,
     variables: queryCfg.variables,
   });
 
@@ -76,9 +76,3 @@ export default function useQueryOne<
     );
   }
 }
-
-// document: DocumentNode,
-// where?: {[key: string]: any},
-// orderBy?: {[key: string]: any},
-// primaryKey: string = defaultPrimaryKey,
-// pageSize: number = defaultPageSize,

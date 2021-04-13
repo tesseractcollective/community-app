@@ -10,14 +10,14 @@ import useInfiniteQueryMany from './useInfiniteQueryMany';
 import {createInfiniteQueryMany} from './useInfiniteQueryMany.utils';
 import useQueryOne from './useQueryOne';
 import {createQueryOne} from './useQueryOne.utils';
-import {MutationMiddleware, QueryMiddleware} from '../types/hookMiddleware';
+import {QueryMiddleware} from '../types/hookMiddleware';
 import {HasuraDataConfig} from '../types/hasuraConfig';
 
 export default function useReactGraphql(config: HasuraDataConfig) {
   return {
     useInsert: (props?: {
       initialVariables?: IJsonObject;
-      middleware?: MutationMiddleware[];
+      middleware?: QueryMiddleware[];
       listKey?: string;
       firstOrLast?: 'insert-first' | 'insert-last';
     }) =>
@@ -29,22 +29,22 @@ export default function useReactGraphql(config: HasuraDataConfig) {
         listKey: props?.listKey,
       }),
 
-    useDelete: (props?: {
-      initialVariables?: IJsonObject;
-      middleware?: MutationMiddleware[];
+    useDelete: (props: {
+      variables: IJsonObject;
+      middleware?: QueryMiddleware[];
       listKey?: string;
     }) =>
       useMutate({
         sharedConfig: config,
-        middleware: props?.middleware || [createDeleteMutation],
-        initialVariables: props?.initialVariables,
+        middleware: props.middleware || [createDeleteMutation],
+        initialVariables: props.variables,
         operationEventType: 'delete',
-        listKey: props?.listKey,
+        listKey: props.listKey,
       }),
 
     useUpdate: (props?: {
       initialVariables?: IJsonObject;
-      middleware?: MutationMiddleware[];
+      middleware?: QueryMiddleware[];
       listKey?: string;
     }) =>
       useMutate({
@@ -70,14 +70,14 @@ export default function useReactGraphql(config: HasuraDataConfig) {
         listKey: props?.listKey,
       }),
 
-    useQueryOne: (props?: {
-      initialVariables?: IJsonObject;
+    useQueryOne: (props: {
+      variables: IJsonObject;
       middleware?: QueryMiddleware[];
     }) =>
       useQueryOne({
         sharedConfig: config,
         middleware: props?.middleware || [createQueryOne],
-        initialVariables: props?.initialVariables,
+        variables: props.variables,
       }),
   };
 }

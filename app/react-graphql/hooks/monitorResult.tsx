@@ -1,13 +1,13 @@
+import { print } from 'graphql';
 import {useEffect} from 'react';
 import {
-  MutationPostMiddlewareState,
   QueryPostMiddlewareState,
 } from '../types/hookMiddleware';
 
 export function useMonitorResult(
   resultType: 'mutation' | 'query',
-  result,
-  cfg: MutationPostMiddlewareState | QueryPostMiddlewareState,
+  result: any,
+  cfg: QueryPostMiddlewareState,
 ) {
   useEffect(() => {
     if (result.error) {
@@ -16,7 +16,7 @@ export function useMonitorResult(
         '\r\n',
         '------------------------',
         '\r\n',
-        cfg?.[resultType + 'Str'],
+        print(cfg.document),
         '\r\n',
         '------------------------',
         '\r\n',
@@ -42,7 +42,7 @@ export function useMonitorResult(
             '\r\n',
             '------------------------',
             '\r\n',
-            cfg?.[resultType + 'Str'],
+            print(cfg.document),
             '\r\n',
             '------------------------',
             '\r\n',

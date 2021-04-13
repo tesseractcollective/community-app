@@ -5,7 +5,7 @@
 // Form (insert & updates)
 
 import { DocumentNode } from 'graphql';
-import { HasuraDataConfig } from 'types/hasuraConfig';
+import { HasuraDataConfig } from 'react-graphql/types/hasuraConfig';
 import { getFragmentName } from './graphqlHelpers';
 
 export const keyExtractor = (config: HasuraDataConfig, item: { [key: string]: any }): string => {

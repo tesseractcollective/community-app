@@ -7,21 +7,22 @@ interface IMutationEventPayload {
 interface IMutationInsertEvent {
   listKey?: string;
   type: 'insert-first' | 'insert-last';
-  pk: any;
+  key: string;
   payload: IMutationEventPayload;
 }
 interface IMutationDeleteEvent {
   listKey?: string;
   type: 'delete';
-  pk: any;
+  key: string;
 }
 interface IMutationUpdateEvent {
   listKey?: string;
   type: 'update';
-  pk: any;
+  key: string;
   payload: IMutationEventPayload;
 }
 interface IMutationInitEvent {
+  listKey?: string;
   type: 'init';
 }
 

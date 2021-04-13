@@ -6,16 +6,17 @@ import {
   Text,
   ScrollViewProps,
 } from 'react-native';
-import {HasuraDataConfig, keyExtractor} from 'graphql-api/HasuraConfigType';
+import {HasuraDataConfig} from 'react-graphql/support/HasuraConfigType';
 import {useIsFocused} from '@react-navigation/core';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import {QueryMiddleware} from 'react-graphql/types/hookMiddleware';
+import { keyExtractor } from 'react-graphql/support/HasuraConfigUtils';
 
 const defaultPageSize = 50;
 
 export interface PaginationListProps<T> {
   config: HasuraDataConfig;
-  renderItem: ListRenderItem<T> & {refresh: () => void};
+  renderItem: ListRenderItem<T>;
   where?: {[key: string]: any};
   orderBy?: {[key: string]: any} | Array<{[key: string]: any}>;
   pageSize?: number;
@@ -94,7 +95,7 @@ export default function <T extends {[key: string]: any}>(
             ) : undefined
           }
           data={items}
-          renderItem={(params) => renderItem({...params, refresh})}
+          renderItem={renderItem}
           keyExtractor={(item) => keyExtractor(config, item)}
           onEndReachedThreshold={1}
           onEndReached={loadNextPage}

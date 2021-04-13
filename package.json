@@ -55,6 +55,7 @@
     "@graphql-codegen/typescript-urql": "^2.0.3",
     "@graphql-codegen/urql-introspection": "1.0.0",
     "@react-native-community/eslint-config": "^1.1.0",
+    "@testing-library/react-hooks": "^5.1.1",
     "@types/jest": "^25.2.3",
     "@types/lodash.isequal": "^4.5.5",
     "@types/react": "^17.0.3",
