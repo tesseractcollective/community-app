@@ -52,6 +52,33 @@ fragment userGroupFields on userGroup {
   }
 }
 
+fragment userGroupsMineFields on userGroup {
+  userId
+  groupId
+  user {
+    id
+    name
+  }
+  group {
+    id
+    name
+    description
+    createdAt
+    updatedAt
+    location {
+      id
+      name
+      city
+      country
+      countryCode
+      formattedAddress
+      latitude
+      longitude
+      state
+    }
+  }
+}
+
 fragment userPostReactionFields on userPostReaction {
   userId
   postId

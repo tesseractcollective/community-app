@@ -98,10 +98,10 @@ export default function (props: PostListItemProps) {
           toggleReaction={() => {
             if (reactionToggle) {
               deleteReaction();
-              setReactionCount(reactionCount + 1);
+              setReactionCount(reactionCount - 1);
             } else {
               insertReaction({reaction: Reaction_Enum.Like});
-              setReactionCount(reactionCount - 1);
+              setReactionCount(reactionCount + 1);
             }
             setReactionToggle(!reactionToggle);
           }}

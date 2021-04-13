@@ -5,7 +5,7 @@ import {Button, Icon} from 'react-native-elements';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
-import {GroupListItemHome} from '../components/GroupListItem';
+import {UserGroupListItemHome} from '../components/GroupListItem';
 import {PaginatedList} from 'react-graphql/components';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
@@ -17,6 +17,9 @@ import {
   Post,
   Post_Bool_Exp,
   Post_Order_By,
+  UserGroup_Bool_Exp,
+  UserGroup,
+  UserGroup_Order_By,
 } from 'graphql-api';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
@@ -43,12 +46,12 @@ export default function () {
     });
   }, [navigation, userId]);
 
-  const whereMyGroups: Group_Bool_Exp = {
-    userGroup: {userId: {_eq: userId}},
+  const whereMyGroups: UserGroup_Bool_Exp = {
+    userId: {_eq: userId},
   };
-  const orderByGroups: Group_Order_By = {name: Order_By.Asc};
-  const renderGroup = ({item}: {item: Group}) => {
-    return <GroupListItemHome group={item} />;
+  const orderByGroups: UserGroup_Order_By = {group: {name: Order_By.Asc}};
+  const renderGroup = ({item}: {item: UserGroup}) => {
+    return <UserGroupListItemHome userGroup={item} />;
   };
 
   const whereMyPosts: Post_Bool_Exp = {
@@ -85,7 +88,7 @@ export default function () {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         pullToRefresh={false}
-        config={HasuraConfig.groups}
+        config={HasuraConfig.userGroupsMine}
         renderItem={renderGroup}
         where={whereMyGroups}
         orderBy={orderByGroups}

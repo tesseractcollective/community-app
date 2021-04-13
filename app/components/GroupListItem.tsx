@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem} from 'react-native-elements';
-import {Group} from 'graphql-api';
+import {Group, UserGroup} from 'graphql-api';
 import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -31,25 +31,35 @@ export default function (props: GroupListItemProps) {
   );
 }
 
-export function GroupListItemHome(props: GroupListItemProps) {
+export interface UserGroupListItemProps {
+  userGroup: UserGroup;
+}
+
+export function UserGroupListItemHome(props: UserGroupListItemProps) {
   const navigation = useNavigation();
-  const {group} = props;
+  const {
+    userGroup: {group},
+  } = props;
 
   const onPress = () => {
     navigation.navigate('GroupDetail', {group});
   };
 
+  if (!group?.name) {
+    console.log('props', props);
+  }
+
   // see https://reactnativeelements.com/docs/listitem#linear-gradient--scale-feedback
   return (
     <ListItem
-      style={{ 
-        height: 100
+      style={{
+        height: 100,
       }}
-      containerStyle={{ 
-        marginHorizontal: 8, 
-        borderRadius: 10, 
-        height: '80%', 
-        elevation: 2
+      containerStyle={{
+        marginHorizontal: 8,
+        borderRadius: 10,
+        height: '80%',
+        elevation: 2,
       }}
       onPress={onPress}
       Component={TouchableScale}
@@ -64,8 +74,14 @@ export function GroupListItemHome(props: GroupListItemProps) {
       ViewComponent={LinearGradient} // TODO: figure out how to remove linting error
     >
       <ListItem.Content>
-        <ListItem.Title style={{ color: 'black', fontFamily: "Montserrat-Semibold", fontSize: 14, textTransform: 'uppercase' }}>
-          {group.name}
+        <ListItem.Title
+          style={{
+            color: 'black',
+            fontFamily: 'Montserrat-Semibold',
+            fontSize: 14,
+            textTransform: 'uppercase',
+          }}>
+          {group?.name}
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>

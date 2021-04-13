@@ -2245,7 +2245,6 @@ export type Mutation_RootDelete_UserPostReactionArgs = {
 /** mutation root */
 export type Mutation_RootDelete_UserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
-  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -3506,7 +3505,6 @@ export type Query_RootUserPostReaction_AggregateArgs = {
 /** query root */
 export type Query_RootUserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
-  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -4053,7 +4051,6 @@ export type Subscription_RootUserPostReaction_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootUserPostReaction_By_PkArgs = {
   postId: Scalars['uuid'];
-  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -4527,7 +4524,6 @@ export type UserPostReaction_Order_By = {
 /** primary key columns input for table: "userPostReaction" */
 export type UserPostReaction_Pk_Columns_Input = {
   postId: Scalars['uuid'];
-  reaction: Reaction_Enum;
   userId: Scalars['uuid'];
 };
 
@@ -4801,17 +4797,28 @@ export type PostFieldsFragment = (
   )> }
 );
 
-export type PostMutationtFieldsFragment = (
-  { __typename?: 'post' }
-  & Pick<Post, 'id' | 'body' | 'createdAt' | 'updatedAt'>
-);
-
 export type UserGroupFieldsFragment = (
   { __typename?: 'userGroup' }
   & Pick<UserGroup, 'userId' | 'groupId'>
   & { user: (
     { __typename?: 'user' }
     & Pick<User, 'id' | 'name'>
+  ) }
+);
+
+export type UserGroupsMineFieldsFragment = (
+  { __typename?: 'userGroup' }
+  & Pick<UserGroup, 'userId' | 'groupId'>
+  & { user: (
+    { __typename?: 'user' }
+    & Pick<User, 'id' | 'name'>
+  ), group: (
+    { __typename?: 'group' }
+    & Pick<Group, 'id' | 'name' | 'description' | 'createdAt' | 'updatedAt'>
+    & { location?: Maybe<(
+      { __typename?: 'location' }
+      & Pick<Location, 'id' | 'name' | 'city' | 'country' | 'countryCode' | 'formattedAddress' | 'latitude' | 'longitude' | 'state'>
+    )> }
   ) }
 );
 
@@ -8312,16 +8319,6 @@ export default {
             "args": [
               {
                 "name": "postId",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              },
-              {
-                "name": "reaction",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -12581,16 +12578,6 @@ export default {
                 }
               },
               {
-                "name": "reaction",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              },
-              {
                 "name": "userId",
                 "type": {
                   "kind": "NON_NULL",
@@ -14492,16 +14479,6 @@ export default {
             "args": [
               {
                 "name": "postId",
-                "type": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Any"
-                  }
-                }
-              },
-              {
-                "name": "reaction",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -16453,14 +16430,6 @@ export const PostFieldsFragmentDoc = gql`
   }
 }
     `;
-export const PostMutationtFieldsFragmentDoc = gql`
-    fragment postMutationtFields on post {
-  id
-  body
-  createdAt
-  updatedAt
-}
-    `;
 export const UserGroupFieldsFragmentDoc = gql`
     fragment userGroupFields on userGroup {
   userId
@@ -16468,6 +16437,34 @@ export const UserGroupFieldsFragmentDoc = gql`
   user {
     id
     name
+  }
+}
+    `;
+export const UserGroupsMineFieldsFragmentDoc = gql`
+    fragment userGroupsMineFields on userGroup {
+  userId
+  groupId
+  user {
+    id
+    name
+  }
+  group {
+    id
+    name
+    description
+    createdAt
+    updatedAt
+    location {
+      id
+      name
+      city
+      country
+      countryCode
+      formattedAddress
+      latitude
+      longitude
+      state
+    }
   }
 }
     `;
