@@ -30,7 +30,7 @@ export default function MutatorTextInput(
 
   useEffect(() => {
     if (props.value !== value) {
-      setValue(props.value);
+      setValue(props.value || '');
     }
   }, [props.value]);
 

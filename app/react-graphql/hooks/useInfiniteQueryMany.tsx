@@ -20,7 +20,7 @@ interface IUseInfiniteQueryMany {
 
 const defaultPageSize = 50;
 
-export default function useInfiniteQueryMany<TData extends any>(
+export default function useInfiniteQueryMany<TData extends IJsonObject>(
   props: IUseInfiniteQueryMany,
 ) {
   const {sharedConfig, middleware, where, orderBy, pageSize, listKey} = props;
@@ -65,7 +65,6 @@ export default function useInfiniteQueryMany<TData extends any>(
 
   useEffect(() => {
     const newState = computeConfig();
-    // console.log('useInfiniteQueryMany -> useEffect -> computeConfig -> newState', newState);
     setQueryCfg(newState);
   }, [externalVariables, offset]);
 
@@ -169,21 +168,21 @@ export default function useInfiniteQueryMany<TData extends any>(
 
     if (mutationEvent?.type === 'insert-first') {
       const newMap = new Map();
-      newMap.set(mutationEvent.pk, mutationEvent.payload as any);
+      newMap.set(mutationEvent.key, mutationEvent.payload as TData);
       itemsMap.forEach((val, key) => newMap.set(key, val));
       setItemsMap(newMap);
     } else if (mutationEvent?.type === 'insert-last') {
-      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+      itemsMap.set(mutationEvent.key, mutationEvent.payload as TData);
     } else if (
       mutationEvent?.type === 'update' &&
-      itemsMap.has(mutationEvent.pk)
+      itemsMap.has(mutationEvent.key)
     ) {
-      itemsMap.set(mutationEvent.pk, mutationEvent.payload as any);
+      itemsMap.set(mutationEvent.key, mutationEvent.payload as TData);
     } else if (
       mutationEvent?.type === 'delete' &&
-      itemsMap.has(mutationEvent.pk)
+      itemsMap.has(mutationEvent.key)
     ) {
-      itemsMap.delete(mutationEvent.pk);
+      itemsMap.delete(mutationEvent.key);
     }
   }, [mutationEvent]);
 

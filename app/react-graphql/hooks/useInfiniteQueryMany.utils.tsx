@@ -1,4 +1,3 @@
-import React, {useCallback, useState} from 'react';
 import {print} from 'graphql';
 import gql from 'graphql-tag';
 
@@ -51,24 +50,7 @@ export function createInfiniteQueryMany(
   }
   ${print(fragment)}`;
 
-  let query;
-  try {
-    query = gql(queryStr);
-  } catch (err) {
-    console.error(
-      'Failed to parse graphql',
-      JSON.stringify(
-        {
-          queryStr,
-          name,
-          variablesStr,
-          operationStr,
-          variables: state.variables,
-        },
-        null,
-        2,
-      ),
-    );
-  }
-  return {query, queryStr, operationName, variables: state.variables ?? {}};
+  const document = gql(queryStr);
+
+  return {document, operationName, variables: state.variables ?? {}};
 }

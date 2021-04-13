@@ -6,7 +6,7 @@ export function useUrqlQuery<TData extends IJsonMapOfArraysObject>(
   objectVariables?: { [key: string]: any },
 ): UseQueryResponse {
   const response: UseQueryResponse = useQuery<TData>({
-    query: queryCfg?.query,
+    query: queryCfg?.document,
     variables: objectVariables || queryCfg.variables,
   });
 

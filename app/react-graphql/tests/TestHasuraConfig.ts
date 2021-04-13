@@ -1,4 +1,4 @@
-import HasuraConfigType from '../react-graphql/support/HasuraConfigType';
+import HasuraConfigType from '../support/HasuraConfigType';
 import {
   GroupFieldsFragmentDoc,
   PostFieldsFragmentDoc,

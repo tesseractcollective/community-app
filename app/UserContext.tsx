@@ -53,6 +53,7 @@ export const UserProvider = ({children}: any) => {
         headers: {
           authorization: token ? `Bearer ${token}` : '',
           'Content-Type': 'application/json',
+          'X-Hasura-Role': 'user',
         },
       };
     },

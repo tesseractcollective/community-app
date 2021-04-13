@@ -1,16 +1,17 @@
-import {useEffect, useState, useCallback, EffectCallback} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {HasuraDataConfig} from '../types/hasuraConfig';
-import {MutationMiddleware} from '../types/hookMiddleware';
+import {QueryMiddleware} from '../types/hookMiddleware';
 import {OperationContext, useMutation, UseMutationState} from 'urql';
-import {stateFromMutationMiddleware} from 'react-graphql/support/middlewareHelpers';
+import {stateFromQueryMiddleware} from 'react-graphql/support/middlewareHelpers';
 import {useMonitorResult} from './monitorResult';
 import {mutationEventAtom} from './mutationEventAtom';
 import {useAtom} from 'jotai';
-import {findPkValueForItem} from './findDefaultPks';
+import {keyExtractor} from 'react-graphql/support/HasuraConfigUtils';
+import {print} from 'graphql';
 
 interface IUseMutateProps {
   sharedConfig: HasuraDataConfig;
-  middleware: MutationMiddleware[];
+  middleware: QueryMiddleware[];
   initialVariables?: IJsonObject;
   operationEventType: 'insert-first' | 'insert-last' | 'update' | 'delete';
   listKey?: string;
@@ -36,7 +37,7 @@ export default function useMutate<T extends IJsonObject>(
   const {sharedConfig, middleware, initialVariables, listKey} = props;
   //MutationConfig is what we internally refer to the middlewareState as
   const [objectVariables, setObjectVariables] = useState<{[key: string]: any}>(
-    initialVariables ?? {},
+    initialVariables || {},
   );
   const [needsExecuteMutation, setNeedsExecuteMutation] = useState<boolean>();
   const [
@@ -50,46 +51,46 @@ export default function useMutate<T extends IJsonObject>(
   if (!sharedConfig || !middleware?.length) {
     throw new Error('sharedConfig and at least one middleware required');
   }
-  const computeConfig = () => {
-    const state = stateFromMutationMiddleware(
-      {variables: objectVariables},
+  const computeConfig = (variables: IJsonObject) => {
+    const state = stateFromQueryMiddleware(
+      {variables},
       middleware,
       sharedConfig,
     );
     return state;
   };
 
-  const [mutationCfg, setMutationCfg] = useState(computeConfig);
+  const [mutationCfg, setMutationCfg] = useState(
+    computeConfig(objectVariables),
+  );
 
   //Setup the initial mutation Config so it's for sure ready before we get to urql
   useEffect(() => {
-    const newState = computeConfig();
+    const newState = computeConfig(objectVariables);
     setMutationCfg(newState);
   }, [objectVariables]);
 
   //The mutation
-  const [mutationResult, executeMutation] = useMutation(mutationCfg?.mutation);
+  const [mutationResult, executeMutation] = useMutation(mutationCfg.document);
   const resultItem = mutationResult.data?.[mutationCfg.operationName];
 
   useEffect(() => {
     (async () => {
       if (needsExecuteMutation && !executeContext) {
-        console.log('💪 executingMutation', {
-          executeContext,
-          needsExecuteMutation,
-          variables: mutationCfg?.variables,
-        });
+        console.log('💪 executingMutation');
+        console.log(print(mutationCfg.document));
+        console.log(JSON.stringify({variables: mutationCfg.variables}));
         setNeedsExecuteMutation(false);
-        const resp = await executeMutation(mutationCfg?.variables);
+        const resp = await executeMutation(mutationCfg.variables);
         const successItem = resp?.data?.[mutationCfg.operationName];
         if (successItem) {
-          const pkValue = findPkValueForItem(successItem, sharedConfig);
+          const key = keyExtractor(sharedConfig, successItem);
           console.log('setMutationEvent');
 
           setMutationEvent(() => ({
             listKey: listKey ?? sharedConfig.typename,
             type: props.operationEventType,
-            pk: pkValue,
+            key: key,
             payload: {
               ...successItem,
             },
@@ -126,14 +127,22 @@ export default function useMutate<T extends IJsonObject>(
           '🎁 wrappedExecuteMutation-> _variables -> Found reactEvent Object.  Will not update variables',
         );
       } else {
-        console.log('🎁 wrappedExecuteMutation-> _variables', _variables);
-        setObjectVariables((original) => ({
-          ...original,
+        console.log(
+          '🎁 wrappedExecuteMutation-> _variables',
+          JSON.stringify(_variables),
+        );
+
+        const newVariables = {
+          ...objectVariables,
           ..._variables,
-        }));
+        }
+
+        // you need to both because setObjectVariables triggers the
+        // effect too late
+        setMutationCfg(computeConfig(newVariables));
+        setObjectVariables(newVariables);
       }
     }
-    console.log('setting setNeedsExecuteMutation');
     if (context) {
       setExecuteContext(context);
     } else {
