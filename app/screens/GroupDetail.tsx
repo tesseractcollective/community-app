@@ -20,7 +20,6 @@ import {createInfiniteQueryMany} from 'react-graphql/hooks/useInfiniteQueryMany.
 
 export interface GroupDetailRouterProps {
   group: Group;
-  isMyGroup: boolean;
 }
 
 const gradient = ['#FF9800', '#F44336'];
