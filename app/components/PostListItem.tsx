@@ -73,8 +73,7 @@ export default function (props: PostListItemProps) {
               </Text>
             </View>
           </View>
-
-          <View style={styles.authorRow}>
+          <View style={styles.postTextRow}>
             <Text style={styles.bodyText}>{post.body ?? 'John Doe'}</Text>
           </View>
         </View>
@@ -84,7 +83,7 @@ export default function (props: PostListItemProps) {
             key={file.id}
             style={{
               ...styles.image,
-              aspectRatio: file.meta?.image?.aspectRatio || 1,
+              aspectRatio: file.meta?.image?.aspectRatio || 1,              
             }}
             source={{
               uri: urlForFile(file, authToken),
@@ -98,10 +97,10 @@ export default function (props: PostListItemProps) {
           toggleReaction={() => {
             if (reactionToggle) {
               deleteReaction();
-              setReactionCount(reactionCount + 1);
+              setReactionCount(reactionCount - 1);
             } else {
               insertReaction({reaction: Reaction_Enum.Like});
-              setReactionCount(reactionCount - 1);
+              setReactionCount(reactionCount + 1);
             }
             setReactionToggle(!reactionToggle);
           }}
@@ -119,6 +118,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 0,
   },
+  postTextRow: {
+    marginTop: 8,
+    marginBottom: 16,
+    width: '100%'  
+  },
   textContainer: {
     width: '100%',
     marginHorizontal: 10,
@@ -130,6 +134,7 @@ const styles = StyleSheet.create({
   bodyText: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 14,
+    lineHeight: 14*1.4
   },
   groupNameText: {
     fontFamily: 'Montserrat-Regular',
