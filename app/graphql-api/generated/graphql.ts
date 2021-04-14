@@ -4803,15 +4803,6 @@ export type UserGroupFieldsFragment = (
   & { user: (
     { __typename?: 'user' }
     & Pick<User, 'id' | 'name'>
-  ) }
-);
-
-export type UserGroupsMineFieldsFragment = (
-  { __typename?: 'userGroup' }
-  & Pick<UserGroup, 'userId' | 'groupId'>
-  & { user: (
-    { __typename?: 'user' }
-    & Pick<User, 'id' | 'name'>
   ), group: (
     { __typename?: 'group' }
     & Pick<Group, 'id' | 'name' | 'description' | 'createdAt' | 'updatedAt'>
@@ -16432,16 +16423,6 @@ export const PostFieldsFragmentDoc = gql`
     `;
 export const UserGroupFieldsFragmentDoc = gql`
     fragment userGroupFields on userGroup {
-  userId
-  groupId
-  user {
-    id
-    name
-  }
-}
-    `;
-export const UserGroupsMineFieldsFragmentDoc = gql`
-    fragment userGroupsMineFields on userGroup {
   userId
   groupId
   user {

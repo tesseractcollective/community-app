@@ -53,14 +53,12 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We access your camera so we can add photos to posts you make</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>We access your location to help you find groups in your area</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We access your camera so we can add photos to posts you make</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We access your photos so we can add photos to posts you make</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-  <string>We access your location to help you find groups in your area</string>
-  <key>UIAppFonts</key>
+	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
