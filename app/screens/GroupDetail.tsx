@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
-import {Image, ListItem} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
@@ -20,7 +20,6 @@ import {createInfiniteQueryMany} from 'react-graphql/hooks/useInfiniteQueryMany.
 
 export interface GroupDetailRouterProps {
   group: Group;
-  isMyGroup: boolean;
 }
 
 const gradient = ['#FF9800', '#F44336'];
@@ -36,7 +35,7 @@ export default function (props: any) {
 
   const insertState = reactGraphql.useInsert({initialVariables: variables});
   const deleteState = reactGraphql.useDelete({variables});
-  const queryOneState = reactGraphql.useQueryOne({variables, opts: { requestPolicy: 'network-only'}});
+  const queryOneState = reactGraphql.useQueryOne({variables});
 
   useEffect(() => {
     console.log('queryOneState.refresh()');

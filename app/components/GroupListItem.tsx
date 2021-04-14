@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Avatar, ListItem} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import {Group, UserGroup} from 'graphql-api';
 import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';

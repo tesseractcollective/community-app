@@ -10,9 +10,6 @@ import {PaginatedList} from 'react-graphql/components';
 import PostListItem from '../components/PostListItem';
 import {useTranslations} from '../components/TranslationProvider';
 import {
-  Group,
-  Group_Bool_Exp,
-  Group_Order_By,
   Order_By,
   Post,
   Post_Bool_Exp,
@@ -89,7 +86,7 @@ export default function () {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         pullToRefresh={false}
-        config={HasuraConfig.userGroupsMine}
+        config={HasuraConfig.userGroups}
         renderItem={renderGroup}
         where={whereMyGroups}
         orderBy={orderByGroups}

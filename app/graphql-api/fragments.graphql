@@ -50,15 +50,6 @@ fragment userGroupFields on userGroup {
     id
     name
   }
-}
-
-fragment userGroupsMineFields on userGroup {
-  userId
-  groupId
-  user {
-    id
-    name
-  }
   group {
     id
     name
