@@ -40,9 +40,7 @@ export default function useQueryOne<
   });
 
   useEffect(() => {
-    if (item) {
-      updateItemKey(item);
-    }
+    updateItemKey();
   }, [item, objectVariables]);
 
   useEffect(() => {
@@ -131,15 +129,17 @@ export default function useQueryOne<
     );
   }
 
-  function updateItemKey(item) {
-    let newKey =
-      keyExtractor(sharedConfig, item) ||
-      keyExtractor(sharedConfig, objectVariables);
+  function updateItemKey() {
+    if (!sharedConfig || (!item && !objectVariables)) {
+      return;
+    }
+    let newKey = item
+      ? keyExtractor(sharedConfig, item)
+      : keyExtractor(sharedConfig, objectVariables);
     if (newKey) {
       if (newKey !== key) {
         setKey(newKey);
       }
-      return newKey;
     } else if (item.typename !== sharedConfig.typename) {
       console.log(
         `❗ useQueryOne -> item -> keyExtractor failed',
