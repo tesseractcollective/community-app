@@ -46,17 +46,15 @@ export default function useQueryOne<
   }, [item, objectVariables]);
 
   useEffect(() => {
-    const newItem = mutationEvent.payload;
     if (mutationEvent.type === 'init') {
       return;
     }
 
     logMutationEvent();
 
-    const newKey = updateItemKey(newItem);
     if (
       mutationEvent.listKey === sharedConfig.typename &&
-      (mutationEvent.key === newKey || !key)
+      (mutationEvent.key === key || !key)
     ) {
       if (mutationEvent.type === 'delete') {
         setItem(null);
@@ -122,11 +120,9 @@ export default function useQueryOne<
           c1: mutationEvent.listKey == sharedConfig.typename,
           'me:listKey': mutationEvent.listKey,
           typename: sharedConfig.typename,
-          c2: mutationEvent.key === key,
+          c2: mutationEvent.key === key || !key,
           'me:key': mutationEvent.key,
           key: key ?? 'NO KEY',
-          c3: mutationEvent.type,
-          'me:type': mutationEvent.type,
           mutationEvent,
         },
         null,
