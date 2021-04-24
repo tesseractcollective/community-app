@@ -1,5 +1,8 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
@@ -68,11 +71,14 @@ function ProfileStackNavigator() {
   );
 }
 
-export default () => {
+export const RootNavigator = React.forwardRef<
+  NavigationContainerRef,
+  Partial<React.ComponentProps<typeof NavigationContainer>>
+>((props, ref) => {
   const translations = useTranslations();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer {...props} ref={ref}>
       <MainTabs.Navigator>
         <MainTabs.Screen
           name="HomeStackNavigator"
@@ -97,4 +103,4 @@ export default () => {
       </MainTabs.Navigator>
     </NavigationContainer>
   );
-};
+});
