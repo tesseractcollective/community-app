@@ -35,7 +35,7 @@ export async function saveString(key: string, value: string): Promise<boolean> {
  * @param key The key to fetch.
  */
 export async function load(key: string): Promise<any | null> {
-  // console.tron.log("LOAD METHOD RETURN IN STORAGE. LOADING KEY ===", key)
+  // console.log("LOAD METHOD RETURN IN STORAGE. LOADING KEY ===", key)
   try {
     const almostThere = await AsyncStorage.getItem(key);
 
@@ -87,14 +87,14 @@ export async function logoutOnDevice() {
 }
 
 export async function getToken() {
-  return await AsyncStorage.getItem('JWT').then((res) => {
-    console.log('Getting JWT from storage', res);
+  return await AsyncStorage.getItem('USER_TOKEN').then((res: string) => {
+    console.log('Getting USER TOKEN from storage', res);
     return res;
   });
 }
 
 export async function getRefreshToken() {
-  return await AsyncStorage.getItem('REFRESH_JWT').then((res) => {
+  return await AsyncStorage.getItem('REFRESH_JWT').then((res: string) => {
     // console.tron.log("Getting REFRESH TOKEN from storage", res);
     return res;
   });

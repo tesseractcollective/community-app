@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 import Login from './screens/Login';
 import constants from './config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {saveString, getToken} from './utils';
 
 export interface UserContextType {
   userId: string;
@@ -30,16 +30,16 @@ export const UserProvider = ({children}: any) => {
   const [userId, setUserId] = useState<string>('');
   const [token, _setToken] = useState<string | undefined>(undefined);
 
-  console.log(`token`, token);
+  console.log(`USER_TOKEN`, token);
 
   const setToken = (newToken: string | undefined) => {
-    AsyncStorage.setItem('user_token', newToken || '');
+    saveString('USER_TOKEN', newToken || '');
     _setToken(newToken);
   };
 
   useEffect(() => {
     (async () => {
-      const tkn = await AsyncStorage.getItem('user_token');
+      const tkn = await getToken();
       if (tkn) {
         _setToken(tkn);
       }

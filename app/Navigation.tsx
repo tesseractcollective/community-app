@@ -15,9 +15,10 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcons from 'react-native-vector-icons/Feather';
+import {Appearance} from 'react-native-appearance';
 import {StatusBar, View} from 'react-native';
 
-import {Text} from 'components/Theme';
+import {Box, Text} from 'components/Theme';
 import Home from 'screens/Home';
 import GroupDetail, {GroupDetailRouterProps} from 'screens/GroupDetail';
 import {useTranslations} from 'components/TranslationProvider';
@@ -26,11 +27,9 @@ import PostCreate, {PostCreateRouterProps} from 'screens/PostCreate';
 import PostDetail, {PostDetailRouterProps} from 'screens/PostDetail';
 import Profile from 'screens/Profile';
 
-import {Appearance} from 'react-native-appearance';
-
 import {load, save} from './utils';
 
-const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
+export const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
 const defaultTheme = Appearance.getColorScheme() || 'light';
 
 type HomeStackParams = {
@@ -88,63 +87,14 @@ function ProfileStackNavigator() {
   );
 }
 
-// export const RootNavigator = React.forwardRef<
-//   NavProps,
-//   Partial<React.ComponentProps<typeof NavigationContainer>>
-// >((props, ref) => {
-//   const translations = useTranslations();
-//   const navigationRef = React.useRef<NavigationContainerRef>();
-//
-//   setRootNavigation(navigationRef);
-//   useBackButtonHandler(navigationRef, canExit);
-//
-//   const {onNavigationStateChange} = useNavigationPersistence(
-//     storage,
-//     NAVIGATION_PERSISTENCE_KEY,
-//   );
-//
-//   const navigatorTheme = {
-//     ...DefaultTheme,
-//     colors: {
-//       ...DefaultTheme.colors,
-//       // prevent layout blinking when performing navigation
-//       background: 'white',
-//       border: 'transparent',
-//       card: 'white',
-//     },
-//   };
-//
-//   return (
-//     <NavigationContainer
-//       theme={props.theme.themeState === 'dark' ? DarkTheme : navigatorTheme}
-//       ref={ref}>
-//       <MainTabs.Navigator>
-//         <MainTabs.Screen
-//           name="HomeStackNavigator"
-//           component={HomeStackNavigator}
-//           options={{
-//             title: translations.homeTabTitle,
-//             tabBarIcon: (props) => {
-//               return <FeatherIcons name="home" {...props} />;
-//             },
-//           }}
-//         />
-//         <MainTabs.Screen
-//           name="ProfileStackNavigator"
-//           component={ProfileStackNavigator}
-//           options={{
-//             title: translations.profileTabTitle,
-//             tabBarIcon: (props) => {
-//               return <FeatherIcons name="user" {...props} />;
-//             },
-//           }}
-//         />
-//       </MainTabs.Navigator>
-//     </NavigationContainer>
-//   );
-// });
-
-const RootNavigator = () => {
+interface RootNavParams {
+  token?: string;
+  history?: any;
+}
+const RootNavigator: React.FC<RootNavParams> = ({
+  token,
+  history,
+}: RootNavParams) => {
   const translations = useTranslations();
   const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
   const [themeState, setThemeState] = React.useState(defaultTheme);
@@ -188,7 +138,7 @@ const RootNavigator = () => {
     [],
   );
   if (!isNavigationReady) {
-    return <Text>Loading</Text>;
+    return <Box />;
   }
 
   return (
