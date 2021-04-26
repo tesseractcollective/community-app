@@ -6,7 +6,6 @@ export enum AppRoute {
   NESTED = 'NESTED',
   //Auth= 'Auth',
   AUTH_FLOW = 'Auth',
-  SIGN_IN = 'SIGN_IN',
   SIGN_IN_CONFIRM_CODE = 'SIGN_IN_CONFIRM_CODE',
   SIGN_UP = 'SIGN_UP',
   RESET_PASSWORD = 'RESET_PASSWORD',
