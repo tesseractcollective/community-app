@@ -1,28 +1,19 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-  NavigationContainerRef,
   InitialState,
+  NavigationContainer,
+  Theme,
 } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {MainBottomNavigatorProps} from '@ca/navTypes';
-import {AuthenticationNavigator} from '@ca/screens/auth';
+import {MainBottomNavigatorProps} from 'navTypes';
+import {AppRoute} from 'navRoutes';
 
 import FeatherIcons from 'react-native-vector-icons/Feather';
-import {Appearance} from 'react-native-appearance';
-import {StatusBar, View} from 'react-native';
+import {StatusBar} from 'react-native';
 
 import {Box, Text} from 'components/Theme';
 import Home from 'screens/Home';
@@ -33,11 +24,9 @@ import PostCreate, {PostCreateRouterProps} from 'screens/PostCreate';
 import PostDetail, {PostDetailRouterProps} from 'screens/PostDetail';
 import Profile from 'screens/Profile';
 
-import {load, save} from './utils';
-import {AppRoute} from '@ca/routes';
-
+import {load, save} from '../utils';
+import {AuthenticationNavigator} from 'screens/Auth';
 export const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
-const defaultTheme = Appearance.getColorScheme() || 'light';
 
 type HomeStackParams = {
   Home: undefined;
@@ -133,56 +122,38 @@ const BottomTabNav: React.FC<MainBottomNavigatorProps<AppRoute.HOME>> = (
 interface RootNavParams {
   token: string;
   history?: any;
+  theme: Theme;
 }
 
-const RootNavigator: React.FC<RootNavParams> = ({
-  token,
-  history,
-}: RootNavParams) => {
+const RootNavigator: React.FC<RootNavParams> = (
+  {token}: RootNavParams,
+  props,
+) => {
   const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
-  const [themeState, setThemeState] = React.useState(defaultTheme);
 
   const [initialState, setInitialState] = useState<InitialState | undefined>();
 
-  React.useEffect(() => {
-    const subscription = Appearance.addChangeListener(({colorScheme}) => {
-      // console.tron.log("THE COLOR SCHEME", colorScheme)
-      setThemeState(colorScheme);
-    });
-    return () => subscription.remove();
-  }, []);
+  // useEffect(() => {
+  //   const restoreState = async () => {
+  //     try {
+  //       const savedStateString = await load(NAVIGATION_STATE_KEY);
+  //       const state = savedStateString ? savedStateString : undefined;
+  //       setInitialState(state);
+  //     } finally {
+  //       setIsNavigationReady(true);
+  //     }
+  //   };
+  //
+  //   if (!isNavigationReady) {
+  //     restoreState();
+  //   }
+  // }, [isNavigationReady]);
 
-  useEffect(() => {
-    const restoreState = async () => {
-      try {
-        const savedStateString = await load(NAVIGATION_STATE_KEY);
-        const state = savedStateString ? savedStateString : undefined;
-        setInitialState(state);
-      } finally {
-        setIsNavigationReady(true);
-      }
-    };
-
-    if (!isNavigationReady) {
-      restoreState();
-    }
-  }, [isNavigationReady]);
-
-  const currentThemeState = useMemo(() => ({themeState}), [
-    themeState,
-    setThemeState,
-  ]);
-  StatusBar.setBarStyle(
-    currentThemeState.themeState === 'dark' ? 'light-content' : 'dark-content',
-    true,
-  );
   const onStateChange = useCallback(
     (state) => save(NAVIGATION_STATE_KEY, JSON.stringify(state)),
     [],
   );
-  if (!isNavigationReady) {
-    return <Box />;
-  }
+
   const screenOptions = useMemo<StackNavigationOptions>(
     () => ({
       headerShown: false,
@@ -193,8 +164,12 @@ const RootNavigator: React.FC<RootNavParams> = ({
     [],
   );
 
+  // if (!isNavigationReady) {
+  //   return <Box />;
+  // }
+  console.log('NAVIGATION LOADED with token', props);
   return (
-    <NavigationContainer {...{onStateChange, initialState}}>
+    <NavigationContainer {...{onStateChange, initialState, props}}>
       <StatusBar />
       <Stack.Navigator screenOptions={screenOptions}>
         {token ? (

@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {createClient, Provider as UrqlProvider} from 'urql';
 import jwtDecode from 'jwt-decode';
 
-import Login from './screens/Login';
+// import Login from './screens/Login';
 import constants from './config';
 import {saveString, getToken} from './utils';
 
@@ -69,20 +69,20 @@ export const UserProvider = ({children}: any) => {
 
   const userContextValue = {userId, token: token || '', setToken};
 
-  if (userId && token) {
-    return (
-      <UrqlProvider value={client}>
-        <UserContext.Provider value={userContextValue}>
-          {children}
-        </UserContext.Provider>
-      </UrqlProvider>
-    );
-  }
+  // if (userId && token) {
+  //   return (
+  //     <UrqlProvider value={client}>
+  //       <UserContext.Provider value={userContextValue}>
+  //         {children}
+  //       </UserContext.Provider>
+  //     </UrqlProvider>
+  //   );
+  // }
 
   return (
     <UrqlProvider value={client}>
       <UserContext.Provider value={userContextValue}>
-        <Login setToken={setToken} />
+        {children}
       </UserContext.Provider>
     </UrqlProvider>
   );

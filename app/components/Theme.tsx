@@ -1,6 +1,5 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {ViewStyle, TextStyle, ImageStyle, Dimensions} from 'react-native';
-
 import {
   createText,
   createBox,
@@ -266,16 +265,14 @@ export const darkTheme: Theme = {
   },
 };
 
-export const ThemeProvider = (
-  {children}: {children: ReactNode},
-  props: any,
-) => {
-  return (
-    <ReStyleThemeProvider theme={props.isDarkMode ? darkTheme : theme}>
-      {children}
-    </ReStyleThemeProvider>
-  );
-};
+// export const ThemeProvider = ({ children }: { children: ReactNode }, props: any) => {
+//   console.tron.log("PROPS ON THE THEME", props)
+//   return (
+//     <ReStyleThemeProvider theme={props.isDarkMode ? darkTheme : theme}>
+//       {children}
+//     </ReStyleThemeProvider>
+//   )
+// }
 
 export type Theme = typeof theme;
 export const Box = createBox<Theme>();
