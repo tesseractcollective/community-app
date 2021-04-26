@@ -80,12 +80,9 @@ const App = ({navHistory, userToken}): React.ReactElement => {
           <LocalizationProvider>
             <UserProvider>
               <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                {/*<Box flex={1} backgroundColor={'primary'}>*/}
-                {/*  <Text>HELLO APP</Text>*/}
-                {/*</Box>*/}
                 <RootNavigator
                   history={navHistory}
-                  token={userToken}
+                  topLevelToken={userToken}
                   theme={
                     currentThemeState.themeState === 'dark'
                       ? DarkTheme

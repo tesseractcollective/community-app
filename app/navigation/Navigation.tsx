@@ -14,6 +14,7 @@ import {AppRoute} from 'navRoutes';
 
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {StatusBar} from 'react-native';
+import {useUserUtils} from '../UserContext';
 
 import {Box, Text} from 'components/Theme';
 import Home from 'screens/Home';
@@ -26,6 +27,7 @@ import Profile from 'screens/Profile';
 
 import {load, save} from '../utils';
 import {AuthenticationNavigator} from 'screens/Auth';
+import {Appearance} from 'react-native-appearance';
 export const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
 
 type HomeStackParams = {
@@ -120,34 +122,24 @@ const BottomTabNav: React.FC<MainBottomNavigatorProps<AppRoute.HOME>> = (
 };
 
 interface RootNavParams {
-  token: string;
+  topLevelToken: string;
   history?: any;
   theme: Theme;
 }
 
 const RootNavigator: React.FC<RootNavParams> = (
-  {token}: RootNavParams,
+  {topLevelToken}: RootNavParams,
   props,
 ) => {
   const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
 
   const [initialState, setInitialState] = useState<InitialState | undefined>();
+  const {userId, token} = useUserUtils();
 
-  // useEffect(() => {
-  //   const restoreState = async () => {
-  //     try {
-  //       const savedStateString = await load(NAVIGATION_STATE_KEY);
-  //       const state = savedStateString ? savedStateString : undefined;
-  //       setInitialState(state);
-  //     } finally {
-  //       setIsNavigationReady(true);
-  //     }
-  //   };
-  //
-  //   if (!isNavigationReady) {
-  //     restoreState();
-  //   }
-  // }, [isNavigationReady]);
+  React.useEffect(() => {
+    console.log('THE USER ID IN NAVIGATION', userId);
+    console.log('THE USER TOKEN IN NAVIGATION', token);
+  }, [userId, token]);
 
   const onStateChange = useCallback(
     (state) => save(NAVIGATION_STATE_KEY, JSON.stringify(state)),
@@ -167,12 +159,11 @@ const RootNavigator: React.FC<RootNavParams> = (
   // if (!isNavigationReady) {
   //   return <Box />;
   // }
-  console.log('NAVIGATION LOADED with token', props);
   return (
     <NavigationContainer {...{onStateChange, initialState, props}}>
       <StatusBar />
       <Stack.Navigator screenOptions={screenOptions}>
-        {token ? (
+        {token || topLevelToken ? (
           <Stack.Screen name={AppRoute.MAIN} component={BottomTabNav} />
         ) : (
           <Stack.Screen

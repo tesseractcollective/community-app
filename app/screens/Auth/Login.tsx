@@ -10,6 +10,8 @@ import constants from '../../config';
 import Footer from './components/Footer';
 import {Box, Container} from 'components';
 import {saveString, remove} from '../../utils';
+import {useUserUtils} from '../../UserContext';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,7 +24,8 @@ const styles = StyleSheet.create({
 });
 
 const LoginScreen = ({navigation}: AuthNavigationProps<AppRoute.LOGIN>) => {
-  console.log('THE NAVIGATION PROPS', navigation);
+  console.log('THE NAVIGATION PROPS', useUserUtils);
+  const {setToken} = useUserUtils();
   const [loginError, setLoginError] = useState<Error | undefined>(undefined);
   const translations = useTranslations();
 
@@ -35,7 +38,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<AppRoute.LOGIN>) => {
     auth0.webAuth
       .authorize({scope: 'openid profile email'})
       .then((credentials) => {
-        saveString('USER_TOKEN', credentials.idToken || '');
+        // console.log('THE CREDENTIALS', credentials.idToken);
+        setToken(credentials.idToken || '');
         // setToken(credentials.idToken);
       })
       .catch((error) => {

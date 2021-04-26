@@ -77,6 +77,8 @@ export const UserProvider = ({children}: any) => {
   //       </UserContext.Provider>
   //     </UrqlProvider>
   //   );
+  // } else {
+  //   console.log('NO TOKEN SO BOUNCE');
   // }
 
   return (
@@ -87,3 +89,5 @@ export const UserProvider = ({children}: any) => {
     </UrqlProvider>
   );
 };
+
+export const useUserUtils = () => useContext(UserContext);
