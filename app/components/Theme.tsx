@@ -27,9 +27,8 @@ const bottomSpace = getBottomSpace();
 export const aspectRatio = width / 375;
 
 export const palette = {
-  green: '#0EB89D',
-  primaryColor: '#34EAB9',
-  primaryColorTwo: '#00BA88',
+  primaryColor: '#AC926F',
+  primaryButton: '#F2E0D0',
 
   blue: '#08427C',
   darkBlue: '#0C0D34',
@@ -51,12 +50,13 @@ export const palette = {
 
 export const theme = {
   colors: {
-    primary: palette.green,
+    primary: palette.primaryColor,
     primaryLight: '#E7F9F7',
     secondary: palette.darkBlue,
+    primaryButton: palette.primaryButton,
     danger: '#FF0058',
     info: '#808080',
-    titleText: 'rgba(54, 134, 142, 1)',
+    titleText: palette.title,
     listTitle: palette.title,
     text: 'rgba(88, 88, 88, 1)',
     subText: palette.grey,
@@ -64,23 +64,14 @@ export const theme = {
     inactiveText: palette.lightGrey,
     highlightedText: palette.blue,
     background: palette.background,
-    background2: '#FFF',
+    forground: palette.white,
     screenBackground: palette.screenBackground,
     grey: palette.grey,
     borderLight: palette.lighterGrey,
-    graph1: palette.orange,
-    graph2: palette.yellow,
-    drawer1: palette.orange,
-    drawer2: palette.yellow,
-    drawer3: palette.pink,
-    drawer4: palette.violet,
     iconDefault: palette.lightGrey,
-    activeIcon: palette.green,
+    activeIcon: palette.primaryColor,
     inactiveIcon: palette.lightGrey,
     shadow: palette.shadow,
-    forground: palette.white,
-    activeMapMarker: palette.primaryColor,
-    inactiveMapMarker: palette.primaryColorTwo,
   },
   spacing: {
     xs: 4,
@@ -261,7 +252,7 @@ export const darkTheme: Theme = {
   colors: {
     ...theme.colors,
     background: palette.darkGrey,
-    background2: palette.lightGrey,
+    forground: palette.lightGrey,
   },
 };
 

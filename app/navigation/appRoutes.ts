@@ -3,6 +3,7 @@ export enum AppRoute {
 
   //Auth= 'Auth',
   AUTH_FLOW = 'Auth',
+  WELCOME = 'WELCOME',
   SIGN_IN_CONFIRM_CODE = 'SIGN_IN_CONFIRM_CODE',
   SIGN_UP = 'SIGN_UP',
   RESET_PASSWORD = 'RESET_PASSWORD',
@@ -22,8 +23,6 @@ export enum AppRoute {
   HOME = 'Home',
 
   MAP = 'Map',
-  MAP_LIST_VIEW = 'Map List',
-  MAP_NAVIGATOR = 'Map Navigator Stack',
   FEED = 'FEED',
   CONSUMER_PROFILE = 'CONSUMER_PROFILE',
   NOTIFICATIONS = 'NOTIFICATIONS',
@@ -46,7 +45,6 @@ export enum AppRoute {
   CHAT_DETAILS = 'Chat Details',
 
   ABOUT = 'ABOUT',
-  WELCOME = 'WELCOME',
   SETTINGS = 'SETTINGS',
   ADD_CONTACT = 'ADD_CONTACT',
   NOTIFICATION_CENTER = 'NOTIFICATION_CENTER',

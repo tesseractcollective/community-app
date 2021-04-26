@@ -30,7 +30,7 @@ export const UserProvider = ({children}: any) => {
   const [userId, setUserId] = useState<string>('');
   const [token, _setToken] = useState<string | undefined>(undefined);
 
-  console.log(`USER_TOKEN`, token);
+  // console.log(`USER_TOKEN`, token);
 
   const setToken = (newToken: string | undefined) => {
     saveString('USER_TOKEN', newToken || '');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Avatar, ListItem, Image} from 'react-native-elements';
 import {Post, Reaction_Enum} from 'graphql-api';
@@ -21,14 +21,18 @@ export default function (props: PostListItemProps) {
   const translations = useTranslations();
   const navigation = useNavigation();
   const authToken = useAuthToken();
-  const [reactionToggle, setReactionToggle] = useState(post.userPostReactions.length > 0);
-  const [reactionCount, setReactionCount] = useState(post.userPostReactions_aggregate.aggregate?.count || 0);
+  const [reactionToggle, setReactionToggle] = useState(
+    post.userPostReactions.length > 0,
+  );
+  const [reactionCount, setReactionCount] = useState(
+    post.userPostReactions_aggregate.aggregate?.count || 0,
+  );
 
   const reactGraphql = useReactGraphql(HasuraConfig.userPostReactions);
 
-  const {
-    executeMutation: insertReaction,
-  } = reactGraphql.useInsert({ initialVariables: { postId: post.id }});
+  const {executeMutation: insertReaction} = reactGraphql.useInsert({
+    initialVariables: {postId: post.id},
+  });
 
   const {executeMutation: deleteReaction} = reactGraphql.useDelete({
     variables: {
@@ -40,8 +44,6 @@ export default function (props: PostListItemProps) {
   const onPress = () => {
     navigation.navigate('PostDetail', {post});
   };
-
-
 
   if (!post) {
     return (
@@ -83,7 +85,7 @@ export default function (props: PostListItemProps) {
             key={file.id}
             style={{
               ...styles.image,
-              aspectRatio: file.meta?.image?.aspectRatio || 1,              
+              aspectRatio: file.meta?.image?.aspectRatio || 1,
             }}
             source={{
               uri: urlForFile(file, authToken),
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   postTextRow: {
     marginTop: 8,
     marginBottom: 16,
-    width: '100%'  
+    width: '100%',
   },
   textContainer: {
     width: '100%',
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   bodyText: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 14,
-    lineHeight: 14*1.4
+    lineHeight: 14 * 1.4,
   },
   groupNameText: {
     fontFamily: 'Montserrat-Regular',

@@ -16,7 +16,6 @@ import FeatherIcons from 'react-native-vector-icons/Feather';
 import {StatusBar} from 'react-native';
 import {useUserUtils} from '../UserContext';
 
-import {Box, Text} from 'components/Theme';
 import Home from 'screens/Home';
 import GroupDetail, {GroupDetailRouterProps} from 'screens/GroupDetail';
 import {useTranslations} from 'components/TranslationProvider';
@@ -137,8 +136,8 @@ const RootNavigator: React.FC<RootNavParams> = (
   const {userId, token} = useUserUtils();
 
   React.useEffect(() => {
-    console.log('THE USER ID IN NAVIGATION', userId);
-    console.log('THE USER TOKEN IN NAVIGATION', token);
+    // console.log('THE USER ID IN NAVIGATION', userId);
+    // console.log('THE USER TOKEN IN NAVIGATION', token);
   }, [userId, token]);
 
   const onStateChange = useCallback(
@@ -155,6 +154,22 @@ const RootNavigator: React.FC<RootNavParams> = (
     }),
     [],
   );
+
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await load(NAVIGATION_STATE_KEY);
+        const state = savedStateString ? savedStateString : undefined;
+        setInitialState(state);
+      } finally {
+        setIsNavigationReady(true);
+      }
+    };
+
+    if (!isNavigationReady) {
+      restoreState();
+    }
+  }, [isNavigationReady]);
 
   // if (!isNavigationReady) {
   //   return <Box />;

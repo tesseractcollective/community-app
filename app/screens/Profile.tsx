@@ -11,7 +11,11 @@ import HasuraConfig from 'graphql-api/HasuraConfig';
 import {useUserId} from '../UserContext';
 import {bs} from 'react-graphql/support/styling/buildStyles';
 import VersionInfo from 'react-native-version-info';
-
+import {remove} from '../utils';
+import {AppRoute} from 'navRoutes';
+import Auth0 from 'react-native-auth0';
+import constants from '../config';
+import {useUserUtils} from '../UserContext';
 const gradient = ['#F44336', '#FF9800'];
 
 const styles = StyleSheet.create({
@@ -22,7 +26,17 @@ export default function () {
   const translations = useTranslations();
   const navigation = useNavigation();
   const userId = useUserId();
+  const {setToken} = useUserUtils();
 
+  const auth0 = new Auth0({
+    domain: constants.auth0.domain,
+    clientId: constants.auth0.clientId,
+  });
+
+  const logout = () => {
+    setToken('');
+    remove('USER_TOKEN').then(() => console.log('USER TOKEN CLEARED'));
+  };
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (props: any) => (
@@ -35,9 +49,9 @@ export default function () {
     });
   }, [navigation, userId]);
 
-  const logout = () => {
-    AsyncStorage.removeItem('user_token');
-  };
+  // const logout = () => {
+  //   AsyncStorage.removeItem('user_token');
+  // };
 
   return (
     <View style={bs(`f-1`)}>

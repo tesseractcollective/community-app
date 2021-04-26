@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Image, Text} from 'react-native-elements';
+import {Button, Image} from 'react-native-elements';
 import Auth0 from 'react-native-auth0';
 
 import {AppRoute} from 'navRoutes';
@@ -8,7 +8,7 @@ import {AuthNavigationProps} from 'navTypes';
 import {useTranslations} from 'components/TranslationProvider';
 import constants from '../../config';
 import Footer from './components/Footer';
-import {Box, Container} from 'components';
+import {Box, Text} from 'components';
 import {saveString, remove} from '../../utils';
 import {useUserUtils} from '../../UserContext';
 
@@ -69,23 +69,21 @@ const LoginScreen = ({navigation}: AuthNavigationProps<AppRoute.LOGIN>) => {
   );
 
   return (
-    <Container pattern={0} {...{footer}}>
-      <Box style={styles.container}>
-        {loginError ? <Text>{loginError.message}</Text> : null}
-        <Image
-          source={{uri: constants.logoUrl}}
-          style={{
-            width: '100%',
-            aspectRatio: 1,
-            resizeMode: 'contain',
-            marginBottom: 20,
-            marginTop: 100,
-          }}
-        />
-        <Button onPress={login} title={translations.loginButtonText} />
-        <Button onPress={logout} title={translations.logoutButtonText} />
-      </Box>
-    </Container>
+    <Box style={styles.container}>
+      {loginError ? <Text>{loginError.message}</Text> : null}
+      <Image
+        source={{uri: constants.logoUrl}}
+        style={{
+          width: '100%',
+          aspectRatio: 1,
+          resizeMode: 'contain',
+          marginBottom: 20,
+          marginTop: 100,
+        }}
+      />
+      <Button onPress={login} title={translations.loginButtonText} />
+      <Button onPress={logout} title={translations.logoutButtonText} />
+    </Box>
   );
 };
 

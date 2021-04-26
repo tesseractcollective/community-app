@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {AppRoute} from 'navRoutes';
 import type {AuthenticationRoutes} from 'navTypes';
 // import Onboarding, {assets as onBoardingAssets} from './Onboarding';
-// import Welcome, {assets as welcomeAssets} from './Welcome';
+import Welcome from './Welcome';
 import Login from './Login';
 // import SignUp from './SignUp';
 // import ForgotPassword from './ForgotPassword';
@@ -21,7 +21,7 @@ export const AuthenticationNavigator = () => {
   console.log('THE AUTH FLOW');
   return (
     <AuthenticationStack.Navigator screenOptions={{headerShown: false}}>
-      {/*<AuthenticationStack.Screen name={AppRoute.WELCOME} component={Welcome} />*/}
+      <AuthenticationStack.Screen name={AppRoute.WELCOME} component={Welcome} />
       <AuthenticationStack.Screen name={AppRoute.LOGIN} component={Login} />
       {/*<AuthenticationStack.Screen name={AppRoute.SIGN_UP} component={SignUp} />*/}
       {/*<AuthenticationStack.Screen*/}

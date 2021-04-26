@@ -13,7 +13,7 @@ import ImageCropPicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {MutatorButton, MutatorTextInput} from 'react-graphql/components';
 import HasuraConfig from 'graphql-api/HasuraConfig';
 import {uploadImage} from '../fileApi/fileApi';
-import {useAuthToken} from '../UserContext';
+import {useAuthToken, useUserId} from '../UserContext';
 import useReactGraphql from 'react-graphql/hooks/useReactGraphql';
 import {useTranslations} from 'components/TranslationProvider';
 
@@ -23,12 +23,12 @@ export interface PostCreateRouterProps {
 }
 
 export default function (props: any) {
-  const {userId, groupId} = props.route.params;
+  const {groupId} = props.route.params;
 
   const navigation = useNavigation();
   const translations = useTranslations();
   const authToken = useAuthToken();
-
+  const userId = useUserId();
   const [image, setImage] = useState<ImageOrVideo | undefined>();
 
   const insert = useReactGraphql(HasuraConfig.posts).useInsert({

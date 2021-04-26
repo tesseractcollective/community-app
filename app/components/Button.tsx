@@ -24,9 +24,9 @@ interface ButtonProps {
 const Button = ({label, onPress, variant, style}: ButtonProps) => {
   const theme = useTheme();
   const backgroundColor =
-    variant === 'primary' ? theme.colors.primary : theme.colors.background2;
+    variant === 'primary' ? theme.colors.primaryButton : theme.colors.forground;
   const color =
-    variant === 'primary' ? theme.colors.background : theme.colors.secondary;
+    variant === 'primary' ? theme.colors.text : theme.colors.secondary;
   return (
     <RectButton
       style={[styles.container, style, {backgroundColor}]}
