@@ -1,22 +1,25 @@
 export enum AppRoute {
-  //Top Level
-  PRIMARY_STACK = 'primary stack',
   MAIN = 'MAIN',
-  MAIN_TABS = 'Main Tabs',
-  NESTED = 'NESTED',
+
   //Auth= 'Auth',
   AUTH_FLOW = 'Auth',
   SIGN_IN_CONFIRM_CODE = 'SIGN_IN_CONFIRM_CODE',
   SIGN_UP = 'SIGN_UP',
   RESET_PASSWORD = 'RESET_PASSWORD',
   LOGOUT = 'LOGOUT',
-  CONSUMER_ONBOARDING = 'onboarding',
-
+  CONSUMER_ON_BOARDING = 'onboarding',
   LOGIN = 'login',
   FORGOT_PASSWORD = 'forgot password',
   CHANGE_PASSWORD = 'change password',
   PASSWORD_CHANGED = 'password changed',
   PHONE_INPUT = 'phone input',
+
+  //Main bottom nav
+  HOME_STACK_NAVIGATOR = 'Home stack',
+  PROFILE_STACK_NAVIGATOR = 'Profile stack',
+
+  //HOME STACK NAVIGATOR
+  HOME = 'Home',
 
   MAP = 'Map',
   MAP_LIST_VIEW = 'Map List',
@@ -32,7 +35,7 @@ export enum AppRoute {
   MY_POSTS = 'My Posts',
   POST_DETAILS = 'Post Details',
   POST_SHOW_ALL = 'Show all posts',
-  FEED_ONBOARDING = 'Select Interests',
+  FEED_ON_BOARDING = 'Select Interests',
   ALERTS = 'Alerts',
   MY_PROFILE = 'My Profile',
   MY_SETTINGS = 'Settings',

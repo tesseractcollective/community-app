@@ -19,10 +19,6 @@ const AuthenticationStack = createStackNavigator<AuthenticationRoutes>();
 export const AuthenticationNavigator = () => {
   return (
     <AuthenticationStack.Navigator screenOptions={{headerShown: false}}>
-      <AuthenticationStack.Screen
-        name={AppRoute.CONSUMER_ONBOARDING}
-        component={Onboarding}
-      />
       <AuthenticationStack.Screen name={AppRoute.WELCOME} component={Welcome} />
       <AuthenticationStack.Screen name={AppRoute.LOGIN} component={Login} />
       <AuthenticationStack.Screen name={AppRoute.SIGN_UP} component={SignUp} />

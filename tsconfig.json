@@ -51,6 +51,7 @@
       "react-graphql": ["react-graphql"],
       "localization": ["localization"],
       "screen": ["screen"],
+      "@ca/screens/*": ["screens/*"],
       "@ca/routes": ["navigation/appRoutes"],
       "@ca/navTypes": ["navigation/navTypes"]
     },

@@ -87,15 +87,17 @@ export async function logoutOnDevice() {
 }
 
 export async function getToken() {
-  return await AsyncStorage.getItem('USER_TOKEN').then((res: string) => {
+  return await AsyncStorage.getItem('USER_TOKEN').then((res: string | null) => {
     console.log('Getting USER TOKEN from storage', res);
     return res;
   });
 }
 
 export async function getRefreshToken() {
-  return await AsyncStorage.getItem('REFRESH_JWT').then((res: string) => {
-    // console.tron.log("Getting REFRESH TOKEN from storage", res);
-    return res;
-  });
+  return await AsyncStorage.getItem('REFRESH_JWT').then(
+    (res: string | null) => {
+      // console.tron.log("Getting REFRESH TOKEN from storage", res);
+      return res;
+    },
+  );
 }

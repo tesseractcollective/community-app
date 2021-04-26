@@ -12,8 +12,14 @@ import {
   NavigationContainerRef,
   InitialState,
 } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {MainBottomNavigatorProps} from '@ca/navTypes';
+import {AuthenticationNavigator} from '@ca/screens/auth';
+
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import {Appearance} from 'react-native-appearance';
 import {StatusBar, View} from 'react-native';
@@ -28,6 +34,7 @@ import PostDetail, {PostDetailRouterProps} from 'screens/PostDetail';
 import Profile from 'screens/Profile';
 
 import {load, save} from './utils';
+import {AppRoute} from '@ca/routes';
 
 export const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
 const defaultTheme = Appearance.getColorScheme() || 'light';
@@ -40,6 +47,11 @@ type HomeStackParams = {
   PostDetail: PostDetailRouterProps;
 };
 
+export type RootParamList = {
+  [AppRoute.MAIN]: undefined;
+  [AppRoute.AUTH_FLOW]: undefined;
+};
+const Stack = createStackNavigator<RootParamList>();
 const MainTabs = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const HomeStack = createStackNavigator<HomeStackParams>();
@@ -87,15 +99,46 @@ function ProfileStackNavigator() {
   );
 }
 
+const BottomTabNav: React.FC<MainBottomNavigatorProps<AppRoute.HOME>> = (
+  props,
+) => {
+  const translations = useTranslations();
+
+  return (
+    <MainTabs.Navigator>
+      <MainTabs.Screen
+        name={AppRoute.HOME_STACK_NAVIGATOR}
+        component={HomeStackNavigator}
+        options={{
+          title: translations.homeTabTitle,
+          tabBarIcon: (props) => {
+            return <FeatherIcons name="home" {...props} />;
+          },
+        }}
+      />
+      <MainTabs.Screen
+        name="ProfileStackNavigator"
+        component={ProfileStackNavigator}
+        options={{
+          title: translations.profileTabTitle,
+          tabBarIcon: (props) => {
+            return <FeatherIcons name="user" {...props} />;
+          },
+        }}
+      />
+    </MainTabs.Navigator>
+  );
+};
+
 interface RootNavParams {
-  token?: string;
+  token: string;
   history?: any;
 }
+
 const RootNavigator: React.FC<RootNavParams> = ({
   token,
   history,
 }: RootNavParams) => {
-  const translations = useTranslations();
   const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
   const [themeState, setThemeState] = React.useState(defaultTheme);
 
@@ -140,32 +183,29 @@ const RootNavigator: React.FC<RootNavParams> = ({
   if (!isNavigationReady) {
     return <Box />;
   }
+  const screenOptions = useMemo<StackNavigationOptions>(
+    () => ({
+      headerShown: false,
+      safeAreaInsets: {top: 0},
+      gestureEnabled: true,
+      stackPresentation: 'modal',
+    }),
+    [],
+  );
 
   return (
     <NavigationContainer {...{onStateChange, initialState}}>
       <StatusBar />
-      <MainTabs.Navigator>
-        <MainTabs.Screen
-          name="HomeStackNavigator"
-          component={HomeStackNavigator}
-          options={{
-            title: translations.homeTabTitle,
-            tabBarIcon: (props) => {
-              return <FeatherIcons name="home" {...props} />;
-            },
-          }}
-        />
-        <MainTabs.Screen
-          name="ProfileStackNavigator"
-          component={ProfileStackNavigator}
-          options={{
-            title: translations.profileTabTitle,
-            tabBarIcon: (props) => {
-              return <FeatherIcons name="user" {...props} />;
-            },
-          }}
-        />
-      </MainTabs.Navigator>
+      <Stack.Navigator screenOptions={screenOptions}>
+        {token ? (
+          <Stack.Screen name={AppRoute.MAIN} component={BottomTabNav} />
+        ) : (
+          <Stack.Screen
+            name={AppRoute.AUTH_FLOW}
+            component={AuthenticationNavigator}
+          />
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
