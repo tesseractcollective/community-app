@@ -20,7 +20,7 @@ import {AppLoading, Task} from 'components/LoadApp';
 
 import {load, getToken} from './utils';
 import {StatusBar} from 'react-native';
-import {theme as caTheme, darkTheme, Box, Text} from './components/Theme';
+import {theme as caTheme, darkTheme} from './components/Theme';
 
 const loadingTasks: Task[] = [
   () => load(NAVIGATION_STATE_KEY).then((result) => ['navHistory', result]),

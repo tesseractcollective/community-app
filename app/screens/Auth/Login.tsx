@@ -34,6 +34,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<AppRoute.LOGIN>) => {
     clientId: constants.auth0.clientId,
   });
 
+  //TODO Ben: on success navigate to the correct onboarding pages, if the user has not onboarded yet
   const login = () => {
     auth0.webAuth
       .authorize({scope: 'openid profile email'})
