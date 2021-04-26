@@ -86,3 +86,10 @@ fragment postCommentFields on postComment {
     name
   }
 }
+
+fragment myProfileFields on user {
+  userId
+  user {
+    name
+  }
+}

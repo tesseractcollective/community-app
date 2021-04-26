@@ -27,6 +27,7 @@ import Profile from 'screens/Profile';
 import {load, save} from '../utils';
 import {AuthenticationNavigator} from 'screens/Auth';
 import {Appearance} from 'react-native-appearance';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 export const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY`;
 
 type HomeStackParams = {
@@ -134,6 +135,7 @@ const RootNavigator: React.FC<RootNavParams> = (
 
   const [initialState, setInitialState] = useState<InitialState | undefined>();
   const {userId, token} = useUserUtils();
+  const insets = useSafeAreaInsets();
 
   React.useEffect(() => {
     // console.log('THE USER ID IN NAVIGATION', userId);
@@ -148,7 +150,7 @@ const RootNavigator: React.FC<RootNavParams> = (
   const screenOptions = useMemo<StackNavigationOptions>(
     () => ({
       headerShown: false,
-      safeAreaInsets: {top: 0},
+      safeAreaInsets: {top: insets.top},
       gestureEnabled: true,
       stackPresentation: 'modal',
     }),

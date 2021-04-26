@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {StyleSheet, Text, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,9 +13,8 @@ import {bs} from 'react-graphql/support/styling/buildStyles';
 import VersionInfo from 'react-native-version-info';
 import {remove} from '../utils';
 import {AppRoute} from 'navRoutes';
-import Auth0 from 'react-native-auth0';
-import constants from '../config';
 import {useUserUtils} from '../UserContext';
+import useReactGraphql from '../react-graphql/hooks/useReactGraphql';
 const gradient = ['#F44336', '#FF9800'];
 
 const styles = StyleSheet.create({
@@ -27,11 +26,17 @@ export default function () {
   const navigation = useNavigation();
   const userId = useUserId();
   const {setToken} = useUserUtils();
+  const reactGraphql = useReactGraphql(HasuraConfig.userProfile);
+  const variables = {id: userId};
 
-  const auth0 = new Auth0({
-    domain: constants.auth0.domain,
-    clientId: constants.auth0.clientId,
-  });
+  const insertState = reactGraphql.useInsert({initialVariables: variables});
+  const deleteState = reactGraphql.useDelete({variables});
+  const queryOneState = reactGraphql.useQueryOne({variables});
+
+  useEffect(() => {
+    console.log('queryOneState.refresh()');
+    queryOneState.refresh();
+  }, [insertState.resultItem, deleteState.resultItem]);
 
   const logout = () => {
     setToken('');

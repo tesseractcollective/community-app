@@ -8,6 +8,11 @@ import {
 } from './generated/graphql';
 
 const HasuraConfig: HasuraConfigType = {
+  myProfile: {
+    typename: 'user',
+    primaryKey: ['id'],
+    fieldFragment: GroupFieldsFragmentDoc,
+  },
   groups: {
     typename: 'group',
     primaryKey: ['id'],
