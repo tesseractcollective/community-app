@@ -50,6 +50,8 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>NSLocationUsageDescription</key>
+  <string>We accesss your location for a better search and discovery experience.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We access your camera so we can add photos to posts you make</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

@@ -29,12 +29,11 @@ export const aspectRatio = width / 375;
 export const palette = {
   primaryColor: '#AC926F',
   primaryButton: '#F2E0D0',
-
   blue: '#08427C',
   darkBlue: '#0C0D34',
   white: 'white',
   background: '#FFF',
-  screenBackground: '#FFF',
+  screenBackground: '#1D1D1D',
   orange: '#FE5E33',
   yellow: '#FFC641',
   pink: '#FF87A2',
@@ -55,6 +54,7 @@ export const theme = {
     secondary: palette.darkBlue,
     primaryButton: palette.primaryButton,
     danger: '#FF0058',
+    success: '#59C669',
     info: '#808080',
     titleText: palette.title,
     listTitle: palette.title,

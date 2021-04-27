@@ -14,6 +14,7 @@ export enum AppRoute {
   CHANGE_PASSWORD = 'change password',
   PASSWORD_CHANGED = 'password changed',
   PHONE_INPUT = 'phone input',
+  ENTER_LOCATION = 'Where do you live',
 
   //Main bottom nav
   HOME_STACK_NAVIGATOR = 'Home stack',

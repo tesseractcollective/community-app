@@ -40,14 +40,14 @@ const Welcome = ({navigation}: AuthNavigationProps<AppRoute.WELCOME>) => {
     <Box flex={1} backgroundColor="background">
       <Box
         flex={1}
-        backgroundColor="primary"
+        backgroundColor="screenBackground"
         alignItems="center"
-        justifyContent="flex-end">
+        justifyContent="center">
         <Image
-          source={require('./assets/1.png')}
+          source={require('../../../assets/stacked_logo.png')}
           style={{
-            width: width,
-            height: theme.size.vh * 50,
+            width: 200,
+            height: 300,
           }}
         />
       </Box>

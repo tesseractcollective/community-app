@@ -33,6 +33,7 @@ export type AuthenticationRoutes = {
   [AppRoute.SIGN_IN_CONFIRM_CODE]: undefined;
   [AppRoute.WELCOME]: undefined;
   [AppRoute.PASSWORD_CHANGED]: undefined;
+  [AppRoute.ENTER_LOCATION]: undefined;
 };
 
 export interface MainBottomNavigatorProps<

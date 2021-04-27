@@ -4,7 +4,7 @@ import {BorderlessButton} from 'react-native-gesture-handler';
 
 import {Box, Text} from '../Theme';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   label: string;
   checked: boolean;
   onChange: () => void;

@@ -19,7 +19,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
   ({icon, touched, error, ...props}, ref) => {
     const theme = useTheme();
     const SIZE = theme.borderRadii.m * 2.5;
-    const validationColor = error ? 'danger' : 'primary';
+    const validationColor = error ? 'danger' : 'success';
     const color = !touched ? 'text' : validationColor;
     return (
       <Box
@@ -47,7 +47,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
           <RoundedIcon
             name={!error ? 'check' : 'x'}
             size={SIZE}
-            backgroundColor={!error ? 'primary' : 'danger'}
+            backgroundColor={!error ? 'success' : 'danger'}
             color="background"
           />
         )}

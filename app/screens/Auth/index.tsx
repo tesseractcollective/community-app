@@ -5,6 +5,8 @@ import {AppRoute} from 'navRoutes';
 import type {AuthenticationRoutes} from 'navTypes';
 import Welcome from './Welcome';
 import SignUp from './SignUp';
+import LocationForm from './EnterLocation';
+
 // import ForgotPassword from './ForgotPassword';
 // import PasswordChanged from './PasswordChanged';
 // import PhoneInput from './PhoneInput';
@@ -16,12 +18,16 @@ export const assets = [];
 
 const AuthenticationStack = createStackNavigator<AuthenticationRoutes>();
 export const AuthenticationNavigator = () => {
-  console.log('THE AUTH FLOW');
   return (
     <AuthenticationStack.Navigator screenOptions={{headerShown: false}}>
       <AuthenticationStack.Screen name={AppRoute.WELCOME} component={Welcome} />
       {/*<AuthenticationStack.Screen name={AppRoute.LOGIN} component={Login} />*/}
       <AuthenticationStack.Screen name={AppRoute.SIGN_UP} component={SignUp} />
+      <AuthenticationStack.Screen
+        name={AppRoute.ENTER_LOCATION}
+        component={LocationForm}
+      />
+
       {/*<AuthenticationStack.Screen*/}
       {/*  name={AppRoute.FORGOT_PASSWORD}*/}
       {/*  component={ForgotPassword}*/}
