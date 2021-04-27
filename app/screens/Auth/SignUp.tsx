@@ -37,7 +37,6 @@ const SignUp = ({navigation}: AuthNavigationProps<AppRoute.SIGN_UP>) => {
     touched,
     values,
     setFieldValue,
-    validateForm,
   } = useFormik({
     validationSchema: SignUpSchema,
     initialValues: {
